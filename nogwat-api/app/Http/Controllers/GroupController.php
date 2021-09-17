@@ -11,13 +11,22 @@ use App\Models\UserGroup;
 class GroupController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display the list of groups where the user belongs to
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function myGroups()
     {
-        //
+        $response = auth()->user()->groups;
+
+        foreach ($response as $r){
+            $r->admin_check = UserGroup::where('group_id',$r->id)
+            ->where('user_id',auth()->user()->id)
+            ->select('is_admin')
+            ->first();
+        }
+
+        return response($response, 200);
     }
 
     /**
@@ -59,36 +68,57 @@ class GroupController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
+    * Display the config settings for a specific group
+    *
+    * @return \Illuminate\Http\Response
+    */
+    public function getGroupConfig($id)
+    {   
+        $applicableGroups = UserGroup::where('user_id', auth()->user()->id)
+        ->pluck('id')
+        ->toArray();
+
+        if(!in_array($id,$applicableGroups)){
+            return response('unauthorized', 401);
+        }
+
+        $group = Group::where('id',$id)->first();
+        $response = $group->groupConfig;
+
+        return response($response, 200);
+    } 
+
 
     /**
-     * Display the specified resource.
+     * Edit config settings for a specific group
      *
-     * @param  int  $id
+     * @param  int  $request->configId is the config id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function updateGroupConfig(Request $request)
     {
-        //
-    }
+        try{
+            GroupConfig::where('id',$request->configId)
+            ->update([
+                'use_store' => $request->useStore,
+                'use_store_type' => $request->useStoreType,
+                'use_planning' => $request->usePlanning
+            ]);
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
+            $success = true;
+            $message = 'Config updated';
+
+        } catch (\Illuminate\Database\QueryException $ex) {
+            $success = false;
+            $message = $ex->getMessage();
+        }
+
+        $response = [
+            'success' => $success,
+            'message' => $message,
+        ];
+
+        return response()->json($response);
     }
 
     /**

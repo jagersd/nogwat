@@ -17,7 +17,7 @@ class InviteController extends Controller
     */
     public function create(Request $request)
     {   
-        if ($this->isGroupAdmin($request->user()->id, $request->group_id) == false){
+        if ($this->isGroupAdmin($request->user()->id, $request->groupId) == false){
             return 'you are not the group Admin';
         }
 

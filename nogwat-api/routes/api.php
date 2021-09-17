@@ -7,6 +7,7 @@ use App\Http\Controllers\GroupController;
 use App\Http\Controllers\RecipeController;
 use App\Http\Controllers\InviteController;
 use App\Http\Controllers\ListController;
+use App\Http\Controllers\StoreController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,7 +20,7 @@ Route::post('/register',[Auth::class,'register']);
 
 
 Route::middleware('auth:sanctum')->group( function() {
-    //checker routes
+    //global routes
     Route::get('/me',[Auth::class, 'me']);
 
     //invite routes
@@ -30,6 +31,9 @@ Route::middleware('auth:sanctum')->group( function() {
 
     //group routes
     Route::post('/creategroup', [GroupController::class, 'create']);
+    Route::get('/mygroups', [GroupController::class, 'myGroups']);
+    Route::get('/getgroupconfig/{id}',[GroupController::class,'getGroupConfig']);
+    Route::put('updategroupconfig',[GroupController::class,'updateGroupConfig']);
 
     //recipe routes
     Route::post('/createrecipe',[RecipeController::class, 'create']);
@@ -41,4 +45,10 @@ Route::middleware('auth:sanctum')->group( function() {
     Route::post('/additem',[ListController::class,'create']);
     Route::put('/updateitem',[ListController::class,'update']);
     Route::put('/purchaseditem',[ListController::class,'purchased']);
+    Route::get('/mylist',[ListController::class,'myList']);
+
+    //store routes
+    Route::post('addstore',[StoreController::class,'create']);
+    Route::put('updatestore',[StoreController::class,'update']);
+    Route::put('deletestore',[StoreController::class,'delete']);
 });

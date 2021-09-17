@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Models\ActiveList;
 use App\Models\UserGroup;
+use App\Models\Measurement;
 
 class ListController extends Controller
 {
@@ -17,7 +18,7 @@ class ListController extends Controller
     public function create(Request $request)
     {   
         if($this->isInGroup($request->user()->id, $request->groupId) == false){
-            return response('You are not allowd to add items for this group', 401);
+            return response('You are not allowed to add items for this group', 401);
         }
 
         try {
@@ -26,6 +27,8 @@ class ListController extends Controller
                 'user_id_added' => $request->user()->id,
                 'store_id' => $request->storeId,
                 'item_name' => $request->itemName,
+                'measurement_type_id' => Measurement::where('abbreviation',$request->measurementType)->first()->id,
+                'measurement_amount' => $request->amount,
                 'date_added' => Carbon::now(),
                 'due_date' => $request->dueDate,
             ]);
@@ -63,8 +66,24 @@ class ListController extends Controller
         ]);
 
         return response('record updated',200);
-        
     }
+
+    /**
+    * Displays the users shopping Lists
+    *
+    * @return \Illuminate\Http\Response
+    */
+    public function myList()
+    {   
+        $groups = UserGroup::where('user_id', auth()->user()->id)
+        ->get('group_id')
+        ->toArray();
+        
+        $response = ActiveList::whereIn('group_id',$groups)->get();
+        
+        return response($response, 200);
+    }
+
 
     /**
     * User records that the item is purchased
