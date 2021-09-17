@@ -1,0 +1,7 @@
+{
+  "name": "nogwat-app",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "vue"
+}
