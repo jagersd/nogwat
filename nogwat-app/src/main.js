@@ -34,6 +34,6 @@ const app = createApp(App)
   .use(store)
   
 router.isReady().then(() => {
-  app.mount('#app');
   app.component('master-layout', MasterLayout);
+  app.mount('#app');
 });

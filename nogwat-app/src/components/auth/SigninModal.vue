@@ -1,8 +1,7 @@
 <template>
-  <master-layout pageTitle="Login Form">
     <ion-card>
       <ion-card-header>
-        <ion-card-title>SignIn</ion-card-title>
+        <ion-card-title>Inloggen</ion-card-title>
       </ion-card-header>
       <ion-card-content>
         <ion-item>
@@ -14,17 +13,19 @@
           <ion-input type="password" name="password" v-model="password"></ion-input>
         </ion-item>
         <ion-button expand="full" @click="login()">Login</ion-button>
+        <ion-button @click="closeModal">Sluit</ion-button>
       </ion-card-content>
     </ion-card>
-  </master-layout>
 </template>
 
 <script>
 import {
-  IonCard,IonCardHeader,IonCardTitle,IonCardContent,IonItem,IonLabel,IonInput,IonButton
+  IonCard,IonCardHeader,IonCardTitle,IonCardContent,IonItem,IonLabel,IonInput,IonButton,modalController
 } from "@ionic/vue";
+import { defineComponent } from 'vue';
 
-export default {
+export default defineComponent({
+  name: 'SigninModal',
   components: {
     IonCard,IonCardHeader,IonCardTitle,IonCardContent,IonItem,IonLabel,IonInput,IonButton
   },
@@ -34,6 +35,12 @@ export default {
       password: ''
     }
   },
+  setup() {
+    const closeModal = () => {
+      modalController.dismiss();
+    }
+    return { closeModal }
+  },
   methods: {
     login () {
       this.$store
@@ -41,13 +48,14 @@ export default {
           email: this.email,
           password: this.password
         })
+        .then(this.closeModal)
         .then(() => {
-          this.$router.push({ path: '/about' })
+          this.$router.push({ path: '/dashboard' })
         })
         .catch(err => {
           console.log(err)
         })
-    }
+    },
   }
-};
+});
 </script>

@@ -1,28 +1,48 @@
 <template>    
-  <master-layout pageTitle="Home">
+  <master-layout pageTitle="Welkom!">
     <div id="container">
-      <ion-button expand="block" @click="toLogin()">SignIn</ion-button>
+        <ion-text color="primary">
+          <h1>Welkom bij de NogWat app!</h1>
+        </ion-text>
+        <ion-text class="ion-padding-horizontal" color="primary">
+          Het idee achter de app is dat het kruitbord in de keuken altijd meegenomen kan worden naar de stad / het winkelcentrum. 
+        </ion-text>
+
+      <ion-button class="ion-margin-top" expand="block" @click="openSigninModal">Log in</ion-button>
+
+      <ion-button class="ion-margin-top" expand="block" @click="openSignupModal">Registreren</ion-button>
     </div>
   </master-layout>
 </template>
 
 <script>
-import { IonButton } from '@ionic/vue';
-import { defineComponent } from 'vue';
+import { IonButton, modalController } from '@ionic/vue'
+import SigninModal from '../components/auth/SigninModal.vue'
+import SignupModal from '../components/auth/SignupModal.vue'
 
-export default defineComponent({
+export default{
   name: 'Home',
   components: {
     IonButton
   },
 
   methods: {
-    toLogin () {
-      this.$router.push({ path: '/login'})
-    }
+    async openSigninModal() {
+      const modal = await modalController.create({
+        component: SigninModal,
+      })
+      return modal.present();
+    },
+    async openSignupModal() {
+      const modal = await modalController.create({
+        component:SignupModal,
+      })
+      return modal.present();
+    }    
+
   }
 
-});
+};
 </script>
 
 <style scoped>
