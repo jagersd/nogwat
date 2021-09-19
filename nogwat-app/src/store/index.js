@@ -5,7 +5,8 @@ axios.defaults.baseURL = 'http://127.0.0.1:8000/api'
 
 export default createStore({
   state: {
-    user: null
+    user: null,
+    groupId: null,
   },
 
   mutations: {
@@ -18,6 +19,11 @@ export default createStore({
     clearUserData () {
       localStorage.removeItem('user')
       location.reload()
+    },
+
+    setDefaultGroup(state, defaultGroup) {
+      state.groupId = defaultGroup
+      localStorage.setItem('groupId', defaultGroup)
     }
   },
 
@@ -32,7 +38,7 @@ export default createStore({
 
     logout ({ commit }) {
       commit('clearUserData')
-    }
+    },
   },
 
   getters : {

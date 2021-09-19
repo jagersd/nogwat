@@ -16,14 +16,14 @@
 </template>
 
 <script>
-import { IonButton, modalController } from '@ionic/vue'
+import { IonButton, modalController, IonText } from '@ionic/vue'
 import SigninModal from '../components/auth/SigninModal.vue'
 import SignupModal from '../components/auth/SignupModal.vue'
 
 export default{
   name: 'Home',
   components: {
-    IonButton
+    IonButton, IonText, 
   },
 
   methods: {
