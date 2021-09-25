@@ -14,6 +14,15 @@ const routes = [
       if (to.name !== 'Login' && !loggedIn) next({ name: 'Login' })
       else next()
     }
+  },
+  { 
+    path: '/lists',
+    component: () => import(/* webpackChunkName: "Dashboard" */ '../views/Lists.vue'),
+    beforeEnter: (to, from, next) => {
+      const loggedIn = localStorage.getItem('user')
+      if (to.name !== 'Login' && !loggedIn) next({ name: 'Login' })
+      else next()
+    }
   }
 ]
 

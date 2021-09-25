@@ -28,5 +28,12 @@ class Group extends Model
         return $this->hasOne(GroupConfig::class);
     }
 
+    public function activeLists()
+    {
+        return $this->hasMany(ActiveList::class, 'group_id')
+        ->with('measurement')
+        ->with('addedUser');
+    }
+
 
 }

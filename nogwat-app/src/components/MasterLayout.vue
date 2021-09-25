@@ -15,7 +15,7 @@
           <ion-label>Groupen</ion-label>
         </ion-tab-button>
 
-        <ion-tab-button tab="Dashboard" href="/dashboard">
+        <ion-tab-button tab="Lists" href="/lists">
           <ion-icon :icon="list" size="large"></ion-icon>
           <ion-label>Boodschappenlijst</ion-label>
         </ion-tab-button>

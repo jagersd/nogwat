@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Models\ActiveList;
 use App\Models\UserGroup;
+use App\Models\Group;
 use App\Models\Measurement;
 
 class ListController extends Controller
@@ -27,7 +28,7 @@ class ListController extends Controller
                 'user_id_added' => $request->user()->id,
                 'store_id' => $request->storeId,
                 'item_name' => $request->itemName,
-                'measurement_type_id' => Measurement::where('abbreviation',$request->measurementType)->first()->id,
+                'measurement_type_id' => Measurement::where('abbreviation',$request->measurementType)->first('id')->id,
                 'measurement_amount' => $request->amount,
                 'date_added' => Carbon::now(),
                 'due_date' => $request->dueDate,
@@ -78,8 +79,12 @@ class ListController extends Controller
         $groups = UserGroup::where('user_id', auth()->user()->id)
         ->get('group_id')
         ->toArray();
-        
-        $response = ActiveList::whereIn('group_id',$groups)->get();
+
+        foreach($groups as $group){
+            $response[] = Group::where('id',$group)
+            ->with('activeLists')
+            ->first();
+        }
         
         return response($response, 200);
     }
