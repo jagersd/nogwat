@@ -50,7 +50,7 @@ export default defineComponent({
         })
         .then(this.closeModal)
         .then(() => {
-          this.$router.push({ path: '/dashboard' })
+          this.$router.push({ path: '/lists' })
         })
         .catch(err => {
           console.log(err)

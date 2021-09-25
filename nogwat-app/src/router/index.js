@@ -4,23 +4,33 @@ import Home from '../views/Home'
 const routes = [
   {
     path: '/',
-    component: Home
+    component: Home,
+    name: Home
   },
   { 
-    path: '/dashboard',
-    component: () => import(/* webpackChunkName: "Dashboard" */ '../views/Dashboard.vue'),
+    path: '/groups',
+    component: () => import(/* webpackChunkName: "Groups" */ '../views/Groups.vue'),
     beforeEnter: (to, from, next) => {
       const loggedIn = localStorage.getItem('user')
-      if (to.name !== 'Login' && !loggedIn) next({ name: 'Login' })
+      if (to.name !== 'logi' && !loggedIn) next({ name: 'Home' })
       else next()
     }
   },
   { 
     path: '/lists',
-    component: () => import(/* webpackChunkName: "Dashboard" */ '../views/Lists.vue'),
+    component: () => import(/* webpackChunkName: "Lists" */ '../views/Lists.vue'),
     beforeEnter: (to, from, next) => {
       const loggedIn = localStorage.getItem('user')
-      if (to.name !== 'Login' && !loggedIn) next({ name: 'Login' })
+      if (to.name !== 'Home' && !loggedIn) next({ name: 'Home' })
+      else next()
+    }
+  },
+  { 
+    path: '/recipes',
+    component: () => import(/* webpackChunkName: "Lists" */ '../views/Recipes.vue'),
+    beforeEnter: (to, from, next) => {
+      const loggedIn = localStorage.getItem('user')
+      if (to.name !== 'Home' && !loggedIn) next({ name: 'Home' })
       else next()
     }
   }

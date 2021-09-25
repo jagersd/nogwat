@@ -1,5 +1,5 @@
 <template>
-  <master-layout pageTitle="Dashboard">
+  <master-layout pageTitle="Groepen">
     <br>
     <ion-text class="ion-margin-top">Hi {{userInfo.name}}!</ion-text>
     <br>
@@ -22,7 +22,7 @@ import axios from 'axios'
 import CreateGroupModal from '@/components/groups/CreatGroupModal.vue'
 
 export default {
-  name: 'Dashboard',
+  name: 'Groups',
   components: {IonButton, IonText, MasterLayout},
   data() {
     return {

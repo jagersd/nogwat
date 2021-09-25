@@ -1,6 +1,6 @@
 <template>
-  <master-layout pageTitle="Lists">
-    <ion-list v-for="listGroup in listInfo" :key="listGroup.id">
+  <master-layout pageTitle="Boodschappenlijst">
+    <ion-list id="main-content" v-for="listGroup in listInfo" :key="listGroup.id">
         <ion-label>
             <h1>{{listGroup.name}}</h1>
             <ion-list v-for="listItem in listGroup.active_lists" :key="listItem.id">
@@ -21,7 +21,7 @@
 </template>
 
 <script>
-import { IonList, IonLabel, IonItem, IonCheckbox, IonButton, modalController} from '@ionic/vue'
+import {IonList, IonLabel, IonItem, IonCheckbox, IonButton, modalController} from '@ionic/vue'
 import axios from 'axios'
 import AddItemModal from '../components/list/AddItemModal.vue'
 
