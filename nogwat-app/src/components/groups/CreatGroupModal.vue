@@ -1,7 +1,7 @@
 <template>
   <ion-card>
     <ion-card-header>
-      <ion-card-title>Signup</ion-card-title>
+      <ion-card-title>Nieuwe Groep</ion-card-title>
     </ion-card-header>
     <ion-card-content>
       <ion-item>

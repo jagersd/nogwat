@@ -32,6 +32,7 @@ Route::middleware('auth:sanctum')->group( function() {
     //group routes
     Route::post('/creategroup', [GroupController::class, 'create']);
     Route::get('/mygroups', [GroupController::class, 'myGroups']);
+    Route::get('/groupdetails/{id}',[GroupController::class, 'groupDetails']);
     Route::get('/getgroupconfig/{id}',[GroupController::class,'getGroupConfig']);
     Route::put('updategroupconfig',[GroupController::class,'updateGroupConfig']);
 

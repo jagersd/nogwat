@@ -1,41 +1,38 @@
 <template>
   <master-layout pageTitle="Groepen">
-    <ion-list></ion-list>
     <br>
-    <ion-text class="ion-margin-top">Hi {{userInfo.name}}!</ion-text>
-    <br>
-    <ion-text class="ion-margin-top">Selecteer een standaard group</ion-text>
-    <br>
-    <ion-text class="ion-margin-top">default group id {{defaultGroupId}}</ion-text>
-    
+    <ion-text class="ion-margin-top">Hi {{userInfo.name}}!</ion-text><br>
+    <ion-text class="ion-margin-top">Dit is een overzicht van je groepen. Tab om details te bekijken of aanpassingen te maken.</ion-text>
     <ion-list v-for="group in userInfo.groups" :key="group.id">
-      <ion-card @click="setGroupid(group.id)">
-        <ion-card-header>{{group.name}}</ion-card-header>
+      <ion-card color="primary" @click="openGroupDetailModal(group.id)">
+        <ion-card-header><ion-card-title>{{group.name}}</ion-card-title></ion-card-header>
+        <ion-card-content>{{group.admin_instructions}}</ion-card-content>
       </ion-card>
     </ion-list>
 
-    <ion-button expand="block" @click="openCreateGroupModal">Create Group</ion-button>
+    <ion-button expand="block" @click="openCreateGroupModal">Maak een nieuwe groep aan</ion-button>
   </master-layout>
 </template>
 
 
 
 <script>
-import { IonButton, modalController, IonText, IonList, IonCard,IonCardHeader } from '@ionic/vue'
+import { IonButton, modalController, IonText, IonList, IonCard, IonCardHeader, IonCardContent, IonCardTitle } from '@ionic/vue'
 import MasterLayout from '@/components/MasterLayout.vue'
 import axios from 'axios'
 import CreateGroupModal from '@/components/groups/CreatGroupModal.vue'
+import GroupDetailModalVue from '@/components/groups/GroupDetailModal.vue'
 
 export default {
   name: 'Groups',
-  components: {IonButton, IonText, IonList, IonCard, IonCardHeader, MasterLayout},
+  components: {IonButton, IonText, IonList, IonCard, IonCardHeader, MasterLayout, IonCardContent, IonCardTitle},
   data() {
     return {
       userInfo: {},
       defaultGroupId: this.$store.state.groupId
     }
   },
-  mounted() {
+  created() {
     axios.get('/me')
     .then(response => (this.userInfo = response.data))
     .catch(error => console.log(error))
@@ -47,10 +44,17 @@ export default {
       })
       return modal.present();
     },
-    setGroupid(groupId) {
-      this.$store.commit('setDefaultGroup',groupId)
-      console.log(this.$store.state.groupId)
-    }
+
+    async openGroupDetailModal(id) {
+      const modal = await modalController.create({
+        component: GroupDetailModalVue,
+        componentProps: {
+          groupId: id
+        }
+      })
+      return modal.present();
+    },
+
 
 
   }

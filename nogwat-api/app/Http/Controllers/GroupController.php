@@ -22,9 +22,36 @@ class GroupController extends Controller
         foreach ($response as $r){
             $r->adminCheck = UserGroup::where('group_id',$r->id)
             ->where('user_id',auth()->user()->id)
+            ->where('deleted',0)
             ->select('is_admin')
             ->first();
         }
+
+        return response($response, 200);
+    }
+
+    /**
+     * Get all info about specific group
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function groupDetails($id)
+    {
+        $applicableGroups = UserGroup::where('user_id', auth()->user()->id)
+        ->pluck('id')
+        ->toArray();
+
+        if(!in_array($id,$applicableGroups)){
+            return response('unauthorized', 401);
+        }
+
+        $response = Group::where('id',$id)
+        ->with('users')
+        ->first();
+
+        $response->adminCheck = UserGroup::where('user_id', auth()->user()->id)
+        ->select('is_admin')
+        ->first();
 
         return response($response, 200);
     }
