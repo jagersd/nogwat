@@ -64,6 +64,8 @@ class ListController extends Controller
             'store_id' => $request->storeId,
             'item_name' => $request->itemName,
             'due_date' => $request->dueDate,
+            'measurement_type_id' => Measurement::where('abbreviation',$request->measurementType)->first('id')->id,
+            'measurement_amount' => $request->amount,
         ]);
 
         return response('record updated',200);

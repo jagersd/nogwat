@@ -8,9 +8,9 @@
           Het idee achter de app is dat het kruitbord in de keuken altijd meegenomen kan worden naar de stad / het winkelcentrum. 
         </ion-text>
 
-      <ion-button class="ion-margin-top" expand="block" @click="openSigninModal">Log in</ion-button>
+      <ion-button v-if="!$store.state.user" class="ion-margin-top" expand="block" @click="openSigninModal">Log in</ion-button>
 
-      <ion-button class="ion-margin-top" expand="block" @click="openSignupModal">Registreren</ion-button>
+      <ion-button v-if="!$store.state.user" class="ion-margin-top" expand="block" @click="openSignupModal">Registreren</ion-button>
     </div>
   </master-layout>
 </template>

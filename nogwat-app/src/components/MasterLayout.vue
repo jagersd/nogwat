@@ -6,7 +6,7 @@
       </ion-toolbar>
     </ion-header>
     <ion-content>
-      <ion-fab horizontal="end" vertical="top" slot="fixed" edge>
+      <ion-fab v-if="$store.state.user" horizontal="end" vertical="top" slot="fixed" edge>
         <ion-fab-button color="primary">
           <ion-icon :icon="person"></ion-icon>
         </ion-fab-button>
@@ -32,7 +32,7 @@
 
 
 
-    <ion-tab-bar slot="bottom">
+    <ion-tab-bar v-if="$store.state.user" slot="bottom">
 
       <ion-tab-button tab="Groups" href="/groups">
         <ion-icon :icon="heart" size="large"></ion-icon>

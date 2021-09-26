@@ -6,9 +6,8 @@
             <ion-list v-for="listItem in listGroup.active_lists" :key="listItem.id">
                 <ion-item>
                 <ion-label>
-                    <h2>{{listItem.item_name}}</h2>
+                    <h2 @click="openItemDetailsModal(listItem)">{{listItem.item_name}}</h2>
                     <p v-if="listItem.measurement_amount">{{listItem.measurement_amount}} {{listItem.measurement.abbreviation}}</p>
-                    
                 </ion-label>
                 <ion-checkbox v-if="listItem.date_purchased != null" checked disabled color="primary" slot="end"></ion-checkbox>
                 <ion-checkbox v-if="listItem.date_purchased == null" color="primary" slot="end" @click="markPurchased(listItem.id)"></ion-checkbox>
@@ -24,6 +23,7 @@
 import {IonList, IonLabel, IonItem, IonCheckbox, IonButton, modalController} from '@ionic/vue'
 import axios from 'axios'
 import AddItemModal from '../components/list/AddItemModal.vue'
+import ItemDetailsModal from '../components/list/ItemDetailsModal.vue'
 
 export default {
     name: 'Lists',
@@ -56,7 +56,6 @@ export default {
                     groupId:groupId
                 }
             })
-
             modal.onDidDismiss().then(() => {
             axios.get('/mylist')
             .then(response => (this.listInfo = response.data))
@@ -65,6 +64,26 @@ export default {
 
             return modal.present()
         },
+        async openItemDetailsModal(item) {
+            const modal = await modalController.create({
+                component:ItemDetailsModal,
+                componentProps: {
+                    itemDetails:item
+                }
+            })
+            modal.onDidDismiss().then(() => {
+            axios.get('/mylist')
+            .then(response => (this.listInfo = response.data))
+            .catch(error => console.log(error))
+            })
+            return modal.present()
+        }
     },
 }
 </script>
+
+<style scoped>
+ion-checkbox {
+   position:relative;
+}
+</style>

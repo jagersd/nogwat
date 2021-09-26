@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Group;
 use App\Models\GroupConfig;
 use App\Models\UserGroup;
-
+use App\Models\User;
 
 class GroupController extends Controller
 {
@@ -20,7 +20,7 @@ class GroupController extends Controller
         $response = auth()->user()->groups;
 
         foreach ($response as $r){
-            $r->admin_check = UserGroup::where('group_id',$r->id)
+            $r->adminCheck = UserGroup::where('group_id',$r->id)
             ->where('user_id',auth()->user()->id)
             ->select('is_admin')
             ->first();

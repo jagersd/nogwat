@@ -1,7 +1,7 @@
 <template>
   <ion-card>
     <ion-card-header>
-      <ion-card-title>Voeg toe aan boodschappenlijst </ion-card-title>
+      <ion-card-title>Aanpassen</ion-card-title>
     </ion-card-header>
     <ion-card-content>
       <ion-item>
@@ -10,7 +10,7 @@
       </ion-item>
       <ion-item>
         <ion-label position="floating">Hoeveelheid</ion-label>
-        <ion-input type="number" v-model="form.amount" id="amount"></ion-input>
+        <ion-input type="number" required="true" v-model="form.amount" id="amount"></ion-input>
       </ion-item>
         <ion-label position="floating">liter, gram, kilo</ion-label>
       <ion-select v-model="form.measurementType">
@@ -19,46 +19,47 @@
             <ion-select-option value="gr">gr (gram)</ion-select-option>
             <ion-select-option value="kg">kg (kilo)</ion-select-option>
       </ion-select>
-      <ion-button expand="fill" @click="addItem()">Opslaan</ion-button>
+      <ion-button expand="fill" @click="updateItem()">Opslaan</ion-button>
       <ion-button @click="closeModal">Sluit</ion-button>
+      <ion-button color="danger">Verwijderen</ion-button>
     </ion-card-content>
   </ion-card>
 </template>
 
 <script>
 import axios from 'axios'
-import {
-  IonCard,IonCardHeader,IonCardTitle,IonCardContent,IonItem,IonLabel,IonInput,IonButton,modalController, IonSelect, IonSelectOption
-} from "@ionic/vue";
+import { IonCard,IonCardHeader,IonCardTitle,IonCardContent,IonItem,IonLabel,IonInput,IonButton,modalController, IonSelect, IonSelectOption} from "@ionic/vue";
 
 import { defineComponent } from 'vue'
 
 export default defineComponent ({
-  name: 'AddItemModal',
-    components: {
-    IonCard,IonCardHeader,IonCardTitle,IonCardContent,IonItem,IonLabel,IonInput,IonButton, IonSelect, IonSelectOption
+  name: 'ItemDetailsModal',
+    components: { IonCard,IonCardHeader,IonCardTitle,IonCardContent,IonItem,IonLabel,IonInput,IonButton,IonSelect, IonSelectOption
   },
-  props: ['groupId'],
+
+  props: ['itemDetails'],
+
   data() {
     return {
       form: {
-        groupId: this.groupId,
-        itemName: "",
-        measurementType:"",
-        amount: "",
+        listItemId: this.itemDetails.id,
+        itemName: this.itemDetails.item_name,
+        measurementType:this.itemDetails.measurement.abbreviation,
+        amount: this.itemDetails.measurement_amount,
       },
       errors: []
     };
   },
+
   setup() {
-  const closeModal = () => {
+    const closeModal = () => {
     modalController.dismiss();
-  }
+    }
   return { closeModal }
   },
   methods: {
-        addItem() {
-        axios.post('/additem', this.form)
+        updateItem() {
+        axios.put('/updateitem', this.form)
         .then(this.closeModal)
 
         .catch(error => {
