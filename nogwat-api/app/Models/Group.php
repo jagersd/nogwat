@@ -35,5 +35,12 @@ class Group extends Model
         ->with('addedUser');
     }
 
+    public function openInvites()
+    {
+        return $this->hasMany(GroupInvite::class, 'group_id')
+        ->where('status','pending')
+        ->with('invitees');
+    }
+
 
 }

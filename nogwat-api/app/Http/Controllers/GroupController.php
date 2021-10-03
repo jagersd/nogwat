@@ -53,6 +53,7 @@ class GroupController extends Controller
 
         $response = Group::where('id',$id)
         ->with('users')
+        ->with('openInvites')
         ->first();
 
         $response->adminCheck = UserGroup::where('user_id', auth()->user()->id)

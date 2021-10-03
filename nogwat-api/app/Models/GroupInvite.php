@@ -25,4 +25,9 @@ class GroupInvite extends Model
         return $this->belongsTo(User::class,'invitor_user_id');
     }
 
+    public function invitees()
+    {
+        return $this->belongsTo(User::class,'invited_user_id');
+    }
+
 }

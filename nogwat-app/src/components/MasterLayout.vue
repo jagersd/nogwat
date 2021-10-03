@@ -22,7 +22,7 @@
           </ion-fab-button>
         </ion-fab-list>
         <ion-fab-list side="start">
-          <ion-fab-button color="dark">
+          <ion-fab-button color="dark" href="/about">
             <ion-icon :icon="help"></ion-icon>
           </ion-fab-button>
         </ion-fab-list>
@@ -100,6 +100,6 @@ export default {
 <style scoped>
 ion-toolbar{
     --background: var(--ion-color-primary);
-    --color: var(--ion-color-primary-contrast)
+    --color: var(--ion-color-primary-contrast);
 }
 </style>
