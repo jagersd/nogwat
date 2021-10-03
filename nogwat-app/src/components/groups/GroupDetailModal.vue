@@ -2,6 +2,7 @@
 <div class="container">
   <h1>{{groupInfo.name}}</h1>
   <i>{{groupInfo.admin_instructions}}</i>
+  
   <hr>
   <p>Groep aangemaakt op:
   <ion-datetime display-format="DD-MM-YYYY" :value="groupInfo.created_at"></ion-datetime>
@@ -10,13 +11,19 @@
   <h4>Deelnemers</h4>
   <ion-list v-for="user in groupInfo.users" :key="user.id">
     <ion-item>
-    <ion-label color="dark">
-      <h2>{{user.name}}</h2>
-      <p>{{user.email}}</p>
-    </ion-label>
-
+      <ion-label color="dark">
+        <h2>{{user.name}}</h2>
+        <p>{{user.email}}</p>
+      </ion-label>
     </ion-item>
   </ion-list>
+
+  <ion-button v-if="groupInfo.adminCheck.is_admin==1" class="ion-margin-top" @click="formHidden = false">+</ion-button>
+
+  <ion-item v-if="!formHidden">
+    <ion-input inputmode="email" type="email" required="true" v-model="form.invitee" id="inviteForm" placeholder="email"></ion-input>
+    <ion-button @click="sendInvite">Verstuur uitnodiging</ion-button>
+  </ion-item>
 </div>
   <ion-button @click="closeModal">Sluit</ion-button>
   <ion-button color="danger">Group verlaten</ion-button>
@@ -25,7 +32,7 @@
 <script>
 import axios from 'axios'
 import {
- IonButton, modalController, IonList, IonLabel, IonDatetime, IonItem
+ IonButton, modalController, IonList, IonLabel, IonDatetime, IonItem, IonInput
 } from "@ionic/vue";
 
 import { defineComponent } from 'vue'
@@ -33,7 +40,7 @@ import { defineComponent } from 'vue'
 export default defineComponent ({
   name: 'GroupDetailModal',
     components: {
-    IonButton, IonList, IonLabel, IonDatetime, IonItem
+    IonButton, IonList, IonLabel, IonDatetime, IonItem, IonInput
   },
   props: ['groupId'],
 
@@ -45,17 +52,33 @@ export default defineComponent ({
   
   data() {
     return {
-      groupInfo: "",
+      formHidden: true,
+      groupInfo: {
+        adminCheck:{
+          is_admin:null
+        }
+      },
+      form: {
+        invitee:"",
+        groupId:this.groupId,
+      }
     }
   },
   setup() {
-  const closeModal = () => {
+    const closeModal = () => {
     modalController.dismiss();
-  }
-  return { closeModal }
+    }
+    return { closeModal }
   },
   methods: {
-
+    sendInvite(){
+      axios.post('/inviteuser', this.form)
+      .then(this.closeModal)
+      .catch(error => {
+        this.errorMessage = error.message;
+        console.error('there was en error!', error)
+      })
+    }
   }
 });
 </script>
@@ -63,5 +86,12 @@ export default defineComponent ({
 <style scoped>
 h1, h4, p, i{
   color: black;
+}
+
+#inviteForm{
+  padding-top: 5px;
+  padding-bottom: 5px;
+  border: 1px solid black;
+  border-radius: 10px;
 }
 </style>

@@ -93,11 +93,6 @@ export default {
       })
       await actionSheet.present()
     },
-    logout () {
-      this.$store.dispatch('logout')
-      window.localStorage.clear()
-      .then(this.$router.push({ path: '/'}))
-    }
   },
 };
 

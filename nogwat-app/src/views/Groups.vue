@@ -1,15 +1,28 @@
 <template>
   <master-layout pageTitle="Groepen">
     <br>
-    <ion-text class="ion-margin-top">Hi {{userInfo.name}}!</ion-text><br>
+    <ion-text class="ion-margin-top">Hi {{$store.state.user.user.name}}!</ion-text><br>
     <ion-text class="ion-margin-top">Dit is een overzicht van je groepen. Tab om details te bekijken of aanpassingen te maken.</ion-text>
-    <ion-list v-for="group in userInfo.groups" :key="group.id">
+
+    <!--Grouplists-->
+    <ion-text><h4>Groepen:</h4></ion-text>
+    <ion-list v-for="group in getData.groups" :key="group.id">
       <ion-card color="primary" @click="openGroupDetailModal(group.id)">
         <ion-card-header><ion-card-title>{{group.name}}</ion-card-title></ion-card-header>
         <ion-card-content>{{group.admin_instructions}}</ion-card-content>
       </ion-card>
     </ion-list>
 
+    <!--Invites-->
+    <ion-text v-if="getData.invites.length"><h4>Uitnodigingen:</h4></ion-text>
+    <ion-list v-for="invite in getData.invites" :key="invite.id">
+      <ion-card color="secondary" @click="invitationActionSheet(invite.id)">
+        <ion-card-header><ion-card-title>{{invite.group.name}}</ion-card-title></ion-card-header>
+        <ion-card-content>verzonden door: {{invite.invitor.name}}</ion-card-content>
+      </ion-card>
+
+    </ion-list>
+    
     <ion-button expand="block" @click="openCreateGroupModal">Maak een nieuwe groep aan</ion-button>
   </master-layout>
 </template>
@@ -17,7 +30,7 @@
 
 
 <script>
-import { IonButton, modalController, IonText, IonList, IonCard, IonCardHeader, IonCardContent, IonCardTitle } from '@ionic/vue'
+import { IonButton, modalController, IonText, IonList, IonCard, IonCardHeader, IonCardContent, IonCardTitle, actionSheetController } from '@ionic/vue'
 import MasterLayout from '@/components/MasterLayout.vue'
 import axios from 'axios'
 import CreateGroupModal from '@/components/groups/CreatGroupModal.vue'
@@ -28,13 +41,16 @@ export default {
   components: {IonButton, IonText, IonList, IonCard, IonCardHeader, MasterLayout, IonCardContent, IonCardTitle},
   data() {
     return {
-      userInfo: {},
+      getData: {
+        groups:[],
+        invites:[],
+      },
       defaultGroupId: this.$store.state.groupId
     }
   },
-  created() {
-    axios.get('/me')
-    .then(response => (this.userInfo = response.data))
+  async created() {
+    axios.get('/mygroups')
+    .then(response => (this.getData = response.data))
     .catch(error => console.log(error))
   },
   methods: {
@@ -55,6 +71,40 @@ export default {
       return modal.present();
     },
 
+    async invitationActionSheet(id){
+      const inviteActionSheet = await actionSheetController
+
+      .create({
+        header:'Accepteren?',
+        buttons: [
+          {
+            text: 'Ja',
+            handler: () => {
+              axios.post('/acceptinvite', {inviteId:id})
+              .catch(error=> {
+                this.errorMessage = error.message;
+                console.error('there was an error!', error)
+              })
+            }
+          },
+          {
+            text: 'Nee',
+            handler: () => {
+              axios.post('/rejectinvite', {inviteId:id})
+              .catch(error=> {
+                this.errorMessage = error.message;
+                console.error('there was an error!', error)
+              })
+            }
+          },
+          {
+            text: 'Nog niet',
+            role: 'cancel'
+          }
+        ]
+      })
+      await inviteActionSheet.present()
+    }
 
 
   }

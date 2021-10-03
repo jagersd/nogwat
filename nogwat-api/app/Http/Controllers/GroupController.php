@@ -7,6 +7,7 @@ use App\Models\Group;
 use App\Models\GroupConfig;
 use App\Models\UserGroup;
 use App\Models\User;
+use App\Models\GroupInvite;
 
 class GroupController extends Controller
 {
@@ -17,15 +18,20 @@ class GroupController extends Controller
      */
     public function myGroups()
     {
-        $response = auth()->user()->groups;
+        $response['groups'] = auth()->user()->groups;
 
-        foreach ($response as $r){
+        foreach ($response['groups'] as $r){
             $r->adminCheck = UserGroup::where('group_id',$r->id)
             ->where('user_id',auth()->user()->id)
-            ->where('deleted',0)
             ->select('is_admin')
             ->first();
         }
+
+        $response['invites'] = GroupInvite::where('invited_user_id', auth()->user()->id)
+        ->where('status','pending')
+        ->with('group')
+        ->with('invitor')
+        ->get();
 
         return response($response, 200);
     }
@@ -38,7 +44,7 @@ class GroupController extends Controller
     public function groupDetails($id)
     {
         $applicableGroups = UserGroup::where('user_id', auth()->user()->id)
-        ->pluck('id')
+        ->pluck('group_id')
         ->toArray();
 
         if(!in_array($id,$applicableGroups)){
@@ -50,6 +56,7 @@ class GroupController extends Controller
         ->first();
 
         $response->adminCheck = UserGroup::where('user_id', auth()->user()->id)
+        ->where('group_id', $id)
         ->select('is_admin')
         ->first();
 

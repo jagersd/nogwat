@@ -36,7 +36,7 @@ class InviteController extends Controller
             $invite = GroupInvite::create([
                 'invited_user_id' => $inviteeId,
                 'invitor_user_id' => $request->user()->id,
-                'group_id'=>$request->group_id,
+                'group_id'=>$request->groupId,
             ]);
 
             $success = true;
@@ -89,7 +89,7 @@ class InviteController extends Controller
     */
     public function acceptInvite(Request $request)
     {   
-        $invitation = GroupInvite::where('id', $request->inviteId)->find(1);
+        $invitation = GroupInvite::where('id', $request->inviteId)->first();
         $invitation->status = 'accepted';
         $invitation->save();
 
@@ -109,7 +109,7 @@ class InviteController extends Controller
     */
     public function rejectInvite(Request $request)
     {   
-        $invitation = GroupInvite::where('id', $request->inviteId)->find(1);
+        $invitation = GroupInvite::where('id', $request->inviteId)->first();
         $invitation->status = 'rejected';
         $invitation->save();
 

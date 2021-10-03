@@ -1,5 +1,8 @@
 <template>
   <master-layout pageTitle="Boodschappenlijst">
+    <div v-if="!listInfo.length" class="container">
+        <ion-text>Cooking with fire! Je boodschappenlijst is leeg :)</ion-text>
+    </div>
     <ion-list id="main-content" v-for="listGroup in listInfo" :key="listGroup.id">
         <ion-label>
             <h1>{{listGroup.name}}</h1>
@@ -20,14 +23,14 @@
 </template>
 
 <script>
-import {IonList, IonLabel, IonItem, IonCheckbox, IonButton, modalController} from '@ionic/vue'
+import {IonList, IonLabel, IonItem, IonCheckbox, IonButton, modalController, IonText} from '@ionic/vue'
 import axios from 'axios'
 import AddItemModal from '../components/list/AddItemModal.vue'
 import ItemDetailsModal from '../components/list/ItemDetailsModal.vue'
 
 export default {
     name: 'Lists',
-    components: {IonList, IonLabel,IonItem, IonCheckbox, IonButton},
+    components: {IonList, IonLabel,IonItem, IonCheckbox, IonButton, IonText},
     data() {
         return {
             listInfo: {},
