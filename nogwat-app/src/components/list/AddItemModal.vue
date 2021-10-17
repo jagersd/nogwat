@@ -35,7 +35,7 @@ import { defineComponent } from 'vue'
 
 export default defineComponent ({
   name: 'AddItemModal',
-    components: {
+  components: {
     IonCard,IonCardHeader,IonCardTitle,IonCardContent,IonItem,IonLabel,IonInput,IonButton, IonSelect, IonSelectOption
   },
   props: ['groupId'],

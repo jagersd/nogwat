@@ -39,6 +39,15 @@ const routes = [
       if (to.name !== 'Home' && !loggedIn) next({ name: 'Home' })
       else next()
     }
+  },
+  {
+    path: '/myrecipes',
+    component: () => import(/* webpackChunkName: "Lists" */ '../views/recipeviews/Myrecipes.vue'),
+    beforeEnter: (to, from, next) => {
+      const loggedIn = localStorage.getItem('user')
+      if (to.name !== 'Home' && !loggedIn) next({ name: 'Home' })
+      else next()
+    }
   }
 ]
 
