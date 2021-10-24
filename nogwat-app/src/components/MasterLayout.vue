@@ -2,6 +2,9 @@
   <ion-page id="main">
     <ion-header>
       <ion-toolbar>
+        <ion-button id="home-icon" href="/" shape="round" slot="start">
+        <ion-icon :icon="home" slot="start"></ion-icon>
+        </ion-button>
         <ion-title>{{ pageTitle }}</ion-title>
       </ion-toolbar>
     </ion-header>
@@ -56,17 +59,18 @@ import {
   IonPage,IonHeader,IonContent,IonToolbar,IonTitle, IonIcon, IonLabel, IonTabBar, IonTabButton, IonFab, 
   IonFabButton, 
   IonFabList,
-  actionSheetController, 
+  actionSheetController,
+  IonButton
 } from "@ionic/vue";
 
-import { heart, list, flame, person, close, settings, star, help } from "ionicons/icons";
+import { heart, list, flame, person, close, settings, star, help, home } from "ionicons/icons";
 export default {
   components: {
-    IonPage,IonHeader,IonContent,IonToolbar,IonTitle, IonIcon, IonLabel, IonTabBar, IonTabButton, IonFab, IonFabButton, IonFabList, 
+    IonPage,IonHeader,IonContent,IonToolbar,IonTitle, IonIcon, IonLabel, IonTabBar, IonTabButton, IonFab, IonFabButton, IonFabList, IonButton
   },
   setup() {
     return {
-      heart,list, flame, person, close, settings, star, help
+      heart,list, flame, person, close, settings, star, help, home
     }
   },
   props: ["pageTitle"],
@@ -101,5 +105,6 @@ export default {
 ion-toolbar{
     --background: var(--ion-color-primary);
     --color: var(--ion-color-primary-contrast);
+
 }
 </style>

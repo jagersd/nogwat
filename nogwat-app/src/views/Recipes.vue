@@ -2,7 +2,7 @@
     <master-layout pageTitle="Recepten">
         <ion-text>Wat eten we vanavond?</ion-text>
         <ion-list>
-        <ion-button expand="block">Mijn Recepten</ion-button>
+        <ion-button expand="block" router-link="/myrecipes">Mijn Recepten</ion-button>
         <ion-button expand="block">Mijn Favoriete Recepten</ion-button>
         <ion-button expand="block">Alle Recepten</ion-button>
         <ion-button class="ion-margin-top" @click="openAddRecipeModal()">+ voeg recept toe</ion-button>

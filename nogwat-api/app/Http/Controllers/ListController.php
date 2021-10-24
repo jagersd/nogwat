@@ -18,24 +18,26 @@ class ListController extends Controller
     */
     public function create(Request $request)
     {   
-        if($this->isInGroup($request->user()->id, $request->groupId) == false){
+        if($this->isInGroup($request->user()->id, $request->listItems[0]['groupId']) == false){
             return response('You are not allowed to add items for this group', 401);
         }
 
         try {
-            $list = ActiveList::create([
-                'group_id' => $request->groupId,
-                'user_id_added' => $request->user()->id,
-                'store_id' => $request->storeId,
-                'item_name' => $request->itemName,
-                'measurement_type_id' => Measurement::where('abbreviation',$request->measurementType)->first('id')->id,
-                'measurement_amount' => $request->amount,
-                'date_added' => Carbon::now(),
-                'due_date' => $request->dueDate,
-            ]);
+            foreach($request->listItems as $listItem){
+                $list = ActiveList::create([
+                    'group_id' => $listItem['groupId'],
+                    'user_id_added' => $request->user()->id,
+                    'store_id' => $listItem['storeId'] ?? null,
+                    'item_name' => $listItem['itemName'],
+                    'measurement_type_id' => Measurement::where('abbreviation',$listItem['measurementType'])->first('id')->id,
+                    'measurement_amount' => $listItem['amount'],
+                    'date_added' => Carbon::now(),
+                    'due_date' => $listItem['dueDate'] ?? null,
+                ]);
 
-            $success = true;
-            $message = 'item successfully added';
+                $success = true;
+                $message = 'item successfully added';
+            }
 
         } catch (\Illuminate\Database\QueryException $ex) {
             $success = false;

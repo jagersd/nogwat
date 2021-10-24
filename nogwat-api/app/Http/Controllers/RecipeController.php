@@ -155,6 +155,7 @@ class RecipeController extends Controller
     public function myIndex()
     {
         $response = Recipe::where('user_id_created', auth()->user()->id)
+        ->with('recipeItems')
         ->where('deleted',0)
         ->get();
 

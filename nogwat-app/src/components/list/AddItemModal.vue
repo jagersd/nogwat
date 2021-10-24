@@ -6,14 +6,14 @@
     <ion-card-content>
       <ion-item>
         <ion-label position="floating">Product</ion-label>
-        <ion-input type="text" required="true" v-model="form.itemName" id="name"></ion-input>
+        <ion-input type="text" required="true" v-model="form.listItems[0].itemName" id="name"></ion-input>
       </ion-item>
       <ion-item>
         <ion-label position="floating">Hoeveelheid</ion-label>
-        <ion-input type="number" v-model="form.amount" id="amount"></ion-input>
+        <ion-input type="number" v-model="form.listItems[0].amount" id="amount"></ion-input>
       </ion-item>
         <ion-label position="floating">liter, gram, kilo</ion-label>
-      <ion-select v-model="form.measurementType">
+      <ion-select v-model="form.listItems[0].measurementType">
             <ion-select-option value="el">el (eetlepel)</ion-select-option>
             <ion-select-option value="tl">tl (theelepel)</ion-select-option>
             <ion-select-option value="gr">gr (gram)</ion-select-option>
@@ -42,10 +42,12 @@ export default defineComponent ({
   data() {
     return {
       form: {
-        groupId: this.groupId,
-        itemName: "",
-        measurementType:"",
-        amount: "",
+        listItems: [{
+          groupId: this.groupId,
+          itemName: "",
+          measurementType:"",
+          amount: "",
+        }]
       },
       errors: []
     };
