@@ -10,4 +10,9 @@ class RecipeItem extends Model
     use HasFactory;
 
     protected $guarded = [];
+
+    public function measurement()
+    {
+        return $this->belongsTo(Measurement::class,'measurement_type_id');
+    }
 }

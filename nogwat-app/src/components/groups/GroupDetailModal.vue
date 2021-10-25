@@ -33,9 +33,12 @@
           <p>{{invite.invitees.email}}</p>
         </ion-label>
       </ion-item>
-      
     </ion-list>
   </div>
+  <item-item>
+    <ion-checkbox slot=start @click="setDefaultGroup"></ion-checkbox>
+    <ion-label color="secondary">Instellen standaard groep</ion-label>
+  </item-item>
     <ion-button @click="closeModal">Sluit</ion-button>
     <ion-button color="danger">Group verlaten</ion-button>
 </template>
@@ -43,7 +46,7 @@
 <script>
 import axios from 'axios'
 import {
- IonButton, modalController, IonList, IonLabel, IonDatetime, IonItem, IonInput
+ IonButton, modalController, IonList, IonLabel, IonDatetime, IonItem, IonInput, IonCheckbox
 } from "@ionic/vue";
 
 import { defineComponent } from 'vue'
@@ -51,7 +54,7 @@ import { defineComponent } from 'vue'
 export default defineComponent ({
   name: 'GroupDetailModal',
     components: {
-    IonButton, IonList, IonLabel, IonDatetime, IonItem, IonInput
+    IonButton, IonList, IonLabel, IonDatetime, IonItem, IonInput, IonCheckbox
   },
   props: ['groupId'],
 
@@ -91,6 +94,9 @@ export default defineComponent ({
         this.errorMessage = error.message;
         console.error('there was en error!', error)
       })
+    },
+    setDefaultGroup(){
+      this.$store.commit('setDefaultGroup', this.groupId)
     }
   }
 });

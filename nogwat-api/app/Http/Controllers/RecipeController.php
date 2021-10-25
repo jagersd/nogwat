@@ -156,6 +156,7 @@ class RecipeController extends Controller
     {
         $response = Recipe::where('user_id_created', auth()->user()->id)
         ->with('recipeItems')
+        ->with('user:id,name')
         ->where('deleted',0)
         ->get();
 

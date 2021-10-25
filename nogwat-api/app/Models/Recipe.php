@@ -14,11 +14,11 @@ class Recipe extends Model
 
     public function recipeItems()
     {
-        return $this->hasMany(RecipeItem::class);
+        return $this->hasMany(RecipeItem::class)->with('measurement');
     }
 
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'user_id_created');
     }
 }

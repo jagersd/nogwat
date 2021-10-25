@@ -24,6 +24,7 @@
       </ion-list>
     </div>
     <ion-button expand="block" @click="openCreateGroupModal">Maak een nieuwe groep aan</ion-button>
+    {{$store.state.groupId}}
   </master-layout>
 </template>
 
