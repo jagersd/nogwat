@@ -6,7 +6,7 @@ axios.defaults.baseURL = 'http://127.0.0.1:8000/api'
 export default createStore({
   state: {
     user: null,
-    groupId: null,
+    group: null,
   },
 
   mutations: {
@@ -21,9 +21,9 @@ export default createStore({
       location.reload()
     },
 
-    setDefaultGroup(state, defaultGroup) {
-      state.groupId = defaultGroup
-      localStorage.setItem('groupId', defaultGroup)
+    setGroupData(state, groupData) {
+      state.group = groupData
+      localStorage.setItem('group', JSON.stringify(groupData))
     }
   },
 

@@ -27,7 +27,7 @@ import {
 import { defineComponent } from 'vue'
 
 export default defineComponent ({
-  name: 'CreatGroupModal',
+  name: 'CreateGroupModal',
     components: {
     IonCard,IonCardHeader,IonCardTitle,IonCardContent,IonItem,IonLabel,IonInput,IonButton
   },

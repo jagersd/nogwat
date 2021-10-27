@@ -34,7 +34,7 @@
 import { IonButton, modalController, IonText, IonList, IonCard, IonCardHeader, IonCardContent, IonCardTitle, actionSheetController } from '@ionic/vue'
 import MasterLayout from '@/components/MasterLayout.vue'
 import axios from 'axios'
-import CreateGroupModal from '@/components/groups/CreatGroupModal.vue'
+import CreateGroupModal from '@/components/groups/CreateGroupModal.vue'
 import GroupDetailModalVue from '@/components/groups/GroupDetailModal.vue'
 
 export default {
