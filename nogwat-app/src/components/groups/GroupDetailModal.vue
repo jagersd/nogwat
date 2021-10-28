@@ -5,8 +5,8 @@
     <i>{{groupInfo.admin_instructions}}</i>
     <!--Default groups-->
     <ion-item lines="none">
-      <ion-checkbox v-if="groupInfo.id != defaultGroupChecker.groupId" slot="start" @click="setDefaultGroup" ></ion-checkbox>
-      <ion-checkbox v-else disabled="true" checked="true" slot="start" @click="setDefaultGroup" ></ion-checkbox>
+      <ion-checkbox v-if="defaultGroupChecker == null || groupInfo.id != defaultGroupChecker.groupId" slot="start" @click="setDefaultGroup" ></ion-checkbox>
+      <ion-checkbox v-else disabled="true" checked="true" slot="start"></ion-checkbox>
       <ion-label color="secondary">Instellen standaard groep</ion-label>
     </ion-item>
 
