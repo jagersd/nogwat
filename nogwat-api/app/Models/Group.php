@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Carbon\Carbon;
 
 class Group extends Model
 {
@@ -31,6 +32,8 @@ class Group extends Model
     public function activeLists()
     {
         return $this->hasMany(ActiveList::class, 'group_id')
+        ->where('date_purchased','>=',Carbon::now()->subDays(2)->toDateTimeString())
+        ->OrWhere('date_purchased', null)
         ->with('measurement')
         ->with('addedUser');
     }
