@@ -15,10 +15,11 @@ class CreateGroupInvitesTable extends Migration
     {
         Schema::create('group_invites', function (Blueprint $table) {
             $table->id();
-            $table->integer('invited_user_id');
+            $table->integer('invited_user_id')->nullable();
             $table->integer('invitor_user_id');
             $table->integer('group_id');
             $table->enum('status',['pending','accepted','rejected'])->default('pending');
+            $table->string('unregistered_email')->nullable();
             $table->timestamps();
         });
     }

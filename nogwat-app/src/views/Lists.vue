@@ -59,24 +59,28 @@ export default {
 		.then((response) => (this.listInfo = response.data))
 		.then(() => this.listShown = localStorage.getItem('group') !== null ? JSON.parse(localStorage.getItem('group')).groupId : this.listInfo[0].id)
 		.then(() => this.listInfo.sort(
-		function(x,y){ 
-			return x.id == JSON.parse(localStorage.getItem('group')).groupId ? -1 : y.id == JSON.parse(localStorage.getItem('group')).groupId ? 1 : 0; 
-			}
-		))
+			function(x,y){ 
+				return x.id == JSON.parse(localStorage.getItem('group')).groupId ? -1 : y.id == JSON.parse(localStorage.getItem('group')).groupId ? 1 : 0; 
+				}
+			))
 		.catch((error) => console.log(error))
   },
   methods: {
     markPurchased(itemId) {
-      axios
-        .put("/purchaseditem", {
-          listItemId: itemId,
-        })
-        .then(() => {
-          axios
-            .get("/mylist")
-            .then((response) => (this.listInfo = response.data))
-            .catch((error) => console.log(error));
-        });
+      axios.put("/purchaseditem", {
+        listItemId: itemId,
+      })
+			.then(() => {
+				axios.get("/mylist")
+				.then((response) => (this.listInfo = response.data))
+				.then(() => this.listShown = localStorage.getItem('group') !== null ? JSON.parse(localStorage.getItem('group')).groupId : this.listInfo[0].id)
+				.then(() => this.listInfo.sort(
+					function(x,y){ 
+						return x.id == JSON.parse(localStorage.getItem('group')).groupId ? -1 : y.id == JSON.parse(localStorage.getItem('group')).groupId ? 1 : 0; 
+						}
+					))
+				.catch((error) => console.log(error));
+			});
     },
     async openAddItemModal(groupId) {
       const modal = await modalController.create({

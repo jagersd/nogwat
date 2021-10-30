@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
+use App\Models\GroupInvite;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Http\Request;
 
 class Auth extends Controller
@@ -19,6 +21,17 @@ class Auth extends Controller
             $user->email = $request->email;
             $user->password = Hash::make($request->password);
             $user->save();
+
+            $openInvites = GroupInvite::whereNotNull('unregistered_email')->get();
+
+            foreach($openInvites as $openInvite){
+                if(Crypt::decryptString($openInvite->unregistered_email) == $user->email){
+                    GroupInvite::where('id',$openInvite->id)
+                    ->update([
+                        'invited_user_id' => User::where('email',$user->email)->first()->id
+                    ]);
+                }
+            }
 
             $success = true;
             $message = 'User register successfully';

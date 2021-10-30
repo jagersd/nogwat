@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\UserGroup;
 use App\Models\GroupInvite;
 use App\Models\User;
+use Illuminate\Support\Facades\Crypt;
 
 class InviteController extends Controller
 {   
@@ -21,32 +22,53 @@ class InviteController extends Controller
             return 'you are not the group Admin';
         }
 
-        $inviteeId= User::where('email',$request->invitee)->first('id')->id;
+        if(User::where('email',$request->invitee)->exists()){
+            $inviteeId = User::where('email',$request->invitee)->first('id')->id;
 
-        $inviteeGroups = UserGroup::where('user_id',$inviteeId)
-        ->select('group_id')
-        ->get()
-        ->toArray();
+            $inviteeGroups = UserGroup::where('user_id',$inviteeId)
+            ->select('group_id')
+            ->get()
+            ->toArray();
 
-        if(in_array($request->group_id,$inviteeGroups)){
-            return 'The invitee is already in the group';
+            if(in_array($request->group_id,$inviteeGroups)){
+                return 'The invitee is already in the group';
+            }
+
+            try{
+                $invite = GroupInvite::create([
+                    'invited_user_id' => $inviteeId,
+                    'invitor_user_id' => $request->user()->id,
+                    'group_id'=>$request->groupId,
+                ]);
+    
+                $success = true;
+                $message = 'Invite Sent';
+    
+    
+            } catch (\Illuminate\Database\QueryException $ex) {
+                $success = false;
+                $message = $ex->getMessage();
+            }
+        } else {
+            try{
+                $invite = GroupInvite::create([
+                    'unregistered_email' => Crypt::encryptString($request->invitee),
+                    'invitor_user_id' => $request->user()->id,
+                    'group_id'=>$request->groupId,
+                ]);
+    
+                $success = true;
+                $message = 'Invite Sent';
+    
+    
+            } catch (\Illuminate\Database\QueryException $ex) {
+                $success = false;
+                $message = $ex->getMessage();
+            }
         }
-
-        try{
-            $invite = GroupInvite::create([
-                'invited_user_id' => $inviteeId,
-                'invitor_user_id' => $request->user()->id,
-                'group_id'=>$request->groupId,
-            ]);
-
-            $success = true;
-            $message = 'Invite Sent';
+        
 
 
-        } catch (\Illuminate\Database\QueryException $ex) {
-            $success = false;
-            $message = $ex->getMessage();
-        }
 
         $response = [
             'success' => $success,
