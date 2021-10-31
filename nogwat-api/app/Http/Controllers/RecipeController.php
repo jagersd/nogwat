@@ -15,9 +15,9 @@ class RecipeController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function searchIndex(Request $request)
-    {
-        $mealTypes = $request->mealTypes ?? null;
-        $searchString = $request->searchString ?? null;
+    {   
+        $mealTypes = $request->mealTypes ?: null;
+        $searchString = $request->searchString ?: null;
 
         $response = Recipe::with('recipeItems')
         ->with('user:id,name')

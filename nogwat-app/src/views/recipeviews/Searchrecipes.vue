@@ -1,5 +1,6 @@
 <template>
   <master-layout pageTitle="Gevonden Recepten">
+		{{this.$store.state.searchParameters.mealTypes}}
     <ion-list v-for="foundRecipe in foundRecipes" :key="foundRecipe.id">
       <ion-item @click="openDetailRecipeModal(foundRecipe)">
         <ion-label>{{ foundRecipe.name }}
@@ -21,21 +22,28 @@ export default {
   data() {
     return {
       foundRecipes: {},
-			mealTypes: JSON.parse(localStorage.getItem("searchParameters")).mealTypes,
-      seachString: JSON.parse(localStorage.getItem("searchParameters")).searchString,
+			mealTypes: "",
+      seachString: "",
     };
   },
 
   mounted() {
-    this.init()
+    this.initiateSearch()
   },
 
+	updated() {
+		this.$nextTick(function () {
+			this.initiateSearch()
+		})
+	},
+
   methods: {
-		init(){
+		async initiateSearch(){
+			console.log(this.mealTypes)
 			axios.get("/searchrecipes", {
         params: {
-          mealTypes: this.mealTypes,
-          seachString: this.seachString,
+          mealTypes: JSON.parse(localStorage.getItem("searchParameters")).mealTypes,
+          searchString: JSON.parse(localStorage.getItem("searchParameters")).searchString,
         },
       })
 			.then((response) => (this.foundRecipes = response.data))
