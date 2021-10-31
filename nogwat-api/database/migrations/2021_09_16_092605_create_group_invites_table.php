@@ -21,6 +21,7 @@ class CreateGroupInvitesTable extends Migration
             $table->enum('status',['pending','accepted','rejected'])->default('pending');
             $table->string('unregistered_email')->nullable();
             $table->timestamps();
+            $table->unique(['invited_user_id','group_id']);
         });
     }
 

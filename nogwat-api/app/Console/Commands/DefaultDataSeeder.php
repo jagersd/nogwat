@@ -46,7 +46,9 @@ class DefaultDataSeeder extends Command
             'kg'=>'kilogram',
             'l'=>'liter',
             'gr'=>'gram',
-            'st'=>'stuks', 
+            'st'=>'stuks',
+            'fl'=>'fles',
+            'kr'=>'krat',
         ];
 
         foreach($measurements as $key=>$arrayItem){

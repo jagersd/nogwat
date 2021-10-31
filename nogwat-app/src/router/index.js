@@ -42,6 +42,13 @@ const routes = [
     meta: {
       requiresAuth: true
     }
+  },
+  {
+  path: '/searchrecipes',
+  component: () => import(/* webpackChunkName: "Lists" */ '../views/recipeviews/Searchrecipes.vue'),
+    meta: {
+      requiresAuth: true
+    }
   }
 ]
 

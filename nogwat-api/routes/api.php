@@ -41,6 +41,7 @@ Route::middleware('auth:sanctum')->group( function() {
     Route::put('/updaterecipe',[RecipeController::class, 'update']);
     Route::post('/deleterecipe',[RecipeController::class, 'delete']);
     Route::get('/myrecipes',[RecipeController::class,'myIndex']);
+    Route::get('/searchrecipes',[RecipeController::class,'searchIndex']);
 
     //list routes
     Route::post('/additem',[ListController::class,'create']);

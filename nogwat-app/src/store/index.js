@@ -7,6 +7,7 @@ export default createStore({
   state: {
     user: null,
     group: null,
+    searchParameters: null,
   },
 
   mutations: {
@@ -24,7 +25,16 @@ export default createStore({
     setGroupData(state, groupData) {
       state.group = groupData
       localStorage.setItem('group', JSON.stringify(groupData))
-    }
+    },
+
+    setSearchParameters(state, searchParameters) {
+      state.searchParameters = searchParameters
+      localStorage.setItem('searchParameters', JSON.stringify(searchParameters))
+    },
+
+    clearSeachParameters () {
+      localStorage.setItem('searchParameters', null)
+    },
   },
 
   actions: {

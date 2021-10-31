@@ -14,9 +14,24 @@ class RecipeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function searchIndex(Request $request)
     {
-        //
+        $mealTypes = $request->mealTypes ?? null;
+        $searchString = $request->searchString ?? null;
+
+        $response = Recipe::with('recipeItems')
+        ->with('user:id,name')
+        ->where('deleted',0)
+        ->when($mealTypes !== null, function($query) use ($mealTypes){
+            $query->whereIn('meal_type',explode(",",$mealTypes));
+        })
+        ->when($searchString !== null , function($query) use ($searchString){
+            $query->where('name','like', '%' . $searchString . '%')
+            ->where('description','like', '%'. $searchString . '%');
+        })
+        ->get();
+
+        return response($response, 200);
     }
 
     /**
