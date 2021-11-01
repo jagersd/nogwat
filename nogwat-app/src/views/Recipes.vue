@@ -61,9 +61,9 @@ export default {
     IonCheckbox,
     IonInput,
     IonLabel,
-		IonCard,
-		IonCardContent,
-		IonItem,
+	IonCard,
+	IonCardContent,
+	IonItem,
   },
 	async created() {
 		this.$store.commit('clearSeachParameters')

@@ -47,6 +47,7 @@ Route::middleware('auth:sanctum')->group( function() {
     Route::post('/additem',[ListController::class,'create']);
     Route::put('/updateitem',[ListController::class,'update']);
     Route::put('/purchaseditem',[ListController::class,'purchased']);
+    Route::put('/reversepurchase',[ListController::class,'reversePurchase']);
     Route::get('/mylist',[ListController::class,'myList']);
 
     //store routes

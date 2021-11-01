@@ -111,7 +111,8 @@ export default defineComponent({
 					groupId: JSON.parse(localStorage.getItem('group')).groupId,
 					itemName: value.item_name,
 					measurementType: value.measurement.abbreviation,
-					amount: (value.measurement_amount/this.originalPersonAmount) * this.personAmount
+					amount: (value.measurement_amount/this.originalPersonAmount) * this.personAmount,
+          recipeId: this.recipeDetails.id,
 			})
 		})
 			axios.post('/additem', this.form)

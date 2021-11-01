@@ -12,15 +12,22 @@
           <ion-list v-for="listItem in listGroup.active_lists" :key="listItem.id">
             <ion-item v-if="listGroup.id == listShown" >
               <ion-label>
-                <h2 @click="openItemDetailsModal(listItem)">{{ listItem.item_name }}</h2>
+                <h2 v-if="listItem.date_purchased != null" @click="reversePurchasedActionSheet(listItem.id)">
+                  <s>{{ listItem.item_name }}</s>
+                  <ion-icon v-if="listItem.recipe_id" color="primary" size="small" :icon="restaurant"></ion-icon>
+                </h2>
+                <h2 v-if="listItem.date_purchased == null" @click="openItemDetailsModal(listItem)">
+                  {{ listItem.item_name }}
+                  <ion-icon v-if="listItem.recipe_id" color="primary" size="small" :icon="restaurant"></ion-icon>
+                </h2>
                 <p v-if="listItem.measurement_amount">
                   {{ listItem.measurement_amount }}
                   {{ listItem.measurement.abbreviation }} |
                   {{ listItem.added_user.name }}
                 </p>
               </ion-label>
-              <ion-checkbox v-if="listItem.date_purchased != null" checked disabled color="primary" slot="end"></ion-checkbox>
               <ion-checkbox v-if="listItem.date_purchased == null" color="primary" slot="end" @click="markPurchased(listItem.id)"></ion-checkbox>
+              <ion-icon v-if="listItem.date_purchased != null" slot="end" :icon="checkmark"></ion-icon>
             </ion-item>
           </ion-list>
         </ion-label>
@@ -39,48 +46,76 @@ import {
   IonButton,
   modalController,
   IonText,
-	IonBadge
+	IonBadge,
+  actionSheetController,
+  IonIcon,
 } from "@ionic/vue";
+
+import { checkmark, restaurant } from "ionicons/icons";
 import axios from "axios";
 import AddItemModal from "../components/list/AddItemModal.vue";
 import ItemDetailsModal from "../components/list/ItemDetailsModal.vue";
 
 export default {
   name: "Lists",
-  components: { IonList, IonLabel, IonItem, IonCheckbox, IonButton, IonText, IonBadge},
+  components: { IonList, IonLabel, IonItem, IonCheckbox, IonButton, IonText, IonBadge, IonIcon},
   data() {
     return {
       listInfo: {},
 			listShown: null,
     };
   },
-  async created() {
-    axios.get("/mylist")
-		.then((response) => (this.listInfo = response.data))
-		.then(() => this.listShown = localStorage.getItem('group') !== null ? JSON.parse(localStorage.getItem('group')).groupId : this.listInfo[0].id)
-		.then(() => this.listInfo.sort(
-			function(x,y){ 
-				return x.id == JSON.parse(localStorage.getItem('group')).groupId ? -1 : y.id == JSON.parse(localStorage.getItem('group')).groupId ? 1 : 0; 
-				}
-			))
-		.catch((error) => console.log(error))
+  setup(){
+    return {checkmark, restaurant}
+  },
+  mounted() {
+    this.initiateList();
   },
   methods: {
+    async initiateList(){
+      axios.get("/mylist")
+      .then((response) => (this.listInfo = response.data))
+      .then(() => this.listShown = localStorage.getItem('group') !== null ? JSON.parse(localStorage.getItem('group')).groupId : this.listInfo[0].id)
+      .then(() => this.listInfo.sort(
+        function(x,y){ 
+          return x.id == JSON.parse(localStorage.getItem('group')).groupId ? -1 : y.id == JSON.parse(localStorage.getItem('group')).groupId ? 1 : 0; 
+          }
+        ))
+      .catch((error) => console.log(error))
+    },
     markPurchased(itemId) {
       axios.put("/purchaseditem", {
         listItemId: itemId,
       })
 			.then(() => {
-				axios.get("/mylist")
-				.then((response) => (this.listInfo = response.data))
-				.then(() => this.listShown = localStorage.getItem('group') !== null ? JSON.parse(localStorage.getItem('group')).groupId : this.listInfo[0].id)
-				.then(() => this.listInfo.sort(
-					function(x,y){ 
-						return x.id == JSON.parse(localStorage.getItem('group')).groupId ? -1 : y.id == JSON.parse(localStorage.getItem('group')).groupId ? 1 : 0; 
-						}
-					))
-				.catch((error) => console.log(error));
+				this.initiateList();
 			});
+    },
+    async reversePurchasedActionSheet(itemId){
+      const actionSheet = await actionSheetController.create({
+        header: 'Toch niet aangekocht?',
+        buttons:[
+          {
+            text:'Klopt!',
+            handler: () => {
+              this.reversePurchased(itemId)
+            }
+          },
+          {
+            text:'Annuleren',
+            role:'cancel'
+          }
+        ]
+      })
+      await actionSheet.present()
+    },
+    reversePurchased(itemId){
+      axios.put("/reversepurchase", {
+        listItemId: itemId,
+      })
+      .then(() =>{
+        this.initiateList();
+      })
     },
     async openAddItemModal(groupId) {
       const modal = await modalController.create({
@@ -90,10 +125,7 @@ export default {
         },
       });
       modal.onDidDismiss().then(() => {
-        axios
-          .get("/mylist")
-          .then((response) => (this.listInfo = response.data))
-          .catch((error) => console.log(error));
+        this.initiateList();
       });
 
       return modal.present();
@@ -106,10 +138,7 @@ export default {
         },
       });
       modal.onDidDismiss().then(() => {
-        axios
-          .get("/mylist")
-          .then((response) => (this.listInfo = response.data))
-          .catch((error) => console.log(error));
+        this.initiateList();
       });
       return modal.present();
     },

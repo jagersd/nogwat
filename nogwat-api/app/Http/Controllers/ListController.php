@@ -33,6 +33,7 @@ class ListController extends Controller
                     'measurement_amount' => $listItem['amount'],
                     'date_added' => Carbon::now(),
                     'due_date' => $listItem['dueDate'] ?? null,
+                    'recipe_id' => $listItem['recipeId'] ?? null,
                 ]);
 
                 $success = true;
@@ -111,6 +112,25 @@ class ListController extends Controller
 
         return response('record updated',200);
     }
+
+    /**
+    * User records that the item is purchased
+    *
+    * @param  \Illuminate\Http\Request  $request
+    * @return \Illuminate\Http\Response
+    */
+    public function reversePurchase(Request $request)
+    {
+        $listItem = ActiveList::where('id',$request->listItemId)->first();
+        
+        $listItem->update([
+            'date_purchased' => null,
+            'user_id_purchased' => null
+        ]);
+
+        return response('record updated',200);
+    }
+
 
 
     /*
