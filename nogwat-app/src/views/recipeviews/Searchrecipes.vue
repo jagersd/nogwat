@@ -1,6 +1,5 @@
 <template>
   <master-layout pageTitle="Gevonden Recepten">
-		{{this.$store.state.searchParameters.mealTypes}}
     <ion-list v-for="foundRecipe in foundRecipes" :key="foundRecipe.id">
       <ion-item @click="openDetailRecipeModal(foundRecipe)">
         <ion-label>{{ foundRecipe.name }}
@@ -27,15 +26,9 @@ export default {
     };
   },
 
-  mounted() {
+  ionViewWillEnter() {
     this.initiateSearch()
   },
-
-	updated() {
-		this.$nextTick(function () {
-			this.initiateSearch()
-		})
-	},
 
   methods: {
 		async initiateSearch(){

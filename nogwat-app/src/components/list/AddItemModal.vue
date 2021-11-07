@@ -14,10 +14,11 @@
       </ion-item>
         <ion-label position="floating">liter, gram, kilo</ion-label>
       <ion-select v-model="form.listItems[0].measurementType">
-            <ion-select-option value="el">el (eetlepel)</ion-select-option>
-            <ion-select-option value="tl">tl (theelepel)</ion-select-option>
+            <ion-select-option value="st">st (stuks)</ion-select-option>
             <ion-select-option value="gr">gr (gram)</ion-select-option>
             <ion-select-option value="kg">kg (kilo)</ion-select-option>
+            <ion-select-option value="fl">fl (flessen)</ion-select-option>
+            <ion-select-option value="kr">kr (kratten)</ion-select-option>
       </ion-select>
       <ion-button expand="fill" @click="addItem()">Opslaan</ion-button>
       <ion-button @click="closeModal">Sluit</ion-button>

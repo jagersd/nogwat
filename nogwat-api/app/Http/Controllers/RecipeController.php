@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Recipe;
 use App\Models\RecipeItem;
 use App\Models\Measurement;
+use App\Models\Favorite;
 
 class RecipeController extends Controller
 {
@@ -30,6 +31,14 @@ class RecipeController extends Controller
             ->where('description','like', '%'. $searchString . '%');
         })
         ->get();
+
+        foreach($response as $r){
+            $favoCheck = Favorite::where('recipe_id', $r->id)
+            ->where('user_id', auth()->user()->id)
+            ->first();
+
+            $r->favorited = ($favoCheck !==null) ? "true" : "false";
+        }
 
         return response($response, 200);
     }
@@ -175,18 +184,25 @@ class RecipeController extends Controller
         ->where('deleted',0)
         ->get();
 
+        foreach($response as $r){
+            $favoCheck = Favorite::where('recipe_id', $r->id)
+            ->where('user_id', auth()->user()->id)
+            ->first();
+
+            $r->favorited = ($favoCheck !==null) ? "true" : "false";
+        }
+
         return response($response, 200);
     }
 
-    /**
-     * Show the form for editing the specified resource.
+     /**
+     * Display the Users favorited recipes
      *
-     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
-    {
-        //
+    public function myFavorites()
+    {   
+        //TODO
     }
 
     /**

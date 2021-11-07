@@ -8,6 +8,7 @@ use App\Http\Controllers\RecipeController;
 use App\Http\Controllers\InviteController;
 use App\Http\Controllers\ListController;
 use App\Http\Controllers\StoreController;
+use App\Http\Controllers\FavoriteController;
 
 /*
 |--------------------------------------------------------------------------
@@ -42,6 +43,7 @@ Route::middleware('auth:sanctum')->group( function() {
     Route::post('/deleterecipe',[RecipeController::class, 'delete']);
     Route::get('/myrecipes',[RecipeController::class,'myIndex']);
     Route::get('/searchrecipes',[RecipeController::class,'searchIndex']);
+    Route::get('/myfavorites',[RecipeController::class,'myFavorites']);
 
     //list routes
     Route::post('/additem',[ListController::class,'create']);
@@ -49,6 +51,10 @@ Route::middleware('auth:sanctum')->group( function() {
     Route::put('/purchaseditem',[ListController::class,'purchased']);
     Route::put('/reversepurchase',[ListController::class,'reversePurchase']);
     Route::get('/mylist',[ListController::class,'myList']);
+
+    //favorites
+    Route::post('/addfavorite',[FavoriteController::class,'create']);
+    Route::post('/removefavorite',[FavoriteController::class,'delete']);
 
     //store routes
     Route::post('addstore',[StoreController::class,'create']);

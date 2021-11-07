@@ -52,10 +52,9 @@ class DefaultDataSeeder extends Command
         ];
 
         foreach($measurements as $key=>$arrayItem){
-            $measurement = new Measurement();
-            $measurement->abbreviation = $key;
-            $measurement->full_name = $arrayItem;
-            $measurement->save();
+            Measurement::updateOrInsert(
+                ['abbreviation' => $key, 'full_name'=>$arrayItem]
+            );
         }
     }
 }

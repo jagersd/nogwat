@@ -1,17 +1,20 @@
 <template>
   <ion-card color="primary">
     <ion-card-header>
-      <ion-card-title>{{ recipeDetails.name }}</ion-card-title>
-      <ion-card-subtitle
-        >Gedeeld door: {{ recipeDetails.user.name }}</ion-card-subtitle
-      >
+      <ion-card-title>
+        {{ recipeDetails.name }}
+      </ion-card-title>
+      <ion-card-subtitle>
+        Gedeeld door: {{ recipeDetails.user.name }}
+      </ion-card-subtitle>
     </ion-card-header>
     <ion-card-content>
       <i>{{ recipeDetails.description }}</i>
+      <ion-icon v-if="recipeFavorited == 'true'" id="favo-icon" slot="end" :icon="star" color="warning" @click="removeFromFavorites()"></ion-icon>
+      <ion-icon v-if="recipeFavorited == 'false'" id="favo-icon" slot="end" :icon="starOutline" color="warning" @click="addToFavorites()"></ion-icon>
       <h2 id="ingredient-header">
         Ingredienten voor {{ personAmount }} personen
       </h2>
-
       <ion-range
 				v-model="personAmount"
         min="1"
@@ -20,7 +23,6 @@
         :value="personAmount"
         snaps
         color="dark"
-				@ionChange="updatePersonAmount()"
       >
         <ion-icon slot="start" size="small" :icon="person"></ion-icon>
         <ion-icon slot="end" size="small" :icon="people"></ion-icon>
@@ -61,10 +63,8 @@ import {
   IonRange,
   IonText,
   IonIcon,
-	
-
 } from "@ionic/vue";
-import { person, people } from "ionicons/icons";
+import { person, people, star, starOutline } from "ionicons/icons";
 
 export default defineComponent({
   name: "detailRecipeModal",
@@ -89,20 +89,21 @@ export default defineComponent({
       modalController.dismiss();
     };
 
-    return { closeModal, person, people };
+    return { closeModal, person, people, star, starOutline };
   },
   data() {
     return {
 			originalPersonAmount: this.recipeDetails.person_amount,
 			personAmount: this.recipeDetails.person_amount,
+      recipeFavorited: this.recipeDetails.favorited,
 			form: {
 				listItems:[]
 			},
+      favoForm: {
+        recipeId: this.recipeDetails.id
+      }
     };
   },
-	mounted() {
-		
-	},
 	methods:{
 		addToList(){
 			this.form.listItems = [];
@@ -123,15 +124,35 @@ export default defineComponent({
         console.error("There was an error!", error);
         })
 		},
-		updatePersonAmount(){
-			console.log(this.personAmount)
-			console.log(this.originalPersonAmount)
-		}
+    testMethod(){
+      console.log('werkt!')
+    },
+    addToFavorites(){
+      axios.post('/addfavorite',this.favoForm)
+      .then(this.recipeFavorited = 'true')
+      .catch(error => {
+        this.errorMessage = error.message;
+        console.error("There was an error!", error);
+      })
+    },
+    removeFromFavorites(){
+      axios.post('/removefavorite',this.favoForm)
+      .then(this.recipeFavorited = 'false')
+      .catch(error => {
+        this.errorMessage = error.message;
+        console.error("There was an error!", error);
+      })
+    }
 	}
 });
 </script>
 
 <style scoped>
+#favo-icon{
+  font-size: large;
+  position: absolute;
+  right: 2vw;
+}
 .ingredient-list {
   color: black;
   padding-left: 1rem;
