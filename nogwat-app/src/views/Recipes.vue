@@ -3,7 +3,7 @@
     <ion-text>Wat eten we vanavond?</ion-text>
     <ion-list>
       <ion-button expand="block" router-link="/myrecipes">Mijn Recepten</ion-button>
-      <ion-button expand="block">Mijn Favoriete Recepten</ion-button>
+      <ion-button expand="block" router-link="/myfavorites">Mijn Favoriete Recepten</ion-button>
       <ion-button expand="block" @click="flipSearchbox()">Zoeken</ion-button>
       <ion-card color="secondary" v-if="showSearchbox == true">
 				<ion-card-content>

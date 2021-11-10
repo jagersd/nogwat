@@ -202,7 +202,20 @@ class RecipeController extends Controller
      */
     public function myFavorites()
     {   
-        //TODO
+        $userFavos = Favorite::where('user_id', auth()->user()->id)
+        ->pluck('recipe_id')->toArray();
+
+        $response = Recipe::whereIn('id', $userFavos)
+        ->with('recipeItems')
+        ->with('user:id,name')
+        ->where('deleted', 0)
+        ->get();
+
+        foreach($response as $r){
+            $r->favorited = "true";
+        }
+
+        return response($response, 200);
     }
 
     /**
