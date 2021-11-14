@@ -22,8 +22,7 @@
         step="1"
         :value="personAmount"
         snaps
-        color="dark"
-      >
+        color="dark">
         <ion-icon slot="start" size="small" :icon="person"></ion-icon>
         <ion-icon slot="end" size="small" :icon="people"></ion-icon>
       </ion-range>
@@ -32,11 +31,13 @@
         class="ingredient-list"
         inset="true"
         v-for="ingredient in recipeDetails.recipe_items"
-        :key="ingredient.id"
-      >
-      {{ (ingredient.measurement_amount / originalPersonAmount) * personAmount  }} 
-      {{ ingredient.measurement.full_name }} 
-			{{ ingredient.item_name }} 
+        :key="ingredient.id">
+        <ion-item lines="none" id="list-item">
+          {{ (ingredient.measurement_amount / originalPersonAmount) * personAmount  }} 
+          {{ ingredient.measurement.full_name }} 
+          {{ ingredient.item_name }}
+          <ion-checkbox checked v-model="ingredient.checkedForList" color="primary" slot="end" :value="ingredient.id"></ion-checkbox>
+        </ion-item>
       </ion-list>
     </ion-card-content>
   </ion-card>
@@ -63,6 +64,8 @@ import {
   IonRange,
   IonText,
   IonIcon,
+  IonCheckbox,
+  IonItem,
 } from "@ionic/vue";
 import { person, people, star, starOutline } from "ionicons/icons";
 
@@ -79,17 +82,22 @@ export default defineComponent({
     IonRange,
     IonText,
     IonIcon,
-	
+    IonCheckbox,
+    IonItem
   },
   props: {
 		recipeDetails: Object
 	},
   setup() {
     const closeModal = () => {
-      modalController.dismiss();
-    };
-
-    return { closeModal, person, people, star, starOutline };
+      modalController.dismiss()
+    }
+    return { closeModal, person, people, star, starOutline }
+  },
+  ionViewDidEnter(){
+    this.recipeDetails.recipe_items.forEach((item) =>{
+      item.checkedForList = true;
+    })
   },
   data() {
     return {
@@ -101,20 +109,23 @@ export default defineComponent({
 			},
       favoForm: {
         recipeId: this.recipeDetails.id
-      }
-    };
+      },
+      
+    }
   },
 	methods:{
 		addToList(){
 			this.form.listItems = [];
 			this.recipeDetails.recipe_items.forEach((value) => {
-				this.form.listItems.push({
-					groupId: JSON.parse(localStorage.getItem('group')).groupId,
-					itemName: value.item_name,
-					measurementType: value.measurement.abbreviation,
-					amount: (value.measurement_amount/this.originalPersonAmount) * this.personAmount,
+        if (value.checkedForList !== false){
+        this.form.listItems.push({
+          groupId: JSON.parse(localStorage.getItem('group')).groupId,
+          itemName: value.item_name,
+          measurementType: value.measurement.abbreviation,
+          amount: (value.measurement_amount/this.originalPersonAmount) * this.personAmount,
           recipeId: this.recipeDetails.id,
-			})
+        })
+      }
 		})
 			axios.post('/additem', this.form)
         .then(this.closeModal)
@@ -122,10 +133,13 @@ export default defineComponent({
         .catch(error => {
         this.errorMessage = error.message;
         console.error("There was an error!", error);
-        })
+      })
 		},
     testMethod(){
-      console.log('werkt!')
+      this.recipeDetails.recipe_items.forEach((item) =>{
+          console.log(item.checkedForList)
+
+      })
     },
     addToFavorites(){
       axios.post('/addfavorite',this.favoForm)
@@ -155,11 +169,15 @@ export default defineComponent({
 }
 .ingredient-list {
   color: black;
-  padding-left: 1rem;
+  padding: 0;
 }
 
 #ingredient-header {
   margin-top: 10px;
+}
+
+ion-checkbox{
+  --border-radius: 50px;
 }
 
 ion-text {

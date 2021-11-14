@@ -68,7 +68,7 @@ export default {
   setup(){
     return {checkmark, restaurant}
   },
-  mounted() {
+  ionViewWillEnter() {
     this.initiateList();
   },
   methods: {

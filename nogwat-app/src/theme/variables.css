@@ -1,8 +1,9 @@
 /* Ionic Variables and Theming. For more info, please see:
-http://ionicframework.com/docs/theming/ */
+http://ionicframework.com/docs/theming/
 
 /** Ionic CSS Variables **/
 :root {
+  
   --ion-color-primary: #1e847f;
   --ion-color-primary-rgb: 30,132,127;
   --ion-color-primary-contrast: #ffffff;
@@ -93,3 +94,4 @@ http://ionicframework.com/docs/theming/ */
   --ion-color-step-900: #181310;
   --ion-color-step-950: #0c0a08;
 }
+
