@@ -39,7 +39,7 @@
 
       <ion-tab-button tab="Groups" href="/groups">
         <ion-icon :icon="heart" size="large"></ion-icon>
-        <ion-label>Groupen</ion-label>
+        <ion-label>Groepen</ion-label>
       </ion-tab-button>
 
       <ion-tab-button tab="Lists" href="/lists">

@@ -51,6 +51,7 @@ Route::middleware('auth:sanctum')->group( function() {
     Route::put('/purchaseditem',[ListController::class,'purchased']);
     Route::put('/reversepurchase',[ListController::class,'reversePurchase']);
     Route::get('/mylist',[ListController::class,'myList']);
+    Route::get('/gethistory',[Listcontroller::class,'getHistory']);
 
     //favorites
     Route::post('/addfavorite',[FavoriteController::class,'create']);

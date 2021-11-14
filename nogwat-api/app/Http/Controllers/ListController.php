@@ -94,6 +94,31 @@ class ListController extends Controller
         return response($response, 200);
     }
 
+    /**
+    * Displays the user or group purchase history
+    *
+    * @return \Illuminate\Http\Response
+    */
+    public function getHistory(Request $request)
+    {   
+        $groupId = $request->groupId ?: null;
+
+        if($groupId !== null){
+            if($this->isInGroup($request->user()->id, $groupId) == false){
+                return response('You are not allowed to add items for this group', 401);
+            }
+
+            $response = ActiveList::where('group_id',$groupId)
+            ->where('date_purchased','!=', null)
+            ->with('measurement')
+            ->with('addedUser:id,name')
+            ->with('purchasedUser:id,name')
+            ->get();
+            
+            return response($response, 200);
+        }
+    }
+
 
     /**
     * User records that the item is purchased

@@ -40,6 +40,7 @@
       </ion-item>
     </ion-list>
   </div>
+    <ion-button @click="goToGroupHistory">Aankoop historie</ion-button>
     <ion-button @click="closeModal">Sluit</ion-button>
     <ion-button color="danger">Group verlaten</ion-button>
 </template>
@@ -100,6 +101,10 @@ export default defineComponent ({
     },
     setDefaultGroup(){
       this.$store.commit('setGroupData', {groupId: this.groupId, groupName:this.groupInfo.name})
+    },
+    goToGroupHistory(){
+      this.$router.push({name: 'grouphistory', params: {groupId : this.groupId} })
+      .then(this.closeModal)
     }
   }
 });

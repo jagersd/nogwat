@@ -32,7 +32,6 @@ export default {
 
   methods: {
 		async initiateSearch(){
-			console.log(this.mealTypes)
 			axios.get("/searchrecipes", {
         params: {
           mealTypes: JSON.parse(localStorage.getItem("searchParameters")).mealTypes,

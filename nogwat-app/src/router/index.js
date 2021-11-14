@@ -30,6 +30,14 @@ const routes = [
     }
   },
   { 
+    path: '/grouphistory/:groupId',
+    component: () => import(/* webpackChunkName: "Lists" */ '../views/History.vue'),
+    name: 'grouphistory',
+    meta: {
+      requiresAuth: true
+    }
+  },
+  { 
     path: '/recipes',
     component: () => import(/* webpackChunkName: "Lists" */ '../views/Recipes.vue'),
     meta: {

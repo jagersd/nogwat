@@ -30,4 +30,9 @@ class ActiveList extends Model
     {
         return $this->belongsTo(User::class,'user_id_added');
     }
+
+    public function purchasedUser()
+    {
+        return $this->belongsTo(User::class,'user_id_purchased');
+    }
 }
