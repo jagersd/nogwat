@@ -1,7 +1,9 @@
 import { createApp } from 'vue'
 import App from './App.vue'
-import router from './router';
+import router from './router'
 import store from './store'
+import { createI18n } from 'vue-i18n'
+import messages from './locale/i18n'
 
 import { IonicVue } from '@ionic/vue';
 
@@ -26,13 +28,18 @@ import './theme/variables.css';
 
 import MasterLayout from './components/MasterLayout.vue';
 
-
+const i18n = createI18n({
+  locale: 'nl', 
+  fallbackLocale: 'nl', 
+  messages,
+})
 
 const app = createApp(App)
   .use(IonicVue)
   .use(router)
   .use(store)
-  
+  .use(i18n)
+
 router.isReady().then(() => {
   app.component('master-layout', MasterLayout);
   app.mount('#app');

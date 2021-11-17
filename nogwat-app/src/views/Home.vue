@@ -5,8 +5,10 @@
           <h1>Welkom bij de NogWat app!</h1>
         </ion-text>
         <ion-text class="ion-padding-horizontal" color="primary">
-          Het idee achter de app is dat het kruitbord in de keuken altijd meegenomen kan worden naar de stad / het winkelcentrum. 
+          Het idee achter de app is dat het kruitbord in de keuken altijd meegenomen kan worden naar de stad / het winkelcentrum.
+          {{ $t("test") }}
         </ion-text>
+        
 
       <ion-button v-if="!$store.state.user" class="ion-margin-top" expand="block" @click="openSigninModal">Log in</ion-button>
 
