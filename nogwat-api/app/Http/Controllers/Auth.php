@@ -102,14 +102,14 @@ class Auth extends Controller
 
         if (!$user || !Hash::check($request->password, $user->password)) {
             return response([
-                'message' => ['These credentials do not match our records.']
+                'message' => 'These credentials do not match our records.'
             ], 404);
         } else {
             $user->password = Hash::make($request->newPassword);
             $user->save();
 
             return response([
-                'message' => ['Password Changed']
+                'message' => 'Password Changed'
             ], 200);
         }
 
