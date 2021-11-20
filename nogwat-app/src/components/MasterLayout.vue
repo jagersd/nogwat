@@ -14,7 +14,7 @@
           <ion-icon :icon="person"></ion-icon>
         </ion-fab-button>
         <ion-fab-list side="bottom">
-          <ion-fab-button color="secondary">
+          <ion-fab-button router-link="/usersettings" color="secondary">
             <ion-icon :icon="settings"></ion-icon>
           </ion-fab-button>
           <ion-fab-button color="warning">
@@ -25,7 +25,7 @@
           </ion-fab-button>
         </ion-fab-list>
         <ion-fab-list side="start">
-          <ion-fab-button color="dark" href="/about">
+          <ion-fab-button color="dark" router-link="/about">
             <ion-icon :icon="help"></ion-icon>
           </ion-fab-button>
         </ion-fab-list>

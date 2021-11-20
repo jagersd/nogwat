@@ -64,7 +64,14 @@ const routes = [
       meta: {
         requiresAuth: true
       }
-    }
+    },
+  {
+    path: '/usersettings',
+    component: () => import(/* webpackChunkName: "Lists" */ '../views/Usersettings.vue'),
+      meta: {
+        requiresAuth: true
+      }
+  },
 ]
 
 const router = createRouter({

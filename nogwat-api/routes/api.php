@@ -23,6 +23,7 @@ Route::post('/register',[Auth::class,'register']);
 Route::middleware('auth:sanctum')->group( function() {
     //global routes
     Route::get('/me',[Auth::class, 'me']);
+    Route::post('/changepassword', [Auth::class,'changePassword']);
 
     //invite routes
     Route::post('/inviteuser',[InviteController::class, 'create']);

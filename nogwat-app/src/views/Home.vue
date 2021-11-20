@@ -2,11 +2,10 @@
   <master-layout pageTitle="Welkom!">
     <div id="container">
         <ion-text color="primary">
-          <h1>Welkom bij de NogWat app!</h1>
+          <h1>{{$t("home.title")}}</h1>
         </ion-text>
         <ion-text class="ion-padding-horizontal" color="primary">
-          Het idee achter de app is dat het kruitbord in de keuken altijd meegenomen kan worden naar de stad / het winkelcentrum.
-          {{ $t("test") }}
+          {{$t("home.subtitle")}}
         </ion-text>
         
 

@@ -6,6 +6,7 @@ axios.defaults.baseURL = 'http://127.0.0.1:8000/api'
 export default createStore({
   state: {
     user: null,
+    locale: null,
     group: null,
     searchParameters: null,
   },
@@ -20,6 +21,11 @@ export default createStore({
     clearUserData () {
       localStorage.removeItem('user')
       location.reload()
+    },
+
+    setUserLocale(state, userLocale) {
+      state.locale = userLocale,
+      localStorage.setItem('locale', JSON.stringify(userLocale))
     },
 
     setGroupData(state, groupData) {

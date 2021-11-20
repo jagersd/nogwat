@@ -56,18 +56,18 @@ export default defineComponent ({
   setup() {
   const closeModal = () => {
     modalController.dismiss();
-  }
-  return { closeModal }
+    }
+    return { closeModal }
   },
   methods: {
-        addItem() {
-        axios.post('/additem', this.form)
-        .then(this.closeModal)
+      addItem() {
+      axios.post('/additem', this.form)
+      .then(this.closeModal)
 
-        .catch(error => {
-        this.errorMessage = error.message;
-        console.error("There was an error!", error);
-        })
+      .catch(error => {
+      this.errorMessage = error.message;
+      console.error("There was an error!", error);
+      })
     }
   }
 });

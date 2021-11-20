@@ -85,6 +85,39 @@ class Auth extends Controller
     }
 
     /**
+     * User API change passwordController
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+    */
+    public function changePassword(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|email',
+            'password' => 'required',
+            'newPassword' => 'required',
+        ]);
+
+        $user = User::where('email', $request->email)->first();
+
+        if (!$user || !Hash::check($request->password, $user->password)) {
+            return response([
+                'message' => ['These credentials do not match our records.']
+            ], 404);
+        } else {
+            $user->password = Hash::make($request->newPassword);
+            $user->save();
+
+            return response([
+                'message' => ['Password Changed']
+            ], 200);
+        }
+
+        return response($response, 201);
+    }
+
+
+    /**
     * Displays user info and all related db items.
     *
     * @return \Illuminate\Http\Response

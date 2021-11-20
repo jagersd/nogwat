@@ -12,6 +12,13 @@
           <ion-label position="floating">Password</ion-label>
           <ion-input type="password" name="password" v-model="password"></ion-input>
         </ion-item>
+        <ion-item>
+        <ion-label position="floating">en / nl</ion-label>
+          <ion-select ok-text="Ok" value="nl" v-model="userLocale">
+            <ion-select-option value="nl">Nederlands</ion-select-option>
+            <ion-select-option value="en">English</ion-select-option>
+          </ion-select>
+        </ion-item>
         <ion-button expand="full" @click="login()">Login</ion-button>
         <ion-button @click="closeModal">Sluit</ion-button>
       </ion-card-content>
@@ -20,19 +27,20 @@
 
 <script>
 import {
-  IonCard,IonCardHeader,IonCardTitle,IonCardContent,IonItem,IonLabel,IonInput,IonButton,modalController
+  IonCard,IonCardHeader,IonCardTitle,IonCardContent,IonItem,IonLabel,IonInput,IonButton,modalController,IonSelect, IonSelectOption
 } from "@ionic/vue";
 import { defineComponent } from 'vue';
 
 export default defineComponent({
   name: 'SigninModal',
   components: {
-    IonCard,IonCardHeader,IonCardTitle,IonCardContent,IonItem,IonLabel,IonInput,IonButton
+    IonCard,IonCardHeader,IonCardTitle,IonCardContent,IonItem,IonLabel,IonInput,IonButton,IonSelect, IonSelectOption
   },
   data () {
     return {
       email: '',
-      password: ''
+      password: '',
+      userLocale: 'nl'
     }
   },
   setup() {
@@ -46,8 +54,10 @@ export default defineComponent({
       this.$store
         .dispatch('login', {
           email: this.email,
-          password: this.password
+          password: this.password,
+          userLocale: this.userLocale
         })
+        .then(this.$store.commit('setUserLocale', this.userLocale))
         .then(this.closeModal)
         .then(() => {
           this.$router.push({ path: '/lists' })
