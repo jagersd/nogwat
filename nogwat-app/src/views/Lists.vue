@@ -1,16 +1,19 @@
 <template>
   <master-layout pageTitle="Boodschappenlijst">
-    <div class="container">
-      <div v-if="!listInfo.length">
-        <ion-text>Cooking with fire! Je boodschappenlijst is leeg :)</ion-text>
-      </div>
-      <ion-list id="main-content" v-for="listGroup in listInfo" :key="listGroup.id">
-        <ion-label>
-          <ion-button @click="listShown = listGroup.id">{{ listGroup.name }}
-						<ion-badge color="danger">{{listGroup.active_lists.filter(item => item.user_id_purchased == null).length}}</ion-badge>
-					</ion-button>
+    <swiper
+    @reachBeginning="currentSlider = 0"
+    @slideNextTransitionStart="sliderMovedUp"
+    @slidePrevTransitionStart="sliderMovedDown"
+    >
+      <swiper-slide v-for="listGroup in listInfo" :key="listGroup.id" >
+          <ion-item lines="none">
+            <ion-icon v-if="currentSlider != 0" color="primary" slot="start" :icon="chevronBack"></ion-icon>
+            <p id="group-name">{{ listGroup.name }}</p>
+            <ion-badge color="danger">{{listGroup.active_lists.filter(item => item.user_id_purchased == null).length}}</ion-badge>
+            <ion-icon v-if="currentSlider != listInfo.length-1" color="primary" slot="end" :icon="chevronForward"></ion-icon>
+          </ion-item>
           <ion-list v-for="listItem in listGroup.active_lists" :key="listItem.id">
-            <ion-item v-if="listGroup.id == listShown" >
+            <ion-item>
               <ion-label>
                 <h2 v-if="listItem.date_purchased != null" @click="reversePurchasedActionSheet(listItem.id)">
                   <s>{{ listItem.item_name }}</s>
@@ -30,10 +33,9 @@
               <ion-icon v-if="listItem.date_purchased != null" slot="end" :icon="checkmark"></ion-icon>
             </ion-item>
           </ion-list>
-        </ion-label>
-        <ion-button v-if="listGroup.id == listShown" class="ion-margin-top" @click="openAddItemModal(listGroup.id)">+</ion-button>
-      </ion-list>
-    </div>
+          <ion-button class="ion-margin-top" @click="openAddItemModal(listGroup.id)">+</ion-button>
+      </swiper-slide>
+    </swiper>
   </master-layout>
 </template>
 
@@ -45,28 +47,38 @@ import {
   IonCheckbox,
   IonButton,
   modalController,
-  IonText,
 	IonBadge,
   actionSheetController,
   IonIcon,
 } from "@ionic/vue";
 
-import { checkmark, restaurant } from "ionicons/icons";
+import { Swiper, SwiperSlide} from 'swiper/vue';
+
+import 'swiper/swiper.min.css';
+import '@ionic/vue/css/ionic-swiper.css';
+
+
+import { checkmark, restaurant, chevronBack, chevronForward } from "ionicons/icons";
 import axios from "axios";
 import AddItemModal from "../components/list/AddItemModal.vue";
 import ItemDetailsModal from "../components/list/ItemDetailsModal.vue";
 
 export default {
   name: "Lists",
-  components: { IonList, IonLabel, IonItem, IonCheckbox, IonButton, IonText, IonBadge, IonIcon},
+  components: { IonList, IonLabel, IonItem, IonCheckbox, IonButton, IonBadge, IonIcon, Swiper, SwiperSlide},
   data() {
     return {
       listInfo: {},
-			listShown: null,
+      currentSlider: 0,
     };
   },
   setup(){
-    return {checkmark, restaurant}
+    return {
+      checkmark, 
+      restaurant,
+      chevronBack,
+      chevronForward,
+    }
   },
   ionViewWillEnter() {
     this.initiateList();
@@ -142,20 +154,41 @@ export default {
       });
       return modal.present();
     },
+    sliderMovedUp(){
+      this.currentSlider+=1
+    },
+    sliderMovedDown(){
+      if(this.currentSlider !== 0){
+      this.currentSlider-=1
+      }
+    }
   },
 };
 </script>
 
 <style scoped>
+
+.swiper-slide{
+  margin-top: 3vh;
+  min-height: 80vh;
+}
+
+#group-name{
+  font-size: large;
+  margin-left: 2rem;
+  color: var(--ion-color-primary);
+  font-weight: bold;
+}
+
 ion-checkbox {
   position: relative;
 }
 
-ion-badge{
-	margin-left:1rem;
+ion-button {
+  margin-left: 2vw;
 }
 
-.container {
-  padding: 5%;
+ion-badge{
+	margin-left:1rem;
 }
 </style>
