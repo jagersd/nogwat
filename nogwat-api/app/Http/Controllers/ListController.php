@@ -103,21 +103,21 @@ class ListController extends Controller
     */
     public function starItems()
     {   
-        $groups = UserGroup::where('user_id', auth()->user()->id)
-        ->get('group_id')
-        ->toArray();
+        $response = UserGroup::where('user_id', auth()->user()->id)
+        ->join('groups','user_groups.group_id','=','groups.id')
+        ->get(['user_groups.group_id','groups.name']);
 
-        foreach($groups as $group){
-            $response[] = DB::table('active_lists')
-            ->join('groups','active_lists.group_id','=','groups.id')
-            ->select('item_name','groups.id','groups.name', DB::raw('count(*) as name_counter'))
-            ->where('group_id',$group)
+        foreach($response as $r){
+            $r->items = DB::table('active_lists')
+            ->select('item_name', DB::raw('count(*) as name_counter'))
+            ->where('group_id',$r->group_id)
             ->where('user_id_added',auth()->user()->id)
-            ->groupBy('active_lists.item_name','groups.id')
+            ->groupBy('active_lists.item_name','group_id')
+            ->orderBy('name_counter', 'DESC')
             ->take(5)
             ->get();
         }
-        
+
         return response($response, 200);
     }
 
