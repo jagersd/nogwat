@@ -45,6 +45,8 @@ Route::middleware('auth:sanctum')->group( function() {
     Route::get('/myrecipes',[RecipeController::class,'myIndex']);
     Route::get('/searchrecipes',[RecipeController::class,'searchIndex']);
     Route::get('/myfavorites',[RecipeController::class,'myFavorites']);
+    Route::post('/addfavorite',[FavoriteController::class,'create']);
+    Route::post('/removefavorite',[FavoriteController::class,'delete']);
 
     //list routes
     Route::post('/additem',[ListController::class,'create']);
@@ -54,9 +56,9 @@ Route::middleware('auth:sanctum')->group( function() {
     Route::get('/mylist',[ListController::class,'myList']);
     Route::get('/gethistory',[Listcontroller::class,'getHistory']);
 
-    //favorites
-    Route::post('/addfavorite',[FavoriteController::class,'create']);
-    Route::post('/removefavorite',[FavoriteController::class,'delete']);
+    //star items
+    Route::get('/staritems',[Listcontroller::class,'starItems']);
+    
 
     //store routes
     Route::post('addstore',[StoreController::class,'create']);

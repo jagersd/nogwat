@@ -17,7 +17,7 @@
           <ion-fab-button router-link="/usersettings" color="secondary">
             <ion-icon :icon="settings"></ion-icon>
           </ion-fab-button>
-          <ion-fab-button color="warning">
+          <ion-fab-button router-link="/staritems" color="warning">
             <ion-icon :icon="star"></ion-icon>
           </ion-fab-button>
           <ion-fab-button color="danger">

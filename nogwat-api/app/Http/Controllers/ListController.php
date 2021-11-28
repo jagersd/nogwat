@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use DB;
 use App\Models\ActiveList;
 use App\Models\UserGroup;
 use App\Models\Group;
@@ -90,6 +91,31 @@ class ListController extends Controller
             ->with('stores')
             ->with('activeLists')
             ->first();
+        }
+        
+        return response($response, 200);
+    }
+    
+    /**
+    * Displays the users shopping Lists
+    *
+    * @return \Illuminate\Http\Response
+    */
+    public function starItems()
+    {   
+        $groups = UserGroup::where('user_id', auth()->user()->id)
+        ->get('group_id')
+        ->toArray();
+
+        foreach($groups as $group){
+            $response[] = DB::table('active_lists')
+            ->join('groups','active_lists.group_id','=','groups.id')
+            ->select('item_name','groups.id','groups.name', DB::raw('count(*) as name_counter'))
+            ->where('group_id',$group)
+            ->where('user_id_added',auth()->user()->id)
+            ->groupBy('active_lists.item_name','groups.id')
+            ->take(5)
+            ->get();
         }
         
         return response($response, 200);

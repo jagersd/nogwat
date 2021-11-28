@@ -66,6 +66,13 @@ const routes = [
       }
     },
   {
+    path: '/staritems',
+    component: () => import(/* webpackChunkName: "Lists" */ '../views/Staritems.vue'),
+      meta: {
+        requiresAuth: true
+      }
+    },
+  {
     path: '/usersettings',
     component: () => import(/* webpackChunkName: "Lists" */ '../views/Usersettings.vue'),
       meta: {
