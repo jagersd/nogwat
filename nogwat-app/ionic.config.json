@@ -1,7 +1,8 @@
 {
-  "name": "nogwat-app",
+  "name": "nogwat",
   "integrations": {
     "capacitor": {}
   },
-  "type": "vue"
+  "type": "vue",
+  "API_URL": "http://127.0.0.1:8000/api"
 }

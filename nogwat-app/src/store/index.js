@@ -1,7 +1,8 @@
 import { createStore } from 'vuex'
 import axios from 'axios'
 
-axios.defaults.baseURL = 'http://127.0.0.1:8000/api'
+axios.defaults.baseURL = process.env.VUE_APP_ROOT_API
+//axios.defaults.baseURL = 'http://192.168.178.25:8000/api'
 
 export default createStore({
   state: {

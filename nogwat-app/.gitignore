@@ -27,3 +27,4 @@ npm-debug.log*
 /plugins
 /www
 /src/assets
+.env

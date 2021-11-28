@@ -25,15 +25,13 @@
           </ion-fab-button>
         </ion-fab-list>
         <ion-fab-list side="start">
-          <ion-fab-button color="dark" router-link="/about">
+          <ion-fab-button color="tertiary" router-link="/about">
             <ion-icon :icon="help"></ion-icon>
           </ion-fab-button>
         </ion-fab-list>
       </ion-fab>
       <slot> </slot>
     </ion-content>
-
-
 
     <ion-tab-bar v-if="$store.state.user" slot="bottom">
 

@@ -1,39 +1,41 @@
 <template>
   <master-layout pageTitle="Recepten">
+	<div class="container">
     <ion-text>Wat eten we vanavond?</ion-text>
-    <ion-list>
+		<ion-list>
       <ion-button expand="block" router-link="/myrecipes">Mijn Recepten</ion-button>
       <ion-button expand="block" router-link="/myfavorites">Mijn Favoriete Recepten</ion-button>
       <ion-button expand="block" @click="flipSearchbox()">Zoeken</ion-button>
-      <ion-card color="secondary" v-if="showSearchbox == true">
-				<ion-card-content>
-					<ul>
-						<li>
-							<ion-checkbox @click="setMealTypesArray('ontbijt')"></ion-checkbox>
-							<ion-label>Ontbijt</ion-label>
-						</li>
-						<li>
-							<ion-checkbox @click="setMealTypesArray('snack')"></ion-checkbox>
-							<ion-label>Snack</ion-label>
-						</li>
-						<li>
-							<ion-checkbox @click="setMealTypesArray('lunch')"></ion-checkbox>
-							<ion-label>Lunch</ion-label>
-						</li>
-						<li>
-							<ion-checkbox @click="setMealTypesArray('diner')" checked></ion-checkbox>
-							<ion-label>Diner</ion-label>
-						</li>
-					</ul>
-					<ion-item>
-						<ion-label position="floating" color="secondary">Zoekwoord (optioneel)</ion-label>
-						<ion-input v-model="searchString" color="secondary" type="text"></ion-input>
-					</ion-item>
-					<ion-button @click="toSearchResults()">OK</ion-button>
-				</ion-card-content>
+      <ion-card color="tertiary" v-if="showSearchbox == true">
+        <ion-card-content>
+          <ul>
+            <li>
+              <ion-checkbox @click="setMealTypesArray('ontbijt')"></ion-checkbox>
+              <ion-label>Ontbijt</ion-label>
+            </li>
+            <li>
+              <ion-checkbox @click="setMealTypesArray('snack')"></ion-checkbox>
+              <ion-label>Snack</ion-label>
+            </li>
+            <li>
+              <ion-checkbox @click="setMealTypesArray('lunch')"></ion-checkbox>
+              <ion-label>Lunch</ion-label>
+            </li>
+            <li>
+              <ion-checkbox @click="setMealTypesArray('diner')" checked></ion-checkbox>
+              <ion-label>Diner</ion-label>
+            </li>
+          </ul>
+          <ion-item>
+            <ion-label position="floating" color="secondary">Zoekwoord (optioneel)</ion-label>
+            <ion-input v-model="searchString" color="secondary" type="text"></ion-input>
+          </ion-item>
+          <ion-button @click="toSearchResults()">OK</ion-button>
+        </ion-card-content>
       </ion-card>
-      <ion-button class="ion-margin-top" @click="openAddRecipeModal()">+ voeg recept toe</ion-button>
-    </ion-list>
+      <ion-button color="tertiary" class="ion-margin-top" @click="openAddRecipeModal()">+ voeg recept toe</ion-button>
+		</ion-list>
+	</div>
   </master-layout>
 </template>
 
@@ -110,6 +112,10 @@ export default {
 
 <style scoped>
 
+  .container{
+    padding: 1rem;
+  }
+
 	ion-checkbox{
 		margin-right: 5px;
 	}
@@ -121,7 +127,7 @@ export default {
 	li{
 		padding: 5px;
 	}
-
+	
 	ion-item{
 		border-radius: 10px;
 	}
