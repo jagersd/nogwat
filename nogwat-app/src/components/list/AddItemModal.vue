@@ -12,14 +12,22 @@
         <ion-label position="floating">Hoeveelheid</ion-label>
         <ion-input type="number" v-model="form.listItems[0].amount" id="amount"></ion-input>
       </ion-item>
-        <ion-label position="floating">liter, gram, kilo</ion-label>
-      <ion-select v-model="form.listItems[0].measurementType">
-            <ion-select-option value="st">st (stuks)</ion-select-option>
-            <ion-select-option value="gr">gr (gram)</ion-select-option>
-            <ion-select-option value="kg">kg (kilo)</ion-select-option>
-            <ion-select-option value="fl">fl (flessen)</ion-select-option>
-            <ion-select-option value="kr">kr (kratten)</ion-select-option>
-      </ion-select>
+      <ion-item>
+        <ion-label position="stacked">liter, gram, kilo</ion-label>
+        <ion-select v-model="form.listItems[0].measurementType">
+          <ion-select-option value="st">st (stuks)</ion-select-option>
+          <ion-select-option value="gr">gr (gram)</ion-select-option>
+          <ion-select-option value="kg">kg (kilo)</ion-select-option>
+          <ion-select-option value="fl">fl (flessen)</ion-select-option>
+          <ion-select-option value="kr">kr (kratten)</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label position="stacked">(optioneel) selecteer winkel</ion-label>
+        <ion-select v-model="form.listItems[0].storeId">
+          <ion-select-option v-for="store in storeArray" :key="store.id" :value="store.id">{{store.name}}</ion-select-option>
+        </ion-select>
+      </ion-item>
       <ion-button expand="fill" @click="addItem()">Opslaan</ion-button>
       <ion-button @click="closeModal">Sluit</ion-button>
     </ion-card-content>
@@ -39,15 +47,17 @@ export default defineComponent ({
   components: {
     IonCard,IonCardHeader,IonCardTitle,IonCardContent,IonItem,IonLabel,IonInput,IonButton, IonSelect, IonSelectOption
   },
-  props: ['groupId'],
+  props: ['groupId', 'stores'],
   data() {
     return {
+      storeArray: this.stores,
       form: {
         listItems: [{
           groupId: this.groupId,
           itemName: "",
           measurementType:"",
           amount: "",
+          storeId:null,
         }]
       },
       errors: []

@@ -52,6 +52,7 @@ class GroupController extends Controller
         }
 
         $response = Group::where('id',$id)
+        ->with('stores')
         ->with('users')
         ->with('openInvites')
         ->first();

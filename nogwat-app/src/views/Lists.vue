@@ -5,6 +5,7 @@
     @slideNextTransitionStart="sliderMovedUp"
     @slidePrevTransitionStart="sliderMovedDown"
     >
+    <!--GroupID Loop-->
       <swiper-slide v-for="listGroup in listInfo" :key="listGroup.id" >
           <ion-item lines="none">
             <ion-icon v-if="currentSlider != 0" color="primary" slot="start" :icon="chevronBack"></ion-icon>
@@ -12,6 +13,7 @@
             <ion-badge color="danger">{{listGroup.active_lists.filter(item => item.user_id_purchased == null).length}}</ion-badge>
             <ion-icon v-if="currentSlider != listInfo.length-1" color="primary" slot="end" :icon="chevronForward"></ion-icon>
           </ion-item>
+          <!--ListItem Loop-->
           <ion-list v-for="listItem in listGroup.active_lists" :key="listItem.id">
             <ion-item>
               <ion-label>
@@ -19,21 +21,25 @@
                   <s>{{ listItem.item_name }}</s>
                   <ion-icon v-if="listItem.recipe_id" color="primary" size="small" :icon="restaurant"></ion-icon>
                 </h2>
-                <h2 v-if="listItem.date_purchased == null" @click="openItemDetailsModal(listItem)">
+                <h2 v-if="listItem.date_purchased == null" @click="openItemDetailsModal(listItem, listGroup.stores)">
                   {{ listItem.item_name }}
                   <ion-icon v-if="listItem.recipe_id" color="primary" size="small" :icon="restaurant"></ion-icon>
                 </h2>
                 <p v-if="listItem.measurement_amount">
                   {{ listItem.measurement_amount }}
                   {{ listItem.measurement.abbreviation }} |
-                  {{ listItem.added_user.name }}
+                  {{ listItem.added_user.name }} |
+                </p>
+                <p v-if="listItem.store">
+                  {{listItem.store.name}}
                 </p>
               </ion-label>
               <ion-checkbox v-if="listItem.date_purchased == null" color="primary" slot="end" @click="markPurchased(listItem.id)"></ion-checkbox>
               <ion-icon v-if="listItem.date_purchased != null" slot="end" :icon="checkmark"></ion-icon>
             </ion-item>
           </ion-list>
-          <ion-button class="ion-margin-top" @click="openAddItemModal(listGroup.id)">+</ion-button>
+
+          <ion-button class="ion-margin-top" @click="openAddItemModal(listGroup.id, listGroup.stores)">+</ion-button>
       </swiper-slide>
     </swiper>
   </master-layout>
@@ -129,11 +135,12 @@ export default {
         this.initiateList();
       })
     },
-    async openAddItemModal(groupId) {
+    async openAddItemModal(groupId, stores) {
       const modal = await modalController.create({
         component: AddItemModal,
         componentProps: {
           groupId: groupId,
+          stores: stores,
         },
       });
       modal.onDidDismiss().then(() => {
@@ -142,11 +149,12 @@ export default {
 
       return modal.present();
     },
-    async openItemDetailsModal(item) {
+    async openItemDetailsModal(item, stores) {
       const modal = await modalController.create({
         component: ItemDetailsModal,
         componentProps: {
           itemDetails: item,
+          stores: stores,
         },
       });
       modal.onDidDismiss().then(() => {

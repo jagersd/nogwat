@@ -32,10 +32,12 @@ class Group extends Model
     public function activeLists()
     {
         return $this->hasMany(ActiveList::class, 'group_id')
-        ->where('date_purchased','>=',Carbon::now()->subDays(2)->toDateTimeString())
+        ->where('date_purchased','>=',Carbon::now()->subDays(1)->toDateTimeString())
         ->OrWhere('date_purchased', null)
+        ->with('store:id,name')
         ->with('measurement')
-        ->with('addedUser');
+        ->with('addedUser')
+        ->orderBy('store_id', 'DESC');
     }
 
     public function openInvites()
@@ -43,6 +45,10 @@ class Group extends Model
         return $this->hasMany(GroupInvite::class, 'group_id')
         ->where('status','pending')
         ->with('invitees');
+    }
+
+    public function stores(){
+        return $this->hasMany(Store::class, 'group_id');
     }
 
 

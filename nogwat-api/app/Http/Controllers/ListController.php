@@ -87,6 +87,7 @@ class ListController extends Controller
 
         foreach($groups as $group){
             $response[] = Group::where('id',$group)
+            ->with('stores')
             ->with('activeLists')
             ->first();
         }
