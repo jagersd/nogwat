@@ -4,6 +4,9 @@
       <ion-card-title>Aanpassen</ion-card-title>
     </ion-card-header>
     <ion-card-content>
+      <ion-text>
+        Toevoegd door: {{itemDetails.added_user.name}}
+      </ion-text>
       <ion-item>
         <ion-label position="floating">Product</ion-label>
         <ion-input type="text" required="true" v-model="form.itemName" id="name"></ion-input>
@@ -29,26 +32,27 @@
       </ion-item>
       <ion-button expand="fill" @click="updateItem()">Opslaan</ion-button>
       <ion-button @click="closeModal">Sluit</ion-button>
-      <ion-button color="danger">Verwijderen</ion-button>
+      <ion-button v-if="(currentUserMail == itemDetails.added_user.email)" @click="deleteItem(itemDetails.id)" color="danger">Verwijderen</ion-button>
     </ion-card-content>
   </ion-card>
 </template>
 
 <script>
 import axios from 'axios'
-import { IonCard,IonCardHeader,IonCardTitle,IonCardContent,IonItem,IonLabel,IonInput,IonButton,modalController, IonSelect, IonSelectOption} from "@ionic/vue";
+import { IonCard,IonCardHeader,IonCardTitle,IonCardContent,IonItem,IonLabel,IonInput,IonButton,modalController, IonSelect, IonSelectOption, IonText} from "@ionic/vue";
 
 import { defineComponent } from 'vue'
 
 export default defineComponent ({
   name: 'ItemDetailsModal',
-    components: { IonCard,IonCardHeader,IonCardTitle,IonCardContent,IonItem,IonLabel,IonInput,IonButton,IonSelect, IonSelectOption
+    components: { IonCard,IonCardHeader,IonCardTitle,IonCardContent,IonItem,IonLabel,IonInput,IonButton,IonSelect, IonSelectOption, IonText
   },
 
   props: ['itemDetails','stores'],
 
   data() {
     return {
+      currentUserMail: this.$store.state.user.user.email,
       storeArray: this.stores, 
       form: {
         listItemId: this.itemDetails.id,
@@ -68,14 +72,24 @@ export default defineComponent ({
   return { closeModal }
   },
   methods: {
-        updateItem() {
-        axios.put('/updateitem', this.form)
-        .then(this.closeModal)
-
-        .catch(error => {
-        this.errorMessage = error.message;
-        console.error("There was an error!", error);
-        })
+    updateItem() {
+      axios.put('/updateitem', this.form)
+      .then(this.closeModal)
+      .catch(error => {
+      this.errorMessage = error.message;
+      console.error("There was an error!", error);
+      })
+    },
+    deleteItem(itemId) {
+      axios.delete('/removelistitem', {data: {
+        'id':itemId
+        }
+      })
+      .then(this.closeModal)
+      .catch(error => {
+      this.errorMessage = error.message;
+      console.error("There was an error!", error);
+      })
     }
   }
 });

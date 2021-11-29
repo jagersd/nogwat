@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use DB;
+use App\Models\Store;
 use App\Models\ActiveList;
 use App\Models\UserGroup;
 use App\Models\Group;
@@ -108,6 +109,10 @@ class ListController extends Controller
         ->get(['user_groups.group_id','groups.name']);
 
         foreach($response as $r){
+            $r->stores = Store::where('group_id',$r->group_id)
+            ->where('deleted',0)
+            ->get(['id','name']);
+
             $r->items = DB::table('active_lists')
             ->select('item_name', DB::raw('count(*) as name_counter'))
             ->where('group_id',$r->group_id)
@@ -181,6 +186,24 @@ class ListController extends Controller
         ]);
 
         return response('record updated',200);
+    }
+
+    /**
+    * Remove listItem resource from storage.
+    *
+    * @param  int  $id
+    * @return \Illuminate\Http\Response
+    */
+    public function destroy(Request $request)
+    {   
+        $id = $request->id;
+        $listItem = ActiveList::where('id',$id)->first();
+        if($listItem->user_id_added == auth()->user()->id){
+            $listItem->delete();
+            return response('record deleted', 200);
+        } else {
+            return response('operation failed', 500);
+        }
     }
 
 

@@ -55,6 +55,7 @@ Route::middleware('auth:sanctum')->group( function() {
     Route::put('/reversepurchase',[ListController::class,'reversePurchase']);
     Route::get('/mylist',[ListController::class,'myList']);
     Route::get('/gethistory',[Listcontroller::class,'getHistory']);
+    Route::delete('/removelistitem',[Listcontroller::class,'destroy']);
 
     //star items
     Route::get('/staritems',[Listcontroller::class,'starItems']);

@@ -28,18 +28,17 @@
                 <p v-if="listItem.measurement_amount">
                   {{ listItem.measurement_amount }}
                   {{ listItem.measurement.abbreviation }} |
-                  {{ listItem.added_user.name }} |
-                </p>
-                <p v-if="listItem.store">
+                  <i v-if="listItem.store">
                   {{listItem.store.name}}
+                  </i>
                 </p>
+                
               </ion-label>
               <ion-checkbox v-if="listItem.date_purchased == null" color="primary" slot="end" @click="markPurchased(listItem.id)"></ion-checkbox>
               <ion-icon v-if="listItem.date_purchased != null" slot="end" :icon="checkmark"></ion-icon>
             </ion-item>
           </ion-list>
-
-          <ion-button class="ion-margin-top" @click="openAddItemModal(listGroup.id, listGroup.stores)">+</ion-button>
+          <ion-button class="add-btn" @click="openAddItemModal(listGroup.id, listGroup.stores)">+</ion-button>
       </swiper-slide>
     </swiper>
   </master-layout>
@@ -193,7 +192,7 @@ ion-checkbox {
 }
 
 ion-button {
-  margin-left: 2vw;
+  margin-left: 3vw;
 }
 
 ion-badge{

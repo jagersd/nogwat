@@ -8,7 +8,7 @@
         </ion-label>
         <!--Item Loop-->
         <ion-list v-for="item in group.items" :key="item.item_name">
-          <ion-item>
+          <ion-item detail="true" @click="openAddFromStarItemModal(group.group_id,group.stores,item.item_name)">
             {{item.item_name}} ( {{item.name_counter}}x)
           </ion-item>
 
@@ -20,7 +20,8 @@
 
 <script>
 import axios from 'axios'
-import { IonList, IonItem, IonLabel} from '@ionic/vue'
+import { IonList, IonItem, IonLabel, modalController} from '@ionic/vue'
+import AddFromStarItemModal from '../components/list/AddFromStarItemModal.vue'
 
 export default {
   name: "StarItems",
@@ -40,6 +41,17 @@ export default {
       .then(response => (this.starData = response.data))
       .catch(error => console.log(error))
     },
+    async openAddFromStarItemModal(groupId, stores, item){
+      const modal = await modalController.create({
+        component: AddFromStarItemModal,
+        componentProps: {
+          listItem: item,
+          groupId: groupId,
+          stores: stores,
+        },
+      })
+      return modal.present()
+    }
   }
 }
 </script>
