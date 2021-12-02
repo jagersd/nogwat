@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\UserGroup;
 use App\Models\GroupInvite;
 use App\Models\User;
+use App\Mail\SendInvite;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Crypt;
 
 class InviteController extends Controller
@@ -40,7 +42,9 @@ class InviteController extends Controller
                     'invitor_user_id' => $request->user()->id,
                     'group_id'=>$request->groupId,
                 ]);
-    
+
+                Mail::to($request->invitee)->send(new SendInvite($request->user()));
+                
                 $success = true;
                 $message = 'Invite Sent';
     
@@ -56,6 +60,8 @@ class InviteController extends Controller
                     'invitor_user_id' => $request->user()->id,
                     'group_id'=>$request->groupId,
                 ]);
+
+                Mail::to($request->invitee)->send(new SendInvite($request->user()));
     
                 $success = true;
                 $message = 'Invite Sent';

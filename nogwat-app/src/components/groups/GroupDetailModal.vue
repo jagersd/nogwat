@@ -1,6 +1,7 @@
 <template>
 <!--GENERAL-->
   <div class="container">
+    {{groupInfo.open_invites}}
     <h1>{{groupInfo.name}}</h1>
     <i>{{groupInfo.admin_instructions}}</i>
     <!--Default groups-->
