@@ -40,11 +40,20 @@ class Group extends Model
         ->orderBy('store_id', 'DESC');
     }
 
-    public function openInvites()
+    public function openInvitesRegistered()
     {
         return $this->hasMany(GroupInvite::class, 'group_id')
+        ->where('invited_user_id','!=' ,null)
         ->where('status','pending')
         ->with('invitees');
+    }
+
+    public function openInvitesUnregistered()
+    {
+        return $this->hasMany(GroupInvite::class, 'group_id')
+        ->where('invited_user_id', null)
+        ->where('status','pending')
+        ->select('id','unregistered_email');
     }
 
     public function stores(){

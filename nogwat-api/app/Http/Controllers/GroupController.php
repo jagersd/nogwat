@@ -8,6 +8,7 @@ use App\Models\GroupConfig;
 use App\Models\UserGroup;
 use App\Models\User;
 use App\Models\GroupInvite;
+use Illuminate\Support\Facades\Crypt;
 
 class GroupController extends Controller
 {
@@ -54,9 +55,19 @@ class GroupController extends Controller
         $response = Group::where('id',$id)
         ->with('stores')
         ->with('users')
-        ->with('openInvites')
+        ->with('openInvitesRegistered')
+        ->with('openInvitesUnregistered', function ($query) {
+            $query->select('unregistered_email','group_id');
+        })
         ->first();
 
+        
+        if(!empty($response->openInvitesUnregistered)){
+            foreach($response->openInvitesUnregistered as $inviteArray){
+                $inviteArray->unregistered_email = Crypt::decryptString($inviteArray->unregistered_email);
+            }
+        }
+        
         $response->adminCheck = UserGroup::where('user_id', auth()->user()->id)
         ->where('group_id', $id)
         ->select('is_admin')

@@ -126,8 +126,12 @@ class InviteController extends Controller
             'group_id' => $invitation->group_id
         ]);
 
+        $this->removeDuplicates($invitation);
+
         return response('success', 200);
     }
+
+    
 
     /**
     * Allows the user to Reject an invite
@@ -141,6 +145,30 @@ class InviteController extends Controller
         $invitation->status = 'rejected';
         $invitation->save();
 
+        $this->removeDuplicates($invitation);
+
         return response('success', 200);
     }
+
+    private function removeDuplicates($invitation)
+    {
+        $dupInvites = GroupInvite::where('id','!=',$invitation->id)
+        ->where('invited_user_id',$invitation->invited_user_id)
+        ->where('group_id',$invitation->group_id)
+        ->get();
+
+        if($dupInvites != null){
+            foreach($dupInvites as $dupInvite){
+                $dupInvite->delete();
+            }
+        }
+    }
+
+    /**
+    * Allows admin to retract an open invite
+    *
+    * @param  \Illuminate\Http\Request  $request
+    * @return \Illuminate\Http\Response
+    */
+
 }

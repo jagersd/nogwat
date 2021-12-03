@@ -81,6 +81,7 @@ export default {
             text: 'Ja',
             handler: () => {
               axios.post('/acceptinvite', {inviteId:id})
+              .then(this.$router.push({name: 'lists'}))
               .catch(error=> {
                 this.errorMessage = error.message;
                 console.error('there was an error!', error)
@@ -91,6 +92,7 @@ export default {
             text: 'Nee',
             handler: () => {
               axios.post('/rejectinvite', {inviteId:id})
+              .then(this.$router.push({name: 'Home'}))
               .catch(error=> {
                 this.errorMessage = error.message;
                 console.error('there was an error!', error)

@@ -33,7 +33,7 @@ class SendInvite extends Mailable
         ->view('mails.invites')
         ->with([
             'invitorName' =>  $this->invitor->namespace,
-            'invitorEmail' => $this->invotir->email
+            'invitorEmail' => $this->invitor->email
         ]);
     }
 }

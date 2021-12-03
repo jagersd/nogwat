@@ -33,12 +33,21 @@
         <ion-button @click="sendInvite">Verstuur uitnodiging</ion-button>
       </ion-item>
     
-      <!--Invites-->
-      <h4 v-if="groupInfo.open_invites.length">Uitnodigingen verzonden naar:</h4>
-      <ion-list v-for="invite in groupInfo.open_invites" :key="invite.invitees.id">
+      <!--Invites registered-->
+      <h4 v-if="(groupInfo.open_invites_registered.length || groupInfo.open_invites_unregistered.length)">Uitnodigingen verzonden naar:</h4>
+      <ion-list v-for="invite in groupInfo.open_invites_registered" :key="invite.invitees.id">
         <ion-item>
           <ion-label color="dark">
             <p>{{invite.invitees.email}}</p>
+          </ion-label>
+        </ion-item>
+      </ion-list>
+      <!--Invites unregistered-->
+      <h4 v-if="groupInfo.open_invites_unregistered.length"></h4>
+      <ion-list v-for="invite in groupInfo.open_invites_unregistered" :key="invite.unregistered_email">
+        <ion-item>
+          <ion-label color="dark">
+            <p>{{invite.unregistered_email}}</p>
           </ion-label>
         </ion-item>
       </ion-list>
@@ -74,7 +83,7 @@
 <script>
 import axios from 'axios'
 import {
- IonButton, modalController, IonList, IonLabel, IonDatetime, IonItem, IonInput, IonCheckbox
+ IonButton, modalController, IonList, IonLabel, IonDatetime, IonItem, IonInput, IonCheckbox, toastController
 } from "@ionic/vue";
 
 import { defineComponent } from 'vue'
@@ -127,11 +136,22 @@ export default defineComponent ({
   methods: {
     sendInvite(){
       axios.post('/inviteuser', this.form)
+      .then(this.toastResponse)
       .then(this.closeModal)
       .catch(error => {
         this.errorMessage = error.message;
         console.error('there was en error!', error)
       })
+    },
+    async toastResponse(){
+      const toast = await toastController
+      .create({
+        message:'Uitnodiging verzonden!',
+        color: 'dark',
+        position: 'top',
+        duration: 2000
+      })
+      return toast.present()
     },
     addStore(){
       axios.post('/addstore', this.storeForm)
