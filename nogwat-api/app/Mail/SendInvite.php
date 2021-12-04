@@ -32,7 +32,7 @@ class SendInvite extends Mailable
         return $this->subject('Nog Wat Groepsuitnodiging')
         ->view('mails.invites')
         ->with([
-            'invitorName' =>  $this->invitor->namespace,
+            'invitorName' =>  $this->invitor->name,
             'invitorEmail' => $this->invitor->email
         ]);
     }

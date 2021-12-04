@@ -25,13 +25,14 @@
                   {{ listItem.item_name }}
                   <ion-icon v-if="listItem.recipe_id" color="primary" size="small" :icon="restaurant"></ion-icon>
                 </h2>
-                <p v-if="listItem.measurement_amount">
+                <p v-if="(listItem.measurement_amount!=null)">
                   {{ listItem.measurement_amount }}
                   {{ listItem.measurement.abbreviation }} |
                   <i v-if="listItem.store">
                   {{listItem.store.name}}
                   </i>
                 </p>
+                <p v-if="(listItem.measurement_amount ==null && listItem.store != null)">{{listItem.store.name}}</p>
                 
               </ion-label>
               <ion-checkbox v-if="listItem.date_purchased == null" color="primary" slot="end" @click="markPurchased(listItem.id)"></ion-checkbox>
@@ -149,6 +150,11 @@ export default {
       return modal.present();
     },
     async openItemDetailsModal(item, stores) {
+      if(item.measurement == null){
+        item.measurement = {
+          abbreviation: null
+        }
+      }
       const modal = await modalController.create({
         component: ItemDetailsModal,
         componentProps: {

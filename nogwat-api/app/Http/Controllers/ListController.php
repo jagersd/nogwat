@@ -31,8 +31,8 @@ class ListController extends Controller
                     'user_id_added' => $request->user()->id,
                     'store_id' => $listItem['storeId'] ?? null,
                     'item_name' => $listItem['itemName'],
-                    'measurement_type_id' => Measurement::where('abbreviation',$listItem['measurementType'])->first('id')->id,
-                    'measurement_amount' => $listItem['amount'],
+                    'measurement_type_id' =>$listItem['measurementType'] ? Measurement::where('abbreviation',$listItem['measurementType'])->first('id')->id : null,
+                    'measurement_amount' => $listItem['amount'] ?? null,
                     'date_added' => Carbon::now(),
                     'due_date' => $listItem['dueDate'] ?? null,
                     'recipe_id' => $listItem['recipeId'] ?? null,
@@ -69,7 +69,7 @@ class ListController extends Controller
             'store_id' => $request->storeId,
             'item_name' => $request->itemName,
             'due_date' => $request->dueDate,
-            'measurement_type_id' => Measurement::where('abbreviation',$request->measurementType)->first('id')->id,
+            'measurement_type_id' => $request->measurementType ? Measurement::where('abbreviation',$request->measurementType)->first('id')->id : null,
             'measurement_amount' => $request->amount,
         ]);
 

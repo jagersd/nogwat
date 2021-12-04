@@ -22,6 +22,7 @@ class CreateRecipesTable extends Migration
             $table->text('instructions');
             $table->integer('person_amount');
             $table->integer('updatecounter');
+            $table->integer('private')->default(0);
             $table->tinyInteger('verified')->default(0);
             $table->tinyInteger('deleted')->default(0);
             $table->timestamps();
