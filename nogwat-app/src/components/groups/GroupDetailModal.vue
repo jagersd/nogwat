@@ -77,7 +77,7 @@
   </div>
     <ion-button @click="goToGroupHistory">Aankoop historie</ion-button>
     <ion-button @click="closeModal">Sluit</ion-button>
-    <ion-button color="danger">Group verlaten</ion-button>
+    <ion-button @click="leaveGroup" color="danger">Group verlaten</ion-button>
 </template>
 
 <script>
@@ -158,7 +158,7 @@ export default defineComponent ({
       .then(this.closeModal)
       .catch(error=> {
         this.errorMessage = error.message;
-        console.error('there was een error!', error)
+        console.error('there was an error!', error)
       })
     },
     setDefaultGroup(){
@@ -175,6 +175,14 @@ export default defineComponent ({
     flipStoreList(){
       this.showStores == false ? this.showStores = true : this.showStores = false
       this.showParticipants = false
+    },
+    leaveGroup(){
+      axios.post('/leavegroup',this.groupId)
+      .then(this.closeModal)
+      .catch(error=>{
+        this.errorMessage = error.message
+        console.error('there was an error!', error)
+      })
     }
   }
 });

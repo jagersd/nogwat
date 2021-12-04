@@ -1,4 +1,5 @@
 <template>
+  <div class="container">
   <ion-card color="primary">
     <ion-card-header>
       <ion-card-title>
@@ -32,10 +33,12 @@
         inset="true"
         v-for="ingredient in recipeDetails.recipe_items"
         :key="ingredient.id">
-        <ion-item lines="none" id="list-item">
+        <ion-item lines="none">
+          <p id="list-item">
           {{ (ingredient.measurement_amount / originalPersonAmount) * personAmount  }} 
           {{ ingredient.measurement.full_name }} 
           {{ ingredient.item_name }}
+          </p>
           <ion-checkbox checked v-model="ingredient.checkedForList" color="primary" slot="end" :value="ingredient.id"></ion-checkbox>
         </ion-item>
       </ion-list>
@@ -44,8 +47,9 @@
   <ion-text color="secondary">
     <p>{{ recipeDetails.instructions }}</p>
   </ion-text>
-
-  <ion-button expand="block" @click="addToList">Voeg toe aan lijst</ion-button>
+  </div>
+  <ion-text color="danger" v-if="!groupChecker">Stel een standaard groep in om de ingredienten toe te voegen aan je boodschappenlijst.</ion-text>
+  <ion-button v-if="groupChecker" expand="block" @click="addToList">Voeg toe aan lijst</ion-button>
   <ion-button expand="block" @click="closeModal">Sluit</ion-button>
 </template>
 
@@ -101,6 +105,7 @@ export default defineComponent({
   },
   data() {
     return {
+      groupChecker: JSON.parse(localStorage.getItem('group')),
 			originalPersonAmount: this.recipeDetails.person_amount,
 			personAmount: this.recipeDetails.person_amount,
       recipeFavorited: this.recipeDetails.favorited,
@@ -170,6 +175,11 @@ export default defineComponent({
 .ingredient-list {
   color: black;
   padding: 0;
+  font-size: 10px;
+}
+
+.container{
+  overflow-x: scroll;
 }
 
 #ingredient-header {

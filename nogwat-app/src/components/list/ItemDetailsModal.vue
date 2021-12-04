@@ -1,4 +1,5 @@
 <template>
+  <div class="container">
   <ion-card>
     <ion-card-header>
       <ion-card-title>Aanpassen</ion-card-title>
@@ -40,6 +41,7 @@
       <ion-button v-if="(currentUserMail == itemDetails.added_user.email)" @click="deleteItem(itemDetails.id)" color="danger">Verwijderen</ion-button>
     </ion-card-content>
   </ion-card>
+  </div>
 </template>
 
 <script>
@@ -101,3 +103,11 @@ export default defineComponent ({
   }
 });
 </script>
+
+<style scoped>
+
+.container{
+  overflow-x: scroll;
+}
+
+</style>

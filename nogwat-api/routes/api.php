@@ -37,6 +37,7 @@ Route::middleware('auth:sanctum')->group( function() {
     Route::get('/groupdetails/{id}',[GroupController::class, 'groupDetails']);
     Route::get('/getgroupconfig/{id}',[GroupController::class,'getGroupConfig']);
     Route::put('updategroupconfig',[GroupController::class,'updateGroupConfig']);
+    Route::post('/leavegroup',[GroupController::class,'leaveGroup']);
 
     //recipe routes
     Route::post('/createrecipe',[RecipeController::class, 'create']);

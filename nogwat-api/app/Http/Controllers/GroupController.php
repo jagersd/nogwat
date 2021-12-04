@@ -169,15 +169,37 @@ class GroupController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Allows the user to leave a specific group
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function leaveGroup(Request $request)
     {
-        //
+        $userGroupCombo = UserGroup::where('user_id',auth()->user()->id)
+        ->where('group_id',$request->groupId)
+        ->get();
+
+        if($userGroupCombo->is_admin ==1){
+            return response('you are the group admin',406);
+        } else {
+            try{
+                $userGroupCombo->delete();
+
+                $success = true;
+                $message = 'group left';
+            } catch (\Illuminate\Database\QueryException $ex){
+                $success = false;
+                $message = $ex->getMessage();
+            }
+            
+            $response = [
+                'succes' => $success,
+                'message' => $message,
+            ];
+            
+            return response()->json($response);
+        }
     }
 
     /**

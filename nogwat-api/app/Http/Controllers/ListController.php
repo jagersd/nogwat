@@ -142,6 +142,7 @@ class ListController extends Controller
 
             $response = ActiveList::where('group_id',$groupId)
             ->where('date_purchased','!=', null)
+            ->where('date_purchased','>=',Carbon::now()->subMonths(6)->toDateTimeString())
             ->with('measurement')
             ->with('addedUser:id,name')
             ->with('purchasedUser:id,name')

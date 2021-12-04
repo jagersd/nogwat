@@ -71,7 +71,6 @@ export default {
       })
       return modal.present();
     },
-
     async invitationActionSheet(id){
       const inviteActionSheet = await actionSheetController
       .create({
@@ -106,9 +105,7 @@ export default {
         ]
       })
       await inviteActionSheet.present()
-    }
-
-
+    },
   }
 }
 </script>
