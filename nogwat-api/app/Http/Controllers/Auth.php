@@ -7,6 +7,8 @@ use App\Models\User;
 use App\Models\GroupInvite;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Http\Request;
+use App\Mail\SendDevMessage;
+use Illuminate\Support\Facades\Mail;
 
 class Auth extends Controller
 {
@@ -116,7 +118,6 @@ class Auth extends Controller
         return response($response, 201);
     }
 
-
     /**
     * Displays user info and all related db items.
     *
@@ -133,6 +134,25 @@ class Auth extends Controller
         $response = $user;
 
         return response($response, 200);
+    }
+
+    /**
+    * Triggers an email for feedback
+    * @param  \Illuminate\Http\Request  $request
+    * @return \Illuminate\Http\Response
+    * 
+    */
+    public function sendFeedback(Request $request){
+
+        $userMail = $request->user()->email;
+        $type = $request->type;
+        $content = $request->content;
+
+        Mail::to(env('FEEDBACK_MAIL'))->send(new SendDevMessage($userMail,$type,$content));
+
+        $response = 'mail sent';
+
+        return response($response,200);
     }
 
 }

@@ -24,6 +24,7 @@ Route::middleware('auth:sanctum')->group( function() {
     //global routes
     Route::get('/me',[Auth::class, 'me']);
     Route::post('/changepassword', [Auth::class,'changePassword']);
+    Route::post('/sendfeedback',[Auth::class,'sendFeedback']);
 
     //invite routes
     Route::post('/inviteuser',[InviteController::class, 'create']);

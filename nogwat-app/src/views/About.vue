@@ -35,12 +35,13 @@
           </ul>
           <h4>Maar wat gaat het niet doen?</h4>
           <ul>
-              <li>Je boodschappenlijst rechtstreeks doorzetten naar een bezorgservice.</li>
+              <li>Je boodschappenlijst rechtstreeks doorsturen naar een bezorgservice.</li>
               <li>Beoordelen waar jij je boodschappen zou moeten halen.</li>
               <li>Data over jouw boodschappengedrag en voorkeuren doorspelen naar derden.</li>
           </ul>
       </ion-text>
       </div>
+      <!--
       <ion-text>
           <h4>Benieuwd naar ontwikkelingen?</h4>
           <p>De app wordt gebouwd uit liefhebberij en leergierigheid voor web development en is momenteel een 1-persoons project dus het kan een tijdje duren voordat het (wellicht ooit) in de appstore en playstore te vinden is.</p>
@@ -48,6 +49,19 @@
           <p>Volledige code en voortgang is <a href="https://github.com/jagersd">hier</a> in te zien.</p>
           <p>De backend betreft een PHP/Laravel API. <br>
           En de App zelf is een Ionic project met het VueJS framework.</p>
+      </ion-text>
+      -->
+      <ion-text>
+        <h4>Goed te weten voor aanmelding:</h4>
+        <p>Allereerst, heel erg leuk dat je overweegt gebruik te maken van deze applicatie!</p>
+        <p>Momenteel bevind de applicatie zich in een soort 'Alpha' status. Er zijn daarom een paar dingen om rekening mee te houden</p>
+        <ul>
+          <li>Potentiele bugs bugs bugs</li>
+          <li>Missende Features (zoals het niet kunnen aanpassen of verwijderen van recepten)</li>
+          <li>Meertaligheid is nog niet compleet</li>
+          <li>De app werkt momenteel via de browser. Hierdoor zijn updates sneller geleverd want deze hoeven niet via de appstore gedownload te worden. Echter is de applicatie hierdoor iets langzamer dan dat het zal zijn wanneer deze installeerbaar is via zo'n appstore</li>
+          <li>In uiterste noodzaak kan het zo zijn dat de database compleet opnieuw opgebouwd moet worden waardoor alle informatie (gebruikers, groepen, recepten, etc) verloren gaat. Mocht dit nodig zijn zullen gebruikers hier vooraf van op de hoogte worden gebracht.</li>
+        </ul>
       </ion-text>
     </div>
   </master-layout>
@@ -86,7 +100,7 @@ p,h4{
   background-color: #1e847f;
   border: 3px solid black;
   border-radius: 5px;
-  color: #ecc19c;
+  color: #ffc2a0;
   box-shadow: 4px 2px 15px 0px rgba(0,0,0,0.6);
 }
 </style>
