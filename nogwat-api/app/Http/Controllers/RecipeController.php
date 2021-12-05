@@ -22,6 +22,7 @@ class RecipeController extends Controller
 
         $response = Recipe::with('recipeItems')
         ->with('user:id,name')
+        ->where('private',false)
         ->where('deleted',0)
         ->when($mealTypes !== null, function($query) use ($mealTypes){
             $query->whereIn('meal_type',explode(",",$mealTypes));
@@ -59,6 +60,7 @@ class RecipeController extends Controller
                 'instructions' => $request->instructions,
                 'person_amount' => $request->personAmount,
                 'updatecounter' => 0,
+                'private' => $request->private,
             ]);
 
             foreach ($request->ingredients as $recipeItem){

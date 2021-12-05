@@ -178,7 +178,7 @@ class GroupController extends Controller
     {
         $userGroupCombo = UserGroup::where('user_id',auth()->user()->id)
         ->where('group_id',$request->groupId)
-        ->get();
+        ->first();
 
         if($userGroupCombo->is_admin ==1){
             return response('you are the group admin',406);
@@ -203,13 +203,41 @@ class GroupController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Allows group admins to disband the complete group
      *
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function disband(Request $request)
     {
-        //
+        $userGroupCombo = UserGroup::where('user_id',auth()->user()->id)
+        ->where('group_id',$request->groupId)
+        ->first();
+
+        if($userGroupCombo->is_admin ==1){
+            try{
+                Group::where('id',$userGroupCombo->group_id)
+                ->update([
+                    'deleted'=>1
+                ]);
+                UserGroup::where('group_id',$userGroupCombo->group_id)
+                ->delete();
+
+                $success= true;
+                $message = 'group removed';
+            } catch (\Illuminate\Database\QueryException $ex){
+                $success = false;
+                $message = $ex->getMessage();
+            }
+
+            $response = [
+                'succes' => $success,
+                'message' => $message
+            ];
+
+            return response()->json($response);
+        } else {
+            return response('action not allowd', 406);
+        }
     }
 }

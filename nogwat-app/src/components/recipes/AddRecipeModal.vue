@@ -63,6 +63,10 @@
             </ion-item>
             <ion-button @click="addIngredient()">+</ion-button>
         </div>
+    <ion-item>
+    <small>Alleen door jou te vinden?</small>
+    <ion-checkbox v-model="form.private" slot='end'></ion-checkbox>
+    </ion-item>
     <ion-button @click="saveRecipe">Opslaan</ion-button>
     <ion-button @click="closeModal">Sluit</ion-button>
     </div>
@@ -72,13 +76,13 @@
 
 <script>
 import axios from 'axios'
-import { IonText, modalController, IonButton, IonLabel, IonInput, IonItem, IonSelect, IonSelectOption, IonTextarea} from '@ionic/vue'
+import { IonText, modalController, IonButton, IonLabel, IonInput, IonItem, IonSelect, IonSelectOption, IonTextarea, IonCheckbox} from '@ionic/vue'
 import { defineComponent } from 'vue'
 
 export default defineComponent({
     name: 'AddRecipeModal',
     components: {
-        IonText, IonButton, IonLabel, IonInput, IonItem, IonSelect, IonSelectOption, IonTextarea,
+        IonText, IonButton, IonLabel, IonInput, IonItem, IonSelect, IonSelectOption, IonTextarea, IonCheckbox
     },
     data(){
         return {
@@ -88,6 +92,7 @@ export default defineComponent({
                 mealType:"diner",
                 instructions:"",
                 personAmount:"1",
+                private: false,
                 ingredients:[
                     {
                         name:"",

@@ -1,7 +1,6 @@
 <template>
 <!--GENERAL-->
   <div class="container">
-    {{groupInfo.open_invites}}
     <h1>{{groupInfo.name}}</h1>
     <i>{{groupInfo.admin_instructions}}</i>
     <!--Default groups-->
@@ -77,13 +76,14 @@
   </div>
     <ion-button @click="goToGroupHistory">Aankoop historie</ion-button>
     <ion-button @click="closeModal">Sluit</ion-button>
-    <ion-button @click="leaveGroup" color="danger">Group verlaten</ion-button>
+    <ion-button v-if="groupInfo.adminCheck.is_admin==0" @click="leaveGroup" color="danger">Group verlaten</ion-button>
+    <ion-button v-if="groupInfo.adminCheck.is_admin==1" @click="disbandGroup" color="danger">Group verwijderen</ion-button>
 </template>
 
 <script>
 import axios from 'axios'
 import {
- IonButton, modalController, IonList, IonLabel, IonDatetime, IonItem, IonInput, IonCheckbox, toastController
+ IonButton, modalController, IonList, IonLabel, IonDatetime, IonItem, IonInput, IonCheckbox, toastController, actionSheetController
 } from "@ionic/vue";
 
 import { defineComponent } from 'vue'
@@ -176,14 +176,54 @@ export default defineComponent ({
       this.showStores == false ? this.showStores = true : this.showStores = false
       this.showParticipants = false
     },
-    leaveGroup(){
-      axios.post('/leavegroup',this.groupId)
-      .then(this.closeModal)
-      .catch(error=>{
-        this.errorMessage = error.message
-        console.error('there was an error!', error)
+    async leaveGroup(){
+      const leaveActionSheet = await actionSheetController
+      .create({
+        header:'Wil je echt de groep verlaten?',
+        buttons: [
+          {
+            text: 'Ja',
+            handler: ()=> {
+              axios.post('/leavegroup',{groupId:this.groupId})
+              .then(this.closeModal)
+              .catch(error=>{
+                this.errorMessage = error.message
+                console.error('there was an error!', error)
+              })
+            }
+          },
+          {
+            text: 'Nee',
+            role: 'cancel'
+          }
+        ]
       })
-    }
+      await leaveActionSheet.present()
+    },
+      async disbandGroup(){
+      const disbandActionSheet = await actionSheetController
+      .create({
+        header:'Weet je zeker dat je deze groep wilt verwijderen?',
+        buttons: [
+          {
+            text: 'Ja',
+            handler: ()=> {
+              axios.post('/disbandgroup',{groupId:this.groupId})
+              .then(this.closeModal)
+              .catch(error=>{
+                this.errorMessage = error.message
+                console.error('there was an error!', error)
+              })
+            }
+          },
+          {
+            text: 'Nee',
+            role: 'cancel'
+          }
+        ]
+      })
+      await disbandActionSheet.present()
+    },
   }
 });
 </script>

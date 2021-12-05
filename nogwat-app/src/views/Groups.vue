@@ -49,19 +49,24 @@ export default {
       defaultGroupId: this.$store.state.groupId
     }
   },
-  async created() {
-    axios.get('/mygroups')
-    .then(response => (this.getData = response.data))
-    .catch(error => console.log(error))
+  ionViewWillEnter() {
+    this.getGroups()
   },
   methods: {
+    getGroups(){
+      axios.get('/mygroups')
+      .then(response => (this.getData = response.data))
+      .catch(error => console.log(error))
+    },
     async openCreateGroupModal() {
       const modal = await modalController.create({
         component: CreateGroupModal,
       })
+      modal.onDidDismiss().then(() => {
+        this.getGroups();
+      });
       return modal.present();
     },
-
     async openGroupDetailModal(id) {
       const modal = await modalController.create({
         component: GroupDetailModalVue,
@@ -69,6 +74,9 @@ export default {
           groupId: id
         }
       })
+      modal.onDidDismiss().then(() => {
+        this.getGroups();
+      });
       return modal.present();
     },
     async invitationActionSheet(id){
