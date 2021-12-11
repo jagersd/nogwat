@@ -29,7 +29,7 @@ import './theme/variables.css';
 import MasterLayout from './components/MasterLayout.vue';
 
 const i18n = createI18n({
-  locale: 'nl', 
+  locale: store.getters.getAppLanguage,
   fallbackLocale: 'nl', 
   messages,
 })

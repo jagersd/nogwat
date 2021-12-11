@@ -1,6 +1,70 @@
 <template>
   <master-layout pageTitle="About">
-    <div class="container">
+    <div class="container" v-if="$i18n.locale == 'en'">
+      <ion-text class="header">
+        <h1>Welcome to the NogWat app Alpha test build!</h1>
+      </ion-text>
+      <div class="orange">
+        <ion-text>
+          <h4>Just imagine:</h4>
+          <p>You quickly pick up some stuff the neighbourhood shops. It is a busy day and need to visit the gym after work as well...
+            </p>
+            <p>Just popping into the supermarket because the peanut butter ran out and you remember the tea biscuits at the office cantine were gone too last time. 
+            </p>
+            <p>As you are here anyways, might as well get some other stuff, but it is pretty touch to remember what the family needed. 
+            </p>
+            <p>After a view short rounds across the supermarket isles you have filled your cart with some random stuff. Afterwards a quick fly-by to the local pharmacy because you needed those blister bandages.
+            </p>
+            <p>
+                After arriving at home 30 minutes after you had planned, it turns out someone else had already gone to the supermarket and thought of the same thing for diner as you did. <br>
+                ah and if you where at the pharmacy anyways you could have picked up those new toothbrushes the kids needed....
+            </p>
+        </ion-text>
+      </div>
+      <div class="primary">
+      <ion-text>
+        <h4>Sounds familiar?</h4>
+          <p>If so, there could be an App available in the near future which does not make your live easier but might assist in your day to day rush.</p>
+          <h4>What could I do with it?</h4>
+          <ul>
+              <li>Create groups for people with which you would like to have one and the same shopping list.</li>
+              <li>Add products to the shopping list and mark them as 'bought'.</li>
+              <li>Store your day-to-day diner recipes so you can easily add all items to the list.</li>
+              <li>Browse through recipes from other users for inspiration.</li>
+              <li>Other things like that but always in a convenient / simple manner.</li>
+          </ul>
+          <h4>What is the App not going to do?</h4>
+          <ul>
+              <li>Send your shopping list directly to a delivery service.</li>
+              <li>Be opinionated in regards to where to get the items on your list.</li>
+              <li>Share data on shopping habbits with 3rd parties.</li>
+          </ul>
+      </ion-text>
+      </div>
+      <!--
+      <ion-text>
+          <h4>Benieuwd naar ontwikkelingen?</h4>
+          <p>De app wordt gebouwd uit liefhebberij en leergierigheid voor web development en is momenteel een 1-persoons project dus het kan een tijdje duren voordat het (wellicht ooit) in de appstore en playstore te vinden is.</p>
+          <i>Technische details voor de geinteresseerden: </i>
+          <p>Volledige code en voortgang is <a href="https://github.com/jagersd">hier</a> in te zien.</p>
+          <p>De backend betreft een PHP/Laravel API. <br>
+          En de App zelf is een Ionic project met het VueJS framework.</p>
+      </ion-text>
+      -->
+      <ion-text>
+        <h4>Good to know prior to participation:</h4>
+        <p>First and foremost, it is great that you are considering using such an application!</p>
+        <p>Currently the App finds itself in an Alpha testing stage. That us why a few things should be kept in consideration</p>
+        <ul>
+          <li>bugs bugs bugs are a near certainty</li>
+          <li>Missende Features (like not being able to adjust and delete a recipe)</li>
+          <li>Translation to English is not completed. In app notifications and email are still exclusively Dutch.</li>
+          <li>Currently the App runs in the browser. Meaning that updates can be rolled out faster than through the App store. However, the app will be less responsive than it will be once it is an executable through the app stores.</li>
+          <li>There could be a time where the app needs to completely regenerate its backend meaning that all data would be lost. In case this is nessecary users will be informed upfront</li>
+        </ul>
+      </ion-text>
+    </div>
+    <div v-else class="container">
       <ion-text class="header">
         <h1>Welkom bij de alpha van de "Nogwat" App!</h1>
       </ion-text>
@@ -64,6 +128,7 @@
         </ul>
       </ion-text>
     </div>
+
   </master-layout>
 </template>
 

@@ -1,7 +1,14 @@
 {
-    "hello":"Hello CodeCheef",
-    "homePage":"Home Page",
-    "aboutPage":"About Page",
-    "welcome": "Hello {name}",
-    "test": "this is a test message"
+    "masterLayout":{
+        "groups":"Groups",
+        "shoppingList": "Shopping list",
+        "recipes": "Recipes"
+    },
+    "home":{
+        "title": "Welcome to the NogWat app!",
+        "subtitle": "This app aims to provide you the ability to take your kitchen chalk board with you to the stores."
+    },
+    "misc":{
+        "close": "Close"
+    }
 }

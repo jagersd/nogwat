@@ -37,17 +37,17 @@
 
       <ion-tab-button tab="Groups" href="/groups">
         <ion-icon :icon="heart" size="large"></ion-icon>
-        <ion-label>Groepen</ion-label>
+        <ion-label>{{$t("masterLayout.groups")}}</ion-label>
       </ion-tab-button>
 
       <ion-tab-button tab="Lists" href="/lists">
         <ion-icon :icon="list" size="large"></ion-icon>
-        <ion-label>Boodschappenlijst</ion-label>
+        <ion-label>{{$t("masterLayout.shoppingList")}}</ion-label>
       </ion-tab-button>
 
       <ion-tab-button tab="Recipes" href="/recipes">
-        <ion-icon :icon="flame" size="large"></ion-icon>
-        <ion-label>Recepten</ion-label>
+        <ion-icon :icon="restaurant" size="large"></ion-icon>
+        <ion-label>{{$t("masterLayout.recipes")}}</ion-label>
       </ion-tab-button>
     </ion-tab-bar>
   </ion-page>
@@ -61,14 +61,14 @@ import {
   IonButton
 } from "@ionic/vue";
 
-import { heart, list, flame, person, close, settings, star, help, home } from "ionicons/icons";
+import { heart, list, restaurant, person, close, settings, star, help, home } from "ionicons/icons";
 export default {
   components: {
     IonPage,IonHeader,IonContent,IonToolbar,IonTitle, IonIcon, IonLabel, IonTabBar, IonTabButton, IonFab, IonFabButton, IonFabList, IonButton
   },
   setup() {
     return {
-      heart,list, flame, person, close, settings, star, help, home
+      heart,list, restaurant, person, close, settings, star, help, home
     }
   },
   props: ["pageTitle"],

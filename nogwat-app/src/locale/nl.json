@@ -1,6 +1,14 @@
 {
+    "masterLayout":{
+        "groups":"Groepen",
+        "shoppingList": "Boodschappenlijst",
+        "recipes": "Recepten"
+    },
     "home":{
         "title": "Welkom bij de NogWat app!",
         "subtitle": "Het idee achter de app is dat het kruitbord in de keuken altijd meegenomen kan worden naar de stad / het winkelcentrum."
+    },
+    "misc":{
+        "close": "Sluiten"
     }
 }

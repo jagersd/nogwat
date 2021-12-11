@@ -1,22 +1,29 @@
 <template>
   <div class="container">
-    <ion-item @click="setLocale('nl')">
+    <ion-item @click="setLocale('nl')" href="/">
       <ion-label>Nederlands</ion-label>
     </ion-item>
-    <ion-item @click="setLocale('en')">
+    <ion-item @click="setLocale('en')" href="/">
       <ion-label>English</ion-label>
     </ion-item>
-  </div>      
+  </div>
+  <ion-button @click="closeModal">{{$t('misc.close')}}</ion-button>      
 </template>
 
 <script>
-import {IonItem, IonLabel, modalController} from "@ionic/vue"
+import {IonItem, IonLabel, IonButton, modalController} from "@ionic/vue"
 import { defineComponent } from 'vue'
 
 export default defineComponent({
   name:"SelectLocaleModal",
   components: {
-    IonItem, IonLabel,
+    IonItem, IonLabel, IonButton,
+  },
+  setup() {
+    const closeModal = () => {
+      modalController.dismiss();
+    };
+    return { closeModal };
   },
   data(){
     return{

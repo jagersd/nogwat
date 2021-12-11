@@ -7,7 +7,7 @@ axios.defaults.baseURL = process.env.VUE_APP_ROOT_API
 export default createStore({
   state: {
     user: null,
-    locale: null,
+    locale: localStorage.getItem("locale") || 'nl',
     group: null,
     searchParameters: null,
   },
@@ -26,7 +26,7 @@ export default createStore({
 
     setUserLocale(state, userLocale) {
       state.locale = userLocale,
-      localStorage.setItem('locale', JSON.stringify(userLocale))
+      localStorage.setItem('locale', userLocale)
     },
 
     setGroupData(state, groupData) {
@@ -59,6 +59,7 @@ export default createStore({
   },
 
   getters : {
-    isLogged: state => !!state.user
+    isLogged: state => !!state.user,
+    getAppLanguage: (state) => state.locale
   }
 })
