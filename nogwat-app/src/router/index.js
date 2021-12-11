@@ -40,6 +40,7 @@ const routes = [
   { 
     path: '/recipes',
     component: () => import(/* webpackChunkName: "Lists" */ '../views/Recipes.vue'),
+    name: 'recipesmenu',
     meta: {
       requiresAuth: true
     }
@@ -47,6 +48,7 @@ const routes = [
   {
     path: '/myrecipes',
     component: () => import(/* webpackChunkName: "Lists" */ '../views/recipeviews/Myrecipes.vue'),
+    name: 'myrecipes',
     meta: {
       requiresAuth: true
     }

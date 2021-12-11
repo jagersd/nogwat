@@ -23,7 +23,7 @@ export default {
             myRecipes: {},
         }
     },
-    async created() {
+    ionViewWillEnter() {
         axios.get('/myrecipes')
         .then(response => (this.myRecipes = response.data))
         .catch(error=>console.log(error))

@@ -7,6 +7,9 @@
         </ion-label>
       </ion-item>
     </ion-list>
+    <ion-item lines="none" id="expl">
+      <small><i>Er worden maximaal 20 recepten geladen, specificeer zoekresultaten als je andere recepten wilt zien.</i></small>
+    </ion-item>
   </master-layout>
 </template>
 

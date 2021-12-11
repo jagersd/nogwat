@@ -13,6 +13,7 @@
     <p>Groep aangemaakt op:
     <ion-datetime display-format="DD-MM-YYYY" :value="groupInfo.created_at"></ion-datetime>
     </p>
+    <ion-button @click="goToGroupHistory" color="tertiary" expand="block">Aankoop historie</ion-button>
     <!--ParticipantList-->
     <ion-button @click="flipParticipantList">Deelnemers</ion-button>
     <div class="participantListSection" v-if="showParticipants">
@@ -74,10 +75,11 @@
       </ion-item>
     </div>
   </div>
-    <ion-button @click="goToGroupHistory">Aankoop historie</ion-button>
-    <ion-button @click="closeModal">Sluit</ion-button>
-    <ion-button v-if="groupInfo.adminCheck.is_admin==0" @click="leaveGroup" color="danger">Group verlaten</ion-button>
-    <ion-button v-if="groupInfo.adminCheck.is_admin==1" @click="disbandGroup" color="danger">Group verwijderen</ion-button>
+  <div class="slot-menu">  
+    <ion-button @click="closeModal" expand="block">Sluit</ion-button>
+    <ion-button v-if="groupInfo.adminCheck.is_admin==0" @click="leaveGroup" color="danger" expand="block">Group verlaten</ion-button>
+    <ion-button v-if="groupInfo.adminCheck.is_admin==1" @click="disbandGroup" color="danger" expand="block">Group verwijderen</ion-button>
+  </div>
 </template>
 
 <script>
@@ -106,7 +108,7 @@ export default defineComponent ({
       defaultGroupChecker: JSON.parse(localStorage.getItem('group')),
       formHidden: true,
       storeFormHidden: true,
-      showParticipants: false,
+      showParticipants: true,
       showStores: false,
       groupInfo: {
         name:'',
@@ -237,10 +239,6 @@ h1, h4, p, i{
   padding-left: 1rem;
   padding-right: 1rem;
   overflow-x: scroll;
-}
-
-ion-button{
-  min-height: 36px;
 }
 
 #inviteForm{

@@ -4,6 +4,7 @@
     <ion-card-header>
       <ion-card-title>
         {{ recipeDetails.name }}
+        <ion-button v-if="(recipeDetails.user_id_created == $store.state.user.user.id)" color="danger" size="small" id="recipe-remove-btn" @click="removeRecipeActionSheet">X</ion-button>
       </ion-card-title>
       <ion-card-subtitle>
         Gedeeld door: {{ recipeDetails.user.name }}
@@ -70,8 +71,9 @@ import {
   IonIcon,
   IonCheckbox,
   IonItem,
+  actionSheetController,
 } from "@ionic/vue";
-import { person, people, star, starOutline } from "ionicons/icons";
+import { person, people, star, starOutline, removeCircle } from "ionicons/icons";
 
 export default defineComponent({
   name: "detailRecipeModal",
@@ -96,7 +98,7 @@ export default defineComponent({
     const closeModal = () => {
       modalController.dismiss()
     }
-    return { closeModal, person, people, star, starOutline }
+    return { closeModal, person, people, star, starOutline, removeCircle }
   },
   ionViewDidEnter(){
     this.recipeDetails.recipe_items.forEach((item) =>{
@@ -115,7 +117,6 @@ export default defineComponent({
       favoForm: {
         recipeId: this.recipeDetails.id
       },
-      
     }
   },
 	methods:{
@@ -161,6 +162,31 @@ export default defineComponent({
         this.errorMessage = error.message;
         console.error("There was an error!", error);
       })
+    },
+    async removeRecipeActionSheet(){
+      const removeRecipeAction = await actionSheetController
+      .create({
+        header:'Weet je zeker dat je dit recept wilt verwijderen?',
+        buttons:[
+          {
+            text: 'Ja',
+            handler:()=>{
+              axios.post('/deleterecipe',{recipeId:this.recipeDetails.id})
+              .then(this.closeModal)
+              .then(this.$router.push({name: 'recipesmenu'}))
+              .catch(error=>{
+                this.errorMessage = error.message
+                console.error(error)
+              })
+            }
+          },
+          {
+            text: 'Nee',
+            role: 'cancel'
+          }
+        ]
+      })
+      await removeRecipeAction.present()
     }
 	}
 });
@@ -169,6 +195,10 @@ export default defineComponent({
 <style scoped>
 #favo-icon{
   font-size: large;
+  position: absolute;
+  right: 2vw;
+}
+#recipe-remove-btn{
   position: absolute;
   right: 2vw;
 }

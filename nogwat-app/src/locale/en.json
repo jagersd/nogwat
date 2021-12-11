@@ -5,8 +5,12 @@
         "recipes": "Recipes"
     },
     "home":{
-        "title": "Welcome to the NogWat app!",
+        "title": "Welcome!",
+        "opener": "Welcome to the NogWat app!",
         "subtitle": "This app aims to provide you the ability to take your kitchen chalk board with you to the stores."
+    },
+    "shoppingList":{
+        "title": "Shopping List"
     },
     "misc":{
         "close": "Close"

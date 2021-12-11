@@ -31,6 +31,8 @@ class RecipeController extends Controller
             $query->where('name','like', '%' . $searchString . '%')
             ->where('description','like', '%'. $searchString . '%');
         })
+        ->orderBy('id','DESC')
+        ->limit(20)
         ->get();
 
         foreach($response as $r){
@@ -162,7 +164,7 @@ class RecipeController extends Controller
      */
     public function delete(Request $request)
     {
-        $recipe = Recipe::where('id',$request->recipeId)->find(1);
+        $recipe = Recipe::where('id',$request->recipeId)->first();
 
         if($recipe->user_id_created != $request->user()->id){
             return response('only the original creater is allowed to update the recipe', 401);

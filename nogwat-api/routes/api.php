@@ -48,6 +48,8 @@ Route::middleware('auth:sanctum')->group( function() {
     Route::get('/myrecipes',[RecipeController::class,'myIndex']);
     Route::get('/searchrecipes',[RecipeController::class,'searchIndex']);
     Route::get('/myfavorites',[RecipeController::class,'myFavorites']);
+
+    //favo routes
     Route::post('/addfavorite',[FavoriteController::class,'create']);
     Route::post('/removefavorite',[FavoriteController::class,'delete']);
 

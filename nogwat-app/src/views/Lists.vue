@@ -1,5 +1,5 @@
 <template>
-  <master-layout pageTitle="Boodschappenlijst">
+  <master-layout :pageTitle="$t('shoppingList.title')">
     <swiper
     @reachBeginning="currentSlider = 0"
     @slideNextTransitionStart="sliderMovedUp"

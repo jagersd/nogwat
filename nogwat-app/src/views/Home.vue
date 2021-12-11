@@ -1,5 +1,5 @@
 <template>    
-  <master-layout pageTitle="Welkom!">
+  <master-layout :pageTitle="$t('home.title')">
     <div id="container">
         <ion-text color="primary">
           <h1>{{$t("home.title")}}</h1>
