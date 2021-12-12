@@ -1,7 +1,21 @@
 <template>
 <!--GENERAL-->
   <div class="container">
-    <h1>{{groupInfo.name}}</h1>
+    <h1>{{groupInfo.name}}
+      <ion-button v-if="groupInfo.adminCheck.is_admin==1" color="primary" @click="showGroupAdjustForm=true" size="small">
+        <ion-icon :icon="pencil"></ion-icon>
+      </ion-button>
+    </h1>
+
+    <ion-item v-if="showGroupAdjustForm == true">
+      <ion-label position="stacked">Group Naam</ion-label>
+      <ion-input type="text" required="true" v-model="adjustForm.name" :placeholder="groupInfo.name"></ion-input>
+      <ion-label position="stacked">Omgeschrijving</ion-label>
+      <ion-input type="text" required="true" v-model="adjustForm.instructions" :placeholder="groupInfo.admin_instructions"></ion-input>
+      <ion-button @click="changeGroupName">Opslaan</ion-button>
+      <ion-button @click="showGroupAdjustForm=false">Sluiten</ion-button>
+    </ion-item>
+
     <i>{{groupInfo.admin_instructions}}</i>
     <!--Default groups-->
     <ion-item lines="none">
@@ -85,15 +99,16 @@
 <script>
 import axios from 'axios'
 import {
- IonButton, modalController, IonList, IonLabel, IonDatetime, IonItem, IonInput, IonCheckbox, toastController, actionSheetController
+ IonButton, modalController, IonList, IonLabel, IonDatetime, IonItem, IonInput, IonCheckbox, toastController, actionSheetController, IonIcon
 } from "@ionic/vue";
+import { pencil } from "ionicons/icons";
 
 import { defineComponent } from 'vue'
 
 export default defineComponent ({
   name: 'GroupDetailModal',
     components: {
-    IonButton, IonList, IonLabel, IonDatetime, IonItem, IonInput, IonCheckbox
+    IonButton, IonList, IonLabel, IonDatetime, IonItem, IonInput, IonCheckbox, IonIcon
   },
   props: ['groupId'],
 
@@ -110,6 +125,7 @@ export default defineComponent ({
       storeFormHidden: true,
       showParticipants: true,
       showStores: false,
+      showGroupAdjustForm: false,
       groupInfo: {
         name:'',
         adminCheck:{
@@ -126,6 +142,10 @@ export default defineComponent ({
         name:"",
         groupId:this.groupId,
         description:"",
+      },
+      adjustForm:{
+        name:'',
+        instructions: ''
       }
     }
   },
@@ -133,7 +153,7 @@ export default defineComponent ({
     const closeModal = () => {
     modalController.dismiss();
     }
-    return { closeModal }
+    return { closeModal, pencil }
   },
   methods: {
     sendInvite(){

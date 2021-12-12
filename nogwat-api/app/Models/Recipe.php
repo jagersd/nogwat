@@ -16,7 +16,7 @@ class Recipe extends Model
 
     public function recipeItems()
     {
-        return $this->hasMany(RecipeItem::class)->with('measurement');
+        return $this->hasMany(RecipeItem::class)->with('measurement:id,abbreviation,full_name');
     }
 
     public function user()

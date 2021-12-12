@@ -40,6 +40,8 @@ class RecipeController extends Controller
             ->where('user_id', auth()->user()->id)
             ->first();
 
+            unset($r->user->id);
+
             $r->favorited = ($favoCheck !==null) ? "true" : "false";
         }
 

@@ -203,11 +203,22 @@ class GroupController extends Controller
     }
 
     /**
-     * Allows group admins to disband the complete group
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+    * Alter group name and instruction
+    *
+    * @param  \Illuminate\Http\Request  $request
+    * @return \Illuminate\Http\Response
+    */
+    public function updateGroupName(Request $request)
+    {
+        
+    }
+
+    /**
+    * Allows group admins to disband the complete group
+    *
+    * @param  \Illuminate\Http\Request  $request
+    * @return \Illuminate\Http\Response
+    */
     public function disband(Request $request)
     {
         $userGroupCombo = UserGroup::where('user_id',auth()->user()->id)

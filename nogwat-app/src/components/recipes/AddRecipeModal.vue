@@ -52,8 +52,10 @@
         autoGrow="true"
         inputmode="text"
         placeholder="Stap 1:...."
+        maxlength="500"
         v-model="form.instructions"
       ></ion-textarea>
+      <small><i>{{charactersRemaining}}</i></small>
     </ion-item>
   </div>
   <div id="ingredienListSection">
@@ -127,6 +129,7 @@ export default defineComponent({
   },
   data() {
     return {
+      maxCharacters: 500,
       form: {
         name: "",
         description: "",
@@ -143,6 +146,11 @@ export default defineComponent({
         ],
       },
     };
+  },
+  computed:{
+    charactersRemaining: function() {
+      return this.maxCharacters - this.form.instructions.length
+    }
   },
   methods: {
     addIngredient() {

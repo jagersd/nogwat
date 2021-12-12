@@ -60,7 +60,11 @@ export default defineComponent({
         .then(this.$store.commit('setUserLocale', this.userLocale))
         .then(this.closeModal)
         .then(() => {
-          this.$router.push({ path: '/lists' })
+          if(!JSON.parse(localStorage.getItem("groups"))){
+            this.$router.push({name: 'home'})
+          } else {
+            this.$router.push({ name: 'lists' })
+          }
         })
         .catch(err => {
           console.log(err)
