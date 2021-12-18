@@ -30,6 +30,7 @@ import {
   IonCard,IonCardHeader,IonCardTitle,IonCardContent,IonItem,IonLabel,IonInput,IonButton,modalController,IonSelect, IonSelectOption
 } from "@ionic/vue";
 import { defineComponent } from 'vue';
+import axios from 'axios'
 
 export default defineComponent({
   name: 'SigninModal',
@@ -40,7 +41,15 @@ export default defineComponent({
     return {
       email: '',
       password: '',
-      userLocale: 'nl'
+      userLocale: 'nl',
+      groupData:{
+        groups:[
+          {
+            id: null,
+            name: '',
+          }
+        ]
+      },
     }
   },
   setup() {
@@ -61,7 +70,7 @@ export default defineComponent({
         .then(this.closeModal)
         .then(() => {
           if(!JSON.parse(localStorage.getItem("groups"))){
-            this.$router.push({name: 'home'})
+            this.checkForGroups()
           } else {
             this.$router.push({ name: 'lists' })
           }
@@ -69,6 +78,18 @@ export default defineComponent({
         .catch(err => {
           console.log(err)
         })
+    },
+    checkForGroups(){
+      axios.get('/mygroups')
+      .then(response => (this.groupData = response.data))
+      .then(() => {
+        if(this.groupData.groups.length){
+        this.$store.commit('setGroupData', {
+        groupId: this.groupData.groups[0].id, 
+        groupName:this.groupData.groups[0].name}
+        )}
+      })
+      .catch(error => console.log(error))
     },
   }
 });
