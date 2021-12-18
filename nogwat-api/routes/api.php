@@ -40,6 +40,7 @@ Route::middleware('auth:sanctum')->group( function() {
     Route::put('updategroupconfig',[GroupController::class,'updateGroupConfig']);
     Route::post('/leavegroup',[GroupController::class,'leaveGroup']);
     Route::post('/disbandgroup',[GroupController::class,'disband']);
+    Route::post('/changegroupname',[GroupController::class,'updateGroupName']);
 
     //recipe routes
     Route::post('/createrecipe',[RecipeController::class, 'create']);

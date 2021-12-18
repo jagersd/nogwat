@@ -210,7 +210,35 @@ class GroupController extends Controller
     */
     public function updateGroupName(Request $request)
     {
-        
+        $userGroupCombo = UserGroup::where('user_id',auth()->user()->id)
+        ->where('group_id',$request->groupId)
+        ->first();
+
+        if($userGroupCombo->is_admin == 1){
+            try{
+                $group = Group::where('id',$request->groupId)->first();
+                $group->name = !empty($request->name) ? $request->name : $group->name;
+                $group->admin_instructions = !empty($request->instructions) ? $request->instructions : $group->admin_instructions;
+                $group->save();
+
+                $succes = true;
+                $message = 'group updated';
+            } catch (\Illuminate\Database\QueryException $ex){
+                $succes = false;
+                $message = $ex->getMessage();
+            }
+
+        }else{
+            $succes = false;
+            $message = 'you are not allowed to perform this action';
+        }
+
+        $response = [
+            'succes' => $succes,
+            'message' => $message
+        ];
+
+        return response()->json($response);
     }
 
     /**

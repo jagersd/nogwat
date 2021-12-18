@@ -10,7 +10,7 @@
       </ion-item>
       <ion-item>
         <ion-label position="stacked" color="secondary">Hoeveelheid</ion-label>
-        <ion-input type="number" v-model="form.listItems[0].amount" id="amount"></ion-input>
+        <ion-input type="number" v-model="form.listItems[0].amount" @change="autoFillMeasurement" id="amount"></ion-input>
       </ion-item>
       <ion-item>
         <ion-label position="stacked" color="secondary">liter, gram, kilo</ion-label>
@@ -22,7 +22,7 @@
           <ion-select-option value="kr">kr (kratten)</ion-select-option>
         </ion-select>
       </ion-item>
-      <ion-item>
+      <ion-item v-if="storeArray.length">
         <ion-label position="stacked" color="secondary">selecteer winkel</ion-label>
         <ion-select v-model="form.listItems[0].storeId">
           <ion-select-option v-for="store in storeArray" :key="store.id" :value="store.id">{{store.name}}</ion-select-option>
@@ -68,6 +68,7 @@ export default defineComponent ({
       errors: []
     };
   },
+
   setup() {
   const customYearValues = [new Date().getFullYear() ,new Date().getFullYear() +1];
   const closeModal = () => {
@@ -84,6 +85,9 @@ export default defineComponent ({
       this.errorMessage = error.message;
       console.error("There was an error!", error);
       })
+    },
+    autoFillMeasurement() {
+      this.form.listItems[0].measurementType = (this.form.listItems[0].amount) ? 'st' : ''
     }
   }
 });

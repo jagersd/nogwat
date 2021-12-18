@@ -144,6 +144,7 @@ export default defineComponent ({
         description:"",
       },
       adjustForm:{
+        groupId: this.groupId,
         name:'',
         instructions: ''
       }
@@ -222,7 +223,7 @@ export default defineComponent ({
       })
       await leaveActionSheet.present()
     },
-      async disbandGroup(){
+    async disbandGroup(){
       const disbandActionSheet = await actionSheetController
       .create({
         header:'Weet je zeker dat je deze groep wilt verwijderen?',
@@ -246,6 +247,14 @@ export default defineComponent ({
       })
       await disbandActionSheet.present()
     },
+    async changeGroupName(){
+      axios.post('/changegroupname',this.adjustForm)
+      .then(this.closeModal)
+      .catch(error=> {
+        this.errorMessage = error.message;
+        console.error('there was an error!', error)
+      })
+    }
   }
 });
 </script>
