@@ -13,7 +13,7 @@
       <ion-label position="stacked">Omgeschrijving</ion-label>
       <ion-input type="text" required="true" v-model="adjustForm.instructions" :placeholder="groupInfo.admin_instructions"></ion-input>
       <ion-button @click="changeGroupName">Opslaan</ion-button>
-      <ion-button @click="showGroupAdjustForm=false">Sluiten</ion-button>
+      <ion-button @click="showGroupAdjustForm=false">Annuleren</ion-button>
     </ion-item>
 
     <i>{{groupInfo.admin_instructions}}</i>
@@ -37,14 +37,22 @@
             <h2>{{user.name}}</h2>
             <p>{{user.email}}</p>
           </ion-label>
+          <ion-icon v-if="(groupInfo.adminCheck.is_admin==1 && user.email != $store.state.user.user.email)" 
+          :icon="personRemove" 
+          size="small" 
+          color="danger"
+          @click="removeFromGroup(user.id)"
+          ></ion-icon>
         </ion-item>
       </ion-list>
 
       <ion-button v-if="groupInfo.adminCheck.is_admin==1" class="ion-margin-top" @click="formHidden = false">+</ion-button>
 
       <ion-item v-if="!formHidden">
-        <ion-input inputmode="email" type="email" required="true" v-model="form.invitee" id="inviteForm" placeholder="email"></ion-input>
+        <ion-label position="stacked">email adres</ion-label>
+        <ion-input inputmode="email" type="email" required="true" v-model="form.invitee" id="inviteForm" placeholder="email@email.com"></ion-input>
         <ion-button @click="sendInvite">Verstuur uitnodiging</ion-button>
+        <ion-button @click="formHidden = true">Annuleren</ion-button>
       </ion-item>
     
       <!--Invites registered-->
@@ -76,6 +84,22 @@
             <h2>{{store.name}}</h2>
             <p>{{store.description}}</p>
           </ion-label>
+          <ion-icon v-if="(groupInfo.adminCheck.is_admin==1)" 
+          :icon="pencil" 
+          size="small" 
+          color="primary"
+          slot="end"
+          @click="storeAdjustId = store.id"
+          ></ion-icon>
+        </ion-item>
+        <!--store adjust form -->
+        <ion-item v-if="storeAdjustId == store.id">
+          <ion-label position="stacked">Winkelnaam</ion-label>
+          <ion-input type="text" :placeholder="store.name" v-model="storeAdjustFrom.name"></ion-input>
+          <ion-label position="stacked">Omgeschrijving</ion-label>
+          <ion-input type="text" :placeholder="store.description" v-model="storeAdjustFrom.description"></ion-input>
+          <ion-button @click="adjustStoreDetails(store.id)">Opslaan</ion-button>
+          <ion-button @click="storeAdjustId = null">Annuleren</ion-button>
         </ion-item>
       </ion-list>
       <p v-if="groupInfo.adminCheck.is_admin!=1">Groep admins en de oprichter kunnen winkels en winkeltypen toevoegen</p>
@@ -86,6 +110,7 @@
         <ion-label position="stacked">Omgeschrijving</ion-label>
         <ion-input type="text" required="true" v-model="storeForm.description" placeholder="Voorbeeld: supermarkt"></ion-input>
         <ion-button @click="addStore">Toevoegen</ion-button>
+        <ion-button @click="storeFormHidden = true">Annuleren</ion-button>
       </ion-item>
     </div>
   </div>
@@ -101,7 +126,7 @@ import axios from 'axios'
 import {
  IonButton, modalController, IonList, IonLabel, IonDatetime, IonItem, IonInput, IonCheckbox, toastController, actionSheetController, IonIcon
 } from "@ionic/vue";
-import { pencil } from "ionicons/icons";
+import { pencil, personRemove } from "ionicons/icons";
 
 import { defineComponent } from 'vue'
 
@@ -134,6 +159,11 @@ export default defineComponent ({
         users:[],
         open_invites:[],
       },
+        adjustForm:{
+        groupId: this.groupId,
+        name:'',
+        instructions: ''
+      },
       form: {
         invitee:"",
         groupId:this.groupId,
@@ -143,18 +173,21 @@ export default defineComponent ({
         groupId:this.groupId,
         description:"",
       },
-      adjustForm:{
-        groupId: this.groupId,
-        name:'',
-        instructions: ''
+      storeAdjustId: null,
+      storeAdjustFrom:{
+        groupId:this.groupId,
+        storeId: null,
+        name:"",
+        description:"",
       }
+
     }
   },
   setup() {
     const closeModal = () => {
     modalController.dismiss();
     }
-    return { closeModal, pencil }
+    return { closeModal, pencil, personRemove }
   },
   methods: {
     sendInvite(){
@@ -247,6 +280,30 @@ export default defineComponent ({
       })
       await disbandActionSheet.present()
     },
+    async removeFromGroup(userId){
+      const removeFromGroupActionSheet = await actionSheetController
+      .create({
+        header:'Weet je het zeker?',
+        buttons:[
+          {
+            text: 'Ja',
+            handler: () => {
+              axios.post('/kickfromgroup',{groupId:this.groupId, removeUser:userId})
+              .then(this.closeModal)
+              .catch(error=>{
+                this.errorMessage = error.message
+                console.error('there was een error!', error)
+              })
+            },
+          },
+          {
+            text: 'Nee',
+            role: 'cancel'
+          }
+        ]
+      })
+      await removeFromGroupActionSheet.present()
+    },
     async changeGroupName(){
       axios.post('/changegroupname',this.adjustForm)
       .then(this.closeModal)
@@ -254,6 +311,15 @@ export default defineComponent ({
         this.errorMessage = error.message;
         console.error('there was an error!', error)
       })
+    },
+    async adjustStoreDetails(storeId){
+      this.storeAdjustFrom.storeId = storeId
+      axios.post('/adjuststorename',this.storeAdjustFrom)
+      .catch(error=> {
+        this.errorMessage = error.message;
+        console.error('there was an error!', error)
+      })
+      .then(this.closeModal)
     }
   }
 });
@@ -268,12 +334,5 @@ h1, h4, p, i{
   padding-left: 1rem;
   padding-right: 1rem;
   overflow-x: scroll;
-}
-
-#inviteForm{
-  padding-top: 5px;
-  padding-bottom: 5px;
-  border: 1px solid black;
-  border-radius: 10px;
 }
 </style>

@@ -54,11 +54,13 @@ class StoreController extends Controller
         }
 
         try{
-            Store::where('id', $request->storeId)
-            ->update([
-                'name' => $request->name,
-                'description'=> $request->description
-            ]);
+            $store = Store::where('id', $request->storeId)
+            ->where('group_id',$request->groupId)
+            ->first();
+
+            $store->name = !empty($request->name) ? $request->name : $store->name;
+            $store->description = !empty($request->description) ? $request->description : $store->description;
+            $store->save();
 
             $success = true;
             $message = 'Store updated';

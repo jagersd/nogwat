@@ -203,6 +203,45 @@ class GroupController extends Controller
     }
 
     /**
+     * Allows the admin to kick someone from the group
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function kickFromGroup(Request $request)
+    {
+        $userGroupCombo = UserGroup::where('user_id',auth()->user()->id)
+        ->where('group_id',$request->groupId)
+        ->first();
+
+        if($userGroupCombo->is_admin ==1){
+            try{
+                UserGroup::where('user_id',$request->removeUser)
+                ->where('group_id',$request->groupId)
+                ->where('is_admin', 0)
+                ->delete();
+
+                $success = true;
+                $message = 'user removed from group';
+            } catch (\Illuminate\Database\QueryException $ex){
+                $success = false;
+                $message = 'request failed';
+            }
+
+        }else{
+            $success = false;
+            $message = 'You are not allowed to perform this operation';
+        }
+
+        $response = [
+            'succes' => $success,
+            'message' => $message
+        ];
+
+        return response()->json($response);
+    }
+
+    /**
     * Alter group name and instruction
     *
     * @param  \Illuminate\Http\Request  $request

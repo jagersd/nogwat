@@ -41,6 +41,7 @@ Route::middleware('auth:sanctum')->group( function() {
     Route::post('/leavegroup',[GroupController::class,'leaveGroup']);
     Route::post('/disbandgroup',[GroupController::class,'disband']);
     Route::post('/changegroupname',[GroupController::class,'updateGroupName']);
+    Route::post('/kickfromgroup',[GroupController::class,'kickFromGroup']);
 
     //recipe routes
     Route::post('/createrecipe',[RecipeController::class, 'create']);
@@ -69,6 +70,6 @@ Route::middleware('auth:sanctum')->group( function() {
 
     //store routes
     Route::post('addstore',[StoreController::class,'create']);
-    Route::put('updatestore',[StoreController::class,'update']);
+    Route::post('adjuststorename',[StoreController::class,'update']);
     Route::put('deletestore',[StoreController::class,'delete']);
 });
