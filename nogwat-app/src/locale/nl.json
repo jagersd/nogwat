@@ -9,10 +9,37 @@
         "opener": "Welkom bij de NogWat app!",
         "subtitle": "Het idee achter de app is dat het krijtbord in de keuken altijd meegenomen kan worden naar de stad / het winkelcentrum."
     },
+    "groups":{
+        "subtitle1": "Hey {user}!",
+        "subtitle2": "Dit is een overzicht van je groepen. Tab om details te bekijken of aanpassingen te maken.",
+        "groups": "Groepen",
+        "invites": "Uitnodigingen",
+        "sentBy" : "Verzonden door ",
+        "createGroupBtn": "Maak een nieuwe group aan",
+        "detailsModal":{
+            "groupName": "Groep naam",
+            "setDefault": "Instellen als standaard groep",
+            "groupCreated": "Groep aangemaakt op",
+            "historyBtn": "Aankoopgeschiedenis",
+            "participants": "Deelnemers",
+            "invSentTo": "Uitnodigingen verzonden naar",
+            "sendInviteBtn": "Verstuur uitnodiging",
+            "storeType": "Winkel (type)",
+            "adminExp": "Groep admins en de oprichter kunnen winkels en winkeltypen toevoegen",
+            "storeName": "Winkelnaam",
+            "leaveGroupBtn":"Groep verlaten",
+            "removeGroupBtn":"Groep verwijderen"
+        }
+    },
     "shoppingList":{
         "title": "Boodschappenlijst"
     },
     "misc":{
-        "close": "Sluiten"
+        "close": "Sluiten",
+        "cancel": "Annuleren",
+        "save": "Opslaan",
+        "email": "email adres",
+        "description": "Omschrijving",
+        "add": "Toevoegen"
     }
 }

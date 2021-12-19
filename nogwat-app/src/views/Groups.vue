@@ -1,11 +1,11 @@
 <template>
   <master-layout pageTitle="Groepen">
     <div class="container">
-      <ion-text class="ion-margin-top">Hi {{$store.state.user.user.name}}!</ion-text><br>
-      <ion-text class="ion-margin-top">Dit is een overzicht van je groepen. Tab om details te bekijken of aanpassingen te maken.</ion-text>
+      <ion-text class="ion-margin-top">{{$t('groups.subtitle1', {user: $store.state.user.user.name} )}}</ion-text><br>
+      <ion-text class="ion-margin-top">{{$t('groups.subtitle2')}}</ion-text>
 
       <!--Grouplists-->
-      <ion-text><h4>Groepen:</h4></ion-text>
+      <ion-text><h4>{{$t('groups.groups')}}:</h4></ion-text>
       <ion-list v-for="group in getData.groups" :key="group.id">
         <ion-card color="primary" @click="openGroupDetailModal(group.id)">
           <ion-card-header><ion-card-title>{{group.name}}</ion-card-title></ion-card-header>
@@ -14,16 +14,16 @@
       </ion-list>
 
       <!--Invites-->
-      <ion-text v-if="getData.invites.length"><h4>Uitnodigingen:</h4></ion-text>
+      <ion-text v-if="getData.invites.length"><h4>{{$t('groups.invites')}}:</h4></ion-text>
       <ion-list v-for="invite in getData.invites" :key="invite.id">
         <ion-card color="secondary" @click="invitationActionSheet(invite.id)">
           <ion-card-header><ion-card-title>{{invite.group.name}}</ion-card-title></ion-card-header>
-          <ion-card-content>verzonden door: {{invite.invitor.name}}</ion-card-content>
+          <ion-card-content>{{$t('groups.sentBy')}}: {{invite.invitor.name}}</ion-card-content>
         </ion-card>
 
       </ion-list>
     </div>
-    <ion-button expand="block" @click="openCreateGroupModal">Maak een nieuwe groep aan</ion-button>
+    <ion-button expand="block" @click="openCreateGroupModal">{{$t('groups.createGroupBtn')}}</ion-button>
     {{$store.state.groupId}}
   </master-layout>
 </template>

@@ -37,11 +37,14 @@ class InviteController extends Controller
             }
 
             try{
-                $invite = GroupInvite::create([
+                $invite = GroupInvite::updateOrCreate(
+                    ['invited_user_id'=>$inviteeId, 'group_id'=>$request->groupId],
+                    [
                     'invited_user_id' => $inviteeId,
                     'invitor_user_id' => $request->user()->id,
                     'group_id'=>$request->groupId,
-                ]);
+                    'status'=>'pending']
+                );
 
                 Mail::to($request->invitee)->send(new SendInvite($request->user()));
                 
@@ -155,6 +158,7 @@ class InviteController extends Controller
         $dupInvites = GroupInvite::where('id','!=',$invitation->id)
         ->where('invited_user_id',$invitation->invited_user_id)
         ->where('group_id',$invitation->group_id)
+        ->where('status','pending')
         ->get();
 
         if($dupInvites != null){

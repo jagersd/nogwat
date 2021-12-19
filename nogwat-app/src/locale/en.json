@@ -9,10 +9,37 @@
         "opener": "Welcome to the NogWat app!",
         "subtitle": "This app aims to provide you the ability to take your kitchen chalk board with you to the stores."
     },
+    "groups":{
+        "subtitle1": "Hey {user}!",
+        "subtitle2": "This is an overview of your groups and invites. Tab a group to view its details",
+        "groups": "Groups",
+        "invites": "Invites",
+        "sentBy" : "Sent by ",
+        "createGroupBtn": "Create a new group",
+        "detailsModal":{
+            "groupName": "Group name",
+            "setDefault": "Set this group as your default",
+            "groupCreated": "This group is created at",
+            "historyBtn": "Purchasing history",
+            "participants": "Participants",
+            "invSentTo": "Invites have been sent to",
+            "sendInviteBtn": "Send invite",
+            "storeType": "Store (type)",
+            "adminExp": "Group admins and creators are able to add stores and store types",
+            "storeName": "Store name",
+            "leaveGroupBtn":"Leave group",
+            "removeGroupBtn":"Remove group"
+        }
+    },
     "shoppingList":{
         "title": "Shopping List"
     },
     "misc":{
-        "close": "Close"
+        "close": "Close",
+        "cancel": "Cancel",
+        "save": "Save",
+        "email": "email address",
+        "description": "Description",
+        "add": "add"
     }
 }
