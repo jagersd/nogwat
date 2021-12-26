@@ -17,6 +17,11 @@ class Auth extends Controller
     */
     public function register(Request $request)
     {
+        $existCheck = User::where('email',$request->email)->first();
+        if($existCheck !== null){
+            return response()->json('user already registered', 409);
+        }
+
         try {
             $user = new User();
             $user->name = $request->name;
@@ -47,7 +52,7 @@ class Auth extends Controller
             'success' => $success,
             'message' => $message,
         ];
-        return response()->json($response);
+        return response()->json($response,201);
     }
 
 
@@ -83,7 +88,7 @@ class Auth extends Controller
             'token' => $token
         ];
 
-        return response($response, 201);
+        return response()->json($response, 201);
     }
 
     /**

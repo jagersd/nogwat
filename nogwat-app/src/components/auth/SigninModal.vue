@@ -19,6 +19,9 @@
             <ion-select-option value="en">English</ion-select-option>
           </ion-select>
         </ion-item>
+        <ion-item lines="none" color="danger" id="error-message" v-if="incorrectCreds">
+          <p>Gebruikersnaam / wachtwoord combinatie incorrect.</p>
+        </ion-item>
         <ion-button expand="full" @click="login()">Login</ion-button>
         <ion-button @click="closeModal">Sluit</ion-button>
       </ion-card-content>
@@ -50,6 +53,7 @@ export default defineComponent({
           }
         ]
       },
+      incorrectCreds: false,
     }
   },
   setup() {
@@ -76,7 +80,7 @@ export default defineComponent({
           }
         })
         .catch(err => {
-          console.log(err)
+          err.response.status == 404 ? this.incorrectCreds = true : this.incorrectCreds = false
         })
     },
     checkForGroups(){
@@ -94,3 +98,10 @@ export default defineComponent({
   }
 });
 </script>
+
+<style scoped>
+  #error-message{
+    margin-top: 1rem;
+    border-radius: 10px;
+  }
+</style>

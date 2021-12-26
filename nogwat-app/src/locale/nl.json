@@ -15,7 +15,7 @@
         "groups": "Groepen",
         "invites": "Uitnodigingen",
         "sentBy" : "Verzonden door ",
-        "createGroupBtn": "Maak een nieuwe group aan",
+        "createGroupBtn": "Maak een nieuwe groep aan",
         "detailsModal":{
             "groupName": "Groep naam",
             "setDefault": "Instellen als standaard groep",

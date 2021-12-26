@@ -51,7 +51,6 @@ export default createStore({
           commit('setUserData', data)
         })
     },
-
     logout ({ commit }) {
       commit('clearUserData')
     },

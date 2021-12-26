@@ -28,3 +28,5 @@ npm-debug.log*
 /www
 /src/assets
 .env
+.env.development.local
+.env.production.local

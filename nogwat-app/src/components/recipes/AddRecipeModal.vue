@@ -45,7 +45,7 @@
       </ion-select>
     </ion-item>
     <ion-item lines="none">
-      <ion-label position="floating">Instructies:</ion-label>
+      <ion-label position="floating">Instructies: <small><i>{{charactersRemaining}}</i></small></ion-label>
       <ion-textarea
         type="text"
         required="true"
@@ -55,7 +55,6 @@
         maxlength="500"
         v-model="form.instructions"
       ></ion-textarea>
-      <small><i>{{charactersRemaining}}</i></small>
     </ion-item>
   </div>
   <div id="ingredienListSection">
@@ -80,6 +79,7 @@
       <ion-item>
         <ion-label position="floating">Eenheid</ion-label>
         <ion-select v-model="ingredient.amountType">
+          <ion-select-option value="st">stuks</ion-select-option>
           <ion-select-option value="el">el (eetlepel)</ion-select-option>
           <ion-select-option value="tl">tl (theelepel)</ion-select-option>
           <ion-select-option value="gr">gr (gram)</ion-select-option>
@@ -163,7 +163,7 @@ export default defineComponent({
     saveRecipe() {
       let checkerArray = []
       this.form.ingredients.forEach(ingredient => checkerArray.push(Object.values(ingredient).includes('')))
-      if(checkerArray.includes(true)){
+      if(checkerArray.includes(true) || this.form.name == "" || this.form.description == "" || this.form.instructions == ""){
         this.toastResponse()
       }else{
         axios.post("/createrecipe", this.form)

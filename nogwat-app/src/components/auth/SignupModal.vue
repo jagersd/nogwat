@@ -20,6 +20,9 @@
         <ion-label position="floating">Wachtwoord confirmatie</ion-label>
         <ion-input type="password" required="true" v-model="form.password_confirmation" id="password_confirmation"></ion-input>
       </ion-item>
+      <ion-item lines="none" color="danger" id="error-message" v-if="errorMessage != ''">
+        {{errorMessage}}
+      </ion-item>
       <ion-button expand="fill" @click="register()">Register</ion-button>
       <ion-button @click="closeModal">Sluit</ion-button>
     </ion-card-content>
@@ -47,7 +50,8 @@ export default defineComponent ({
         password: "",
         password_confirmation: ""
       },
-      errors: []
+      errors: [],
+      errorMessage: ""
     };
   },
   setup() {
@@ -57,15 +61,26 @@ export default defineComponent ({
   return { closeModal }
   },
   methods: {
-        register() {
-        axios.post('/register', this.form)
-        .then(response => this.articleId = response.data.id)
-        .then(this.closeModal)
-        .catch(error => {
-        this.errorMessage = error.message;
-        console.error("There was an error!", error);
+      register() {
+        if(this.form.password != this.form.password_confirmation){
+          this.errorMessage = 'Passwords do not match'
+        } else {
+          axios.post('/register', this.form)
+          .then(response => this.articleId = response.data.id)
+          .then(this.closeModal)
+          .catch(error => {
+          error.response.status == 409 ? this.errorMessage = 'User already registered' : this.errorMessage = error.message
+          console.error("There was an error!", error);
         });
+      }
     }
   }
 });
 </script>
+
+<style scoped>
+  #error-message{
+    margin-top: 1rem;
+    border-radius: 10px;
+  }
+</style>
