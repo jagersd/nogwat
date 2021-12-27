@@ -30,7 +30,7 @@
       </ion-item>
       <ion-item>
         <ion-label position="stacked" color="secondary">In huis halen voor</ion-label>
-        <ion-datetime v-model="form.listItems[0].dueDate" display-format="DD/MM/YYYY" :year-values="customYearValues"></ion-datetime>
+        <ion-datetime v-model="form.listItems[0].dueDate" locale="nl-NL" display-format="DD/MM/YYYY" :year-values="customYearValues"></ion-datetime>
       </ion-item>
       <ion-button expand="fill" @click="addItem()">Opslaan</ion-button>
       <ion-button @click="closeModal">Sluit</ion-button>
