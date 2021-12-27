@@ -18,7 +18,8 @@ use App\Http\Controllers\FavoriteController;
 
 Route::post('/login', [Auth::class, 'login']);
 Route::post('/register',[Auth::class,'register']);
-
+Route::post('/forgotpassword',[Auth::class,'generatePasswordResetToken']);
+Route::post('/submitresettoken',[Auth::class,'updatePasswordWithToken']);
 
 Route::middleware('auth:sanctum')->group( function() {
     //global routes

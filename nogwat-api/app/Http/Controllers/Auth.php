@@ -5,9 +5,11 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 use App\Models\GroupInvite;
+use App\Models\PasswordReset;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Http\Request;
 use App\Mail\SendDevMessage;
+use App\Mail\SendPasswordResetToken;
 use Illuminate\Support\Facades\Mail;
 
 class Auth extends Controller
@@ -158,6 +160,78 @@ class Auth extends Controller
         $response = 'mail sent';
 
         return response($response,200);
+    }
+
+    /**
+    * Generate and email password request token
+    * @param  \Illuminate\Http\Request  $request
+    * @return \Illuminate\Http\Response
+    * 
+    */
+    public function generatePasswordResetToken(Request $request){
+
+        $user = User::where('email',$request->email)->first();
+        if($user == null){
+            return response()->json('impossible request', 403);
+        }
+
+        $resetToken = mt_rand(10000,99999);
+        PasswordReset::updateOrInsert(
+            ['email'=>$request->email],
+            [
+                'token'=>Crypt::encrypt($resetToken),
+                'created_at'=>\Carbon\Carbon::now()->addMinutes(10)->toDateTimeString()
+            ]
+        );
+
+        Mail::to($user->email)->send(new SendPasswordResetToken($resetToken));
+
+        $response = 'resetToken sent';
+
+        return response($response,200);
+    }
+
+    /**
+    * Allow user to submit new password based on token match
+    * @param  \Illuminate\Http\Request  $request
+    * @return \Illuminate\Http\Response
+    * 
+    */
+    public function updatePasswordWithToken(Request $request){
+
+        $request->validate([
+            'email'=>'required|email',
+            'newPassword' => 'required',
+            'token' => 'required'
+        ]);
+
+        $resetAction = PasswordReset::where('email',$request->email)->first();
+
+        if(Crypt::decrypt($resetAction->token) !== intval($request->token)){
+            return response('tokens do not match',403);
+        }
+
+        if($resetAction->created_at < \Carbon\Carbon::now()->toDateTimeString()){
+            return response('token is no longer valid', 403);
+        }
+
+        $user = User::where('email',$resetAction->email)->first();
+
+        if($user !== null){
+            $user->password = Hash::make($request->newPassword);
+            $user->save();
+
+            PasswordReset::where('email',$request->email)->delete();
+    
+            return response([
+                'message' => 'Password Changed'
+            ], 201);
+        } else {
+            return response([
+                'message' => 'Something went wrong'
+            ], 500);
+        }
+
     }
 
 }

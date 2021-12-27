@@ -9,7 +9,7 @@
           <ion-input type="email" name="email" v-model="email"></ion-input>
         </ion-item>
         <ion-item>
-          <ion-label position="floating">Password</ion-label>
+          <ion-label position="floating">Wachtwoord</ion-label>
           <ion-input type="password" name="password" v-model="password"></ion-input>
         </ion-item>
         <ion-item>
@@ -23,7 +23,8 @@
           <p>Gebruikersnaam / wachtwoord combinatie incorrect.</p>
         </ion-item>
         <ion-button expand="full" @click="login()">Login</ion-button>
-        <ion-button @click="closeModal">Sluit</ion-button>
+        <ion-button expand="full" @click="closeModal">Sluit</ion-button>
+        <ion-button expand="full" @click="forgotPassword" color="secondary" slot="end">Wachtwoord vergeten</ion-button>
       </ion-card-content>
     </ion-card>
 </template>
@@ -32,8 +33,9 @@
 import {
   IonCard,IonCardHeader,IonCardTitle,IonCardContent,IonItem,IonLabel,IonInput,IonButton,modalController,IonSelect, IonSelectOption
 } from "@ionic/vue";
-import { defineComponent } from 'vue';
+import { defineComponent } from 'vue'
 import axios from 'axios'
+import ResetPasswordModal from './ResetPasswordModal.vue'
 
 export default defineComponent({
   name: 'SigninModal',
@@ -95,6 +97,12 @@ export default defineComponent({
       })
       .catch(error => console.log(error))
     },
+    async forgotPassword(){
+      const modal = await modalController.create({
+        component: ResetPasswordModal
+      })
+      return modal.present()
+    }
   }
 });
 </script>
