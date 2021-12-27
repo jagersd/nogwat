@@ -34,7 +34,7 @@ class ListController extends Controller
                     'measurement_type_id' =>$listItem['measurementType'] ? Measurement::where('abbreviation',$listItem['measurementType'])->first('id')->id : null,
                     'measurement_amount' => $listItem['amount'] ?? null,
                     'date_added' => Carbon::now(),
-                    'due_date' => $listItem['dueDate'] ?? null,
+                    'due_date' => $listItem['dueDate'] ? Carbon::parse($listItem['dueDate'])->format('y-m-d') : null,
                     'recipe_id' => $listItem['recipeId'] ?? null,
                 ]);
 
