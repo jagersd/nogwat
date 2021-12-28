@@ -23,7 +23,7 @@
 
       </ion-list>
     </div>
-    <ion-button expand="block" @click="openCreateGroupModal">{{$t('groups.createGroupBtn')}}</ion-button>
+    <ion-button color="tertiary" expand="block" @click="openCreateGroupModal">{{$t('groups.createGroupBtn')}}</ion-button>
     {{$store.state.groupId}}
   </master-layout>
 </template>

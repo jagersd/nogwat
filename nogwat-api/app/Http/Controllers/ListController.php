@@ -68,7 +68,7 @@ class ListController extends Controller
         $listItem->update([
             'store_id' => $request->storeId,
             'item_name' => $request->itemName,
-            'due_date' => $request->dueDate,
+            'due_date' => $request->dueDate ? Carbon::parse($request->dueDate)->format('y-m-d') : null,
             'measurement_type_id' => $request->measurementType ? Measurement::where('abbreviation',$request->measurementType)->first('id')->id : null,
             'measurement_amount' => $request->amount,
         ]);

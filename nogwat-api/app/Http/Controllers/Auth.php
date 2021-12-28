@@ -18,7 +18,14 @@ class Auth extends Controller
     * Register
     */
     public function register(Request $request)
-    {
+    {   
+        $request->validate([
+            'name' => 'required',
+            'email' => 'required|email',
+            'password' => 'required',
+            'password_confirmation' => 'required',
+        ]);
+
         $existCheck = User::where('email',$request->email)->first();
         if($existCheck !== null){
             return response()->json('user already registered', 409);

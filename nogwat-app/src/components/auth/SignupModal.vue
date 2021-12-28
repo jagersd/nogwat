@@ -51,7 +51,8 @@ export default defineComponent ({
         password_confirmation: ""
       },
       errors: [],
-      errorMessage: ""
+      errorMessage: "",
+      userLocale: 'nl'
     };
   },
   setup() {
@@ -66,14 +67,50 @@ export default defineComponent ({
           this.errorMessage = 'Passwords do not match'
         } else {
           axios.post('/register', this.form)
-          .then(response => this.articleId = response.data.id)
+          .then(response => {
+            if(response.status == 201){
+              this.login()
+            }
+          })
           .then(this.closeModal)
           .catch(error => {
           error.response.status == 409 ? this.errorMessage = 'User already registered' : this.errorMessage = error.message
           console.error("There was an error!", error);
         });
       }
-    }
+    },
+    login () {
+      this.$store
+        .dispatch('login', {
+          email: this.form.email,
+          password: this.form.password,
+          userLocale: this.userLocale
+        })
+        .then(this.$store.commit('setUserLocale', this.userLocale))
+        .then(this.closeModal)
+        .then(() => {
+          if(!JSON.parse(localStorage.getItem("groups"))){
+            this.checkForGroups()
+          } else {
+            this.$router.push({ name: 'lists' })
+          }
+        })
+        .catch(err => {
+          err.response.status == 404 ? this.incorrectCreds = true : this.incorrectCreds = false
+        })
+    },
+    checkForGroups(){
+      axios.get('/mygroups')
+      .then(response => (this.groupData = response.data))
+      .then(() => {
+        if(this.groupData.groups.length){
+        this.$store.commit('setGroupData', {
+        groupId: this.groupData.groups[0].id, 
+        groupName:this.groupData.groups[0].name}
+        )}
+      })
+      .catch(error => console.log(error))
+    },
   }
 });
 </script>
