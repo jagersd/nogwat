@@ -34,7 +34,6 @@
     </ion-content>
 
     <ion-tab-bar v-if="$store.state.user" slot="bottom">
-
       <ion-tab-button tab="Groups" href="/groups">
         <ion-icon :icon="heart" size="large"></ion-icon>
         <ion-label>{{$t("masterLayout.groups")}}</ion-label>
@@ -54,7 +53,16 @@
 </template>
 <script>
 import {
-  IonPage,IonHeader,IonContent,IonToolbar,IonTitle, IonIcon, IonLabel, IonTabBar, IonTabButton, IonFab, 
+  IonPage,
+  IonHeader,
+  IonContent,
+  IonToolbar,
+  IonTitle, 
+  IonIcon, 
+  IonLabel, 
+  IonTabBar,
+  IonTabButton, 
+  IonFab, 
   IonFabButton, 
   IonFabList,
   actionSheetController,

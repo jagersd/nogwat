@@ -90,7 +90,7 @@ class Auth extends Controller
             $token->delete();
         }
 
-        $token = $user->createToken('my-app-token')->plainTextToken;
+        $token = $user->createToken('nogwat-app-token')->plainTextToken;
 
         $response = [
             'user' => $user,

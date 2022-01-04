@@ -28,9 +28,17 @@
           <ion-select-option v-for="store in storeArray" :key="store.id" :value="store.id">{{store.name}}</ion-select-option>
         </ion-select>
       </ion-item>
-      <ion-item>
+      <ion-item button="true" id="open-date-input" lines="none">
         <ion-label position="stacked" color="secondary">In huis halen voor</ion-label>
-        <ion-datetime v-model="form.listItems[0].dueDate" locale="nl-NL" display-format="DD/MM/YYYY" :year-values="customYearValues"></ion-datetime>
+        <ion-input :value="formattedDate"/>
+        <ion-popover trigger="open-date-input" :show-backdrop="false" size="cover">
+          <ion-datetime v-model="form.listItems[0].dueDate" 
+          first-day-of-week="1" 
+          presentation="date" 
+          format="YYYY-MM-DD"
+          :year-values="customYearValues"
+          />
+        </ion-popover>
       </ion-item>
       <ion-button expand="fill" @click="addItem()">Opslaan</ion-button>
       <ion-button @click="closeModal">Sluit</ion-button>
@@ -41,15 +49,15 @@
 <script>
 import axios from 'axios'
 import {
-  IonCard,IonCardHeader,IonCardTitle,IonCardContent,IonItem,IonLabel,IonInput,IonButton,modalController, IonSelect, IonSelectOption, IonDatetime
-} from "@ionic/vue";
-
+  IonCard,IonCardHeader,IonCardTitle,IonCardContent,IonItem,IonLabel,IonInput,IonButton,modalController, IonSelect, IonSelectOption, IonDatetime, IonPopover
+} from "@ionic/vue"
+import moment from 'moment'
 import { defineComponent } from 'vue'
 
 export default defineComponent ({
   name: 'AddItemModal',
   components: {
-    IonCard,IonCardHeader,IonCardTitle,IonCardContent,IonItem,IonLabel,IonInput,IonButton, IonSelect, IonSelectOption, IonDatetime
+    IonCard,IonCardHeader,IonCardTitle,IonCardContent,IonItem,IonLabel,IonInput,IonButton, IonSelect, IonSelectOption, IonDatetime, IonPopover
   },
   props: ['groupId', 'stores'],
   data() {
@@ -65,19 +73,23 @@ export default defineComponent ({
           dueDate:null
         }]
       },
-      errors: []
+      errors: [],
     };
   },
-
   setup() {
-  const customYearValues = [new Date().getFullYear() ,new Date().getFullYear() +1];
-  const closeModal = () => {
+    const customYearValues = [new Date().getFullYear() ,new Date().getFullYear() +1];
+    const closeModal = () => {
     modalController.dismiss();
     }
     return { closeModal, customYearValues }
   },
+  computed:{
+    formattedDate: function(){
+      return this.form.listItems[0].dueDate ? moment(this.form.listItems[0].dueDate).format('D MMM YYYY') : null
+    }
+  },
   methods: {
-      addItem() {
+    addItem() {
       axios.post('/additem', this.form)
       .then(this.closeModal)
 
@@ -88,7 +100,20 @@ export default defineComponent ({
     },
     autoFillMeasurement() {
       this.form.listItems[0].measurementType = (this.form.listItems[0].amount) ? 'st' : ''
-    }
+    },
   }
 });
 </script>
+
+<style scoped>
+.popover {
+    height: auto !important;
+}
+.popover ion-header-bar {
+    position: relative;
+}
+.popover ion-content {
+    top: 0;
+    position: relative;
+}
+</style>
