@@ -138,6 +138,7 @@ export default {
     async openAddItemModal(groupId, stores) {
       const modal = await modalController.create({
         component: AddItemModal,
+        id:'add-item-modal',
         componentProps: {
           groupId: groupId,
           stores: stores,
@@ -157,6 +158,7 @@ export default {
       }
       const modal = await modalController.create({
         component: ItemDetailsModal,
+        id:'item-detail-modal',
         componentProps: {
           itemDetails: item,
           stores: stores,

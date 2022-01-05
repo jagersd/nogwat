@@ -109,7 +109,15 @@ export default {
 </script>
 <style scoped>
 ion-toolbar{
-    --background: var(--ion-color-primary);
-    --color: var(--ion-color-primary-contrast);
+  --background: var(--ion-color-primary);
+  --color: var(--ion-color-primary-contrast);
 }
+ion-tab-bar{
+  --background: var(--ion-color-primary);
+}
+ion-tab-button{
+  --color-selected: var(--ion-color-light);
+  --color: var(--ion-color-step-50);
+}
+
 </style>

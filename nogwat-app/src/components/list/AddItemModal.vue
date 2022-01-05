@@ -31,14 +31,16 @@
       <ion-item button="true" id="open-date-input" lines="none">
         <ion-label position="stacked" color="secondary">In huis halen voor</ion-label>
         <ion-input :value="formattedDate"/>
-        <ion-popover trigger="open-date-input" :show-backdrop="false" size="cover">
+        <ion-modal trigger="open-date-input">
+          <ion-content force-overscroll="false">
           <ion-datetime v-model="form.listItems[0].dueDate" 
           first-day-of-week="1" 
           presentation="date" 
           format="YYYY-MM-DD"
           :year-values="customYearValues"
           />
-        </ion-popover>
+          </ion-content>
+        </ion-modal>
       </ion-item>
       <ion-button expand="fill" @click="addItem()">Opslaan</ion-button>
       <ion-button @click="closeModal">Sluit</ion-button>
@@ -49,7 +51,7 @@
 <script>
 import axios from 'axios'
 import {
-  IonCard,IonCardHeader,IonCardTitle,IonCardContent,IonItem,IonLabel,IonInput,IonButton,modalController, IonSelect, IonSelectOption, IonDatetime, IonPopover
+  IonCard,IonCardHeader,IonCardTitle,IonCardContent,IonItem,IonLabel,IonInput,IonButton,modalController, IonSelect, IonSelectOption, IonDatetime, IonModal, IonContent
 } from "@ionic/vue"
 import moment from 'moment'
 import { defineComponent } from 'vue'
@@ -57,7 +59,7 @@ import { defineComponent } from 'vue'
 export default defineComponent ({
   name: 'AddItemModal',
   components: {
-    IonCard,IonCardHeader,IonCardTitle,IonCardContent,IonItem,IonLabel,IonInput,IonButton, IonSelect, IonSelectOption, IonDatetime, IonPopover
+    IonCard,IonCardHeader,IonCardTitle,IonCardContent,IonItem,IonLabel,IonInput,IonButton, IonSelect, IonSelectOption, IonDatetime, IonModal, IonContent
   },
   props: ['groupId', 'stores'],
   data() {
@@ -79,7 +81,7 @@ export default defineComponent ({
   setup() {
     const customYearValues = [new Date().getFullYear() ,new Date().getFullYear() +1];
     const closeModal = () => {
-    modalController.dismiss();
+    modalController.dismiss(undefined,undefined,'add-item-modal');
     }
     return { closeModal, customYearValues }
   },
@@ -106,14 +108,15 @@ export default defineComponent ({
 </script>
 
 <style scoped>
-.popover {
-    height: auto !important;
-}
-.popover ion-header-bar {
-    position: relative;
-}
-.popover ion-content {
-    top: 0;
-    position: relative;
-}
+  ion-modal {
+    --width: 290px;
+    --height: 382px;
+    --border-radius: 10px;
+    
+  }
+  ion-datetime{
+    --background: 'dark';
+    border: 2px solid #1e847f;
+    border-radius: 10px;
+  }
 </style>

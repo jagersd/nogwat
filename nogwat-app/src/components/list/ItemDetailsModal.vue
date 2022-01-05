@@ -32,9 +32,19 @@
           <ion-select-option v-for="store in storeArray" :key="store.id" :value="store.id">{{store.name}}</ion-select-option>
         </ion-select>
       </ion-item>
-      <ion-item>
+      <ion-item button="true" id="open-date-input" lines="none"> 
         <ion-label position="stacked" color="secondary">In huis halen voor</ion-label>
-        <ion-datetime v-model="form.dueDate" display-format="DD/MM/YYYY" :year-values="customYearValues"></ion-datetime>
+        <ion-input :value="formattedDate"/>
+        <ion-modal trigger="open-date-input">
+          <ion-content force-overscroll="false">
+            <ion-datetime v-model="form.dueDate"
+            first-day-of-week="1" 
+            presentation="date" 
+            :year-values="customYearValues"
+            />
+          </ion-content>
+        </ion-modal>
+        
       </ion-item>
       <ion-button expand="fill" @click="updateItem()">Opslaan</ion-button>
       <ion-button @click="closeModal">Sluit</ion-button>
@@ -46,13 +56,14 @@
 
 <script>
 import axios from 'axios'
-import { IonCard,IonCardHeader,IonCardTitle,IonCardContent,IonItem,IonLabel,IonInput,IonButton,modalController, IonSelect, IonSelectOption, IonText, IonDatetime} from "@ionic/vue";
-
+import { IonCard,IonCardHeader,IonCardTitle,IonCardContent,IonItem,IonLabel,IonInput,IonButton,modalController, IonSelect, IonSelectOption, IonText, IonDatetime,IonModal, IonContent
+} from "@ionic/vue";
+import moment from 'moment'
 import { defineComponent } from 'vue'
 
 export default defineComponent ({
   name: 'ItemDetailsModal',
-    components: { IonCard,IonCardHeader,IonCardTitle,IonCardContent,IonItem,IonLabel,IonInput,IonButton,IonSelect, IonSelectOption, IonText, IonDatetime
+    components: { IonCard,IonCardHeader,IonCardTitle,IonCardContent,IonItem,IonLabel,IonInput,IonButton,IonSelect, IonSelectOption, IonText, IonDatetime,IonModal, IonContent
   },
 
   props: ['itemDetails','stores'],
@@ -76,9 +87,14 @@ export default defineComponent ({
   setup() {
     const customYearValues = [new Date().getFullYear() ,new Date().getFullYear() +1];
     const closeModal = () => {
-    modalController.dismiss();
+    modalController.dismiss(undefined,undefined,'item-detail-modal');
     }
   return { closeModal, customYearValues }
+  },
+  computed:{
+    formattedDate: function(){
+      return this.form.dueDate ? moment(this.form.dueDate).format('D MMM YYYY') : null
+    }
   },
   methods: {
     updateItem() {
@@ -106,8 +122,20 @@ export default defineComponent ({
 
 <style scoped>
 
-.container{
-  overflow-x: scroll;
-}
+  .container{
+    overflow-x: scroll;
+  }
+
+  ion-modal {
+    --width: 290px;
+    --height: 382px;
+    --border-radius: 10px;
+    
+  }
+  ion-datetime{
+    --background: 'dark';
+    border: 2px solid #1e847f;
+    border-radius: 10px;
+  }
 
 </style>
