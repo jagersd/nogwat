@@ -1,35 +1,35 @@
 <template>
   <ion-card>
     <ion-card-header>
-      <ion-card-title>Voeg toe aan boodschappenlijst </ion-card-title>
+      <ion-card-title>{{$t('shoppingList.addModal.titel')}}</ion-card-title>
     </ion-card-header>
     <ion-card-content>
       <ion-item>
-        <ion-label position="stacked" color="primary">Product</ion-label>
+        <ion-label position="stacked" color="primary">{{$t('shoppingList.addModal.product')}}</ion-label>
         <ion-input type="text" required="true" v-model="form.listItems[0].itemName" id="name"></ion-input>
       </ion-item>
       <ion-item>
-        <ion-label position="stacked" color="secondary">Hoeveelheid</ion-label>
+        <ion-label position="stacked" color="secondary">{{$t('shoppingList.addModal.amount')}}</ion-label>
         <ion-input type="number" v-model="form.listItems[0].amount" @change="autoFillMeasurement" id="amount"></ion-input>
       </ion-item>
       <ion-item>
-        <ion-label position="stacked" color="secondary">liter, gram, kilo</ion-label>
+        <ion-label position="stacked" color="secondary">{{$t('shoppingList.addModal.amountExamples')}}</ion-label>
         <ion-select v-model="form.listItems[0].measurementType">
-          <ion-select-option value="st">st (stuks)</ion-select-option>
-          <ion-select-option value="gr">gr (gram)</ion-select-option>
-          <ion-select-option value="kg">kg (kilo)</ion-select-option>
-          <ion-select-option value="fl">fl (flessen)</ion-select-option>
-          <ion-select-option value="kr">kr (kratten)</ion-select-option>
+          <ion-select-option value="st">{{$t('misc.measurements.pc')}}</ion-select-option>
+          <ion-select-option value="gr">{{$t('misc.measurements.gr')}}</ion-select-option>
+          <ion-select-option value="kg">{{$t('misc.measurements.kg')}}</ion-select-option>
+          <ion-select-option value="fl">{{$t('misc.measurements.bl')}}</ion-select-option>
+          <ion-select-option value="kr">{{$t('misc.measurements.ca')}}</ion-select-option>
         </ion-select>
       </ion-item>
       <ion-item v-if="storeArray.length">
-        <ion-label position="stacked" color="secondary">selecteer winkel</ion-label>
+        <ion-label position="stacked" color="secondary">{{$t('shoppingList.addModal.selectStore')}}</ion-label>
         <ion-select v-model="form.listItems[0].storeId">
           <ion-select-option v-for="store in storeArray" :key="store.id" :value="store.id">{{store.name}}</ion-select-option>
         </ion-select>
       </ion-item>
       <ion-item button="true" id="open-date-input" lines="none">
-        <ion-label position="stacked" color="secondary">In huis halen voor</ion-label>
+        <ion-label position="stacked" color="secondary">{{$t('shoppingList.addModal.dueDesc')}}</ion-label>
         <ion-input :value="formattedDate"/>
         <ion-modal trigger="open-date-input">
           <ion-content force-overscroll="false">
@@ -42,8 +42,8 @@
           </ion-content>
         </ion-modal>
       </ion-item>
-      <ion-button expand="fill" @click="addItem()">Opslaan</ion-button>
-      <ion-button @click="closeModal">Sluit</ion-button>
+      <ion-button expand="fill" @click="addItem()">{{$t('misc.save')}}</ion-button>
+      <ion-button @click="closeModal">{{$t('misc.close')}}</ion-button>
     </ion-card-content>
   </ion-card>
 </template>

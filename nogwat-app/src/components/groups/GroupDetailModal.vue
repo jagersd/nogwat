@@ -24,9 +24,7 @@
       <ion-label color="secondary">{{$t('groups.detailsModal.setDefault')}}</ion-label>
     </ion-item>
 
-    <p>{{$t('groups.detailsModal.groupCreated')}}
-    <ion-datetime display-format="DD-MM-YYYY" :value="groupInfo.created_at"></ion-datetime>
-    </p>
+    <i>{{$t('groups.detailsModal.groupCreated')}} {{formattedDate}} </i>
     <ion-button @click="goToGroupHistory" color="tertiary" expand="block">{{$t('groups.detailsModal.historyBtn')}}</ion-button>
     <!--ParticipantList-->
     <ion-button @click="flipParticipantList">{{$t('groups.detailsModal.participants')}}</ion-button>
@@ -124,16 +122,17 @@
 <script>
 import axios from 'axios'
 import {
- IonButton, modalController, IonList, IonLabel, IonDatetime, IonItem, IonInput, IonCheckbox, toastController, actionSheetController, IonIcon
+ IonButton, modalController, IonList, IonLabel, IonItem, IonInput, IonCheckbox, toastController, actionSheetController, IonIcon
 } from "@ionic/vue";
 import { pencil, personRemove } from "ionicons/icons";
+import moment from 'moment'
 
 import { defineComponent } from 'vue'
 
 export default defineComponent ({
   name: 'GroupDetailModal',
     components: {
-    IonButton, IonList, IonLabel, IonDatetime, IonItem, IonInput, IonCheckbox, IonIcon
+    IonButton, IonList, IonLabel, IonItem, IonInput, IonCheckbox, IonIcon
   },
   props: ['groupId'],
 
@@ -153,6 +152,7 @@ export default defineComponent ({
       showGroupAdjustForm: false,
       groupInfo: {
         name:'',
+        created_at: null,
         adminCheck:{
           is_admin:null
         },
@@ -189,6 +189,11 @@ export default defineComponent ({
     modalController.dismiss();
     }
     return { closeModal, pencil, personRemove }
+  },
+  computed:{
+    formattedDate: function(){
+      return this.groupInfo.created_at ? moment(this.groupInfo.created_at).format('D MMM YYYY') : null
+    }
   },
   methods: {
     sendInvite(){

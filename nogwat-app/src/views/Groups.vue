@@ -1,5 +1,5 @@
 <template>
-  <master-layout pageTitle="Groepen">
+  <master-layout :pageTitle="$t('groups.groups')">
     <div class="container">
       <ion-text class="ion-margin-top">{{$t('groups.subtitle1', {user: $store.state.user.user.name} )}}</ion-text><br>
       <ion-text class="ion-margin-top">{{$t('groups.subtitle2')}}</ion-text>

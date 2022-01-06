@@ -29,17 +29,40 @@
             "storeName": "Store name",
             "leaveGroupBtn":"Leave group",
             "removeGroupBtn":"Remove group"
+        },
+        "createModal":{
+            "titel": "New Group",
+            "groupName": "Group name",
+            "createBtn": "Create group"
         }
     },
     "shoppingList":{
-        "title": "Shopping List"
+        "title": "Shopping List",
+        "addModal":{
+            "titel": "Add to your grocery list",
+            "product": "Product",
+            "amount": "Amount",
+            "amountExamples": "pieces, grams, liters",
+            "selectStore": "Select store",
+            "dueDesc": "Buy before",
+            "addedBy": "Added by: "
+        }
     },
     "misc":{
         "close": "Close",
         "cancel": "Cancel",
         "save": "Save",
+        "delete": "Delete",
         "email": "email address",
         "description": "Description",
-        "add": "add"
+        "add": "add",
+        "adjust": "adjust",
+        "measurements":{
+            "pc": "pc (pieces)",
+            "gr": "gr (grams)",
+            "kg": "kg (kilo's)",
+            "bl": "bl (bottles)",
+            "ca": "ca (cases)" 
+        }
     }
 }

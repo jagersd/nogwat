@@ -29,17 +29,40 @@
             "storeName": "Winkelnaam",
             "leaveGroupBtn":"Groep verlaten",
             "removeGroupBtn":"Groep verwijderen"
+        },
+        "createModal":{
+            "titel": "Nieuwe Groep",
+            "groupName": "Groep naam",
+            "creatBtn": "Groep aanmaken"
         }
     },
     "shoppingList":{
-        "title": "Boodschappenlijst"
+        "title": "Boodschappenlijst",
+        "addModal":{
+            "titel": "Voeg toe aan de boodschappenlijst",
+            "product": "Product",
+            "amount": "Hoeveelheid",
+            "amountExamples": "stuks, gram, kilo",
+            "selectStore": "Selecteer winkel",
+            "dueDesc": "In huis halen voor",
+            "addedBy": "Toegevoegd door: "
+        }
     },
     "misc":{
         "close": "Sluiten",
         "cancel": "Annuleren",
         "save": "Opslaan",
+        "delete": "Verwijderen",
         "email": "email adres",
         "description": "Omschrijving",
-        "add": "Toevoegen"
+        "add": "Toevoegen",
+        "adjust": "Aanpassen",
+        "measurements":{
+            "pc": "st (stus)",
+            "gr": "gr (gram)",
+            "kg": "kg (kilo)",
+            "bl": "fl (flessen)",
+            "ca": "kr (kratten)" 
+        }
     }
 }
