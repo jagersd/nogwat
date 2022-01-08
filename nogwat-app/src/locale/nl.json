@@ -34,6 +34,12 @@
             "titel": "Nieuwe Groep",
             "groupName": "Groep naam",
             "creatBtn": "Groep aanmaken"
+        },
+        "history":{
+            "titel": "History",
+            "headers":"Lijst item / Aangekocht door / Toegevoegd door",
+            "added": "Toegevoegd op:",
+            "bought": "Gekocht op:"
         }
     },
     "shoppingList":{

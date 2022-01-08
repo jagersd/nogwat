@@ -34,6 +34,12 @@
             "titel": "New Group",
             "groupName": "Group name",
             "createBtn": "Create group"
+        },
+        "history":{
+            "titel": "History",
+            "headers":"List item / purchased by / added by",
+            "added": "Added on:",
+            "bought": "Purchased on:"
         }
     },
     "shoppingList":{

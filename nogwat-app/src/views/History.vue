@@ -1,8 +1,8 @@
 <template>
-  <master-layout pageTitle="Historie">
+  <master-layout :pageTitle="$t('groups.history.titel')">
     <ion-item>
       <ion-label>
-        <p>Lijst item | gekocht door | Toegevoegd door</p>
+        <p>{{$t('groups.history.headers')}}</p>
       </ion-label> 
     </ion-item>
     <ion-list v-for="listItem in listInfo" :key="listItem.id">
@@ -15,17 +15,22 @@
             {{ listItem.added_user.name }} |
             {{ listItem.purchased_user.name }} 
           </h5>
+          <h5 v-else>
+            {{ listItem.item_name}} |
+            {{ listItem.added_user.name }} |
+            {{ listItem.purchased_user.name }} 
+          </h5>
           <div class="details" v-if="showDetails == listItem.id">
             <ion-label>
               <p>
-              Toegevoegd op: 
-              <ion-datetime readonly="true" display-format="DD-MM-YYYY" :value="listItem.created_at"></ion-datetime>
+              {{$t('groups.history.added')}} 
+              {{formatDate(listItem.created_at)}}
               </p>
             </ion-label>
             <ion-label>
               <p>
-              Aangekocht op: 
-              <ion-datetime readonly="true" display-format="DD-MM-YYYY" :value="listItem.date_purchased"></ion-datetime>
+              {{$t('groups.history.bought')}} 
+              {{formatDate(listItem.date_purchased)}}
               </p>
             </ion-label>
           </div>
@@ -41,21 +46,21 @@ import {
   IonList,
   IonLabel,
   IonItem,
-  IonDatetime,
 } from "@ionic/vue";
+import moment from 'moment'
 
 export default {
-  components: { IonList, IonLabel, IonItem, IonDatetime},
+  components: { IonList, IonLabel, IonItem},
   ionViewWillEnter() {
     this.initiateList()
   },
   data(){
     return {
-      listInfo:{},
+      listInfo:{
+      },
       showDetails: null
     }
   },
-
   methods: {
     async initiateList() {
       axios.get("/gethistory", {
@@ -66,6 +71,9 @@ export default {
       .then((response) => (this.listInfo = response.data))
       .catch((error) => console.log(error))
     },
+    formatDate(value){
+      return moment(value).format("D MMM YYYY")
+    }
   },
 };
 </script>
