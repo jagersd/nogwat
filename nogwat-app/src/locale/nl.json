@@ -33,7 +33,7 @@
         "createModal":{
             "titel": "Nieuwe Groep",
             "groupName": "Groep naam",
-            "creatBtn": "Groep aanmaken"
+            "createBtn": "Groep aanmaken"
         },
         "history":{
             "titel": "History",
