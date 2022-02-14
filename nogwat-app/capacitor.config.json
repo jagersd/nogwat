@@ -1,0 +1,6 @@
+{
+  "appId": "nl.stefandejager.nogwat",
+  "appName": "nogwat-app",
+  "webDir": "dist",
+  "bundledWebRuntime": false
+}
