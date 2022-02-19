@@ -60,5 +60,8 @@ class Group extends Model
         return $this->hasMany(Store::class, 'group_id');
     }
 
-
+    public function admins(){
+        return $this->hasMany(UserGroup::class, 'group_id')
+        ->where('is_admin',1);
+    }
 }

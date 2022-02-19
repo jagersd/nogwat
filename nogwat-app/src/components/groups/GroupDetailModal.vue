@@ -32,7 +32,8 @@
       <ion-list v-for="user in groupInfo.users" :key="user.id">     
         <ion-item>
           <ion-label color="dark">
-            <h2>{{user.name}}</h2>
+            <h2>{{user.name}} <i class="admin-indicator" v-if="groupAdmins.includes(user.id)">admin</i>
+            </h2>
             <p>{{user.email}}</p>
           </ion-label>
           <ion-icon v-if="(groupInfo.adminCheck.is_admin==1 && user.email != $store.state.user.user.email)" 
@@ -139,6 +140,7 @@ export default defineComponent ({
   async created() {
     axios.get('/groupdetails/'+this.groupId)
     .then(response => (this.groupInfo = response.data))
+    .then(response => (this.setGroupAdmins(response.admins)))
     .catch(error => console.log(error))
   },
   
@@ -150,6 +152,7 @@ export default defineComponent ({
       showParticipants: true,
       showStores: false,
       showGroupAdjustForm: false,
+      groupAdmins:[],
       groupInfo: {
         name:'',
         created_at: null,
@@ -196,6 +199,9 @@ export default defineComponent ({
     }
   },
   methods: {
+    setGroupAdmins(apiResponse){
+      apiResponse.forEach(element=>this.groupAdmins.push(element.user_id))
+    },
     sendInvite(){
       axios.post('/inviteuser', this.form)
       .then(this.toastResponse)
@@ -334,6 +340,11 @@ export default defineComponent ({
 <style scoped>
 h1, h4, p, i{
   color: black;
+}
+
+.admin-indicator{
+  font-size: smaller;
+  color: var(--ion-color-primary);
 }
 
 .container{

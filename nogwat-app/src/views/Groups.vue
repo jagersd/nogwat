@@ -16,7 +16,7 @@
       <!--Invites-->
       <ion-text v-if="getData.invites.length"><h4>{{$t('groups.invites')}}:</h4></ion-text>
       <ion-list v-for="invite in getData.invites" :key="invite.id">
-        <ion-card color="secondary" @click="invitationActionSheet(invite.id)">
+        <ion-card color="secondary" @click="invitationActionSheet(invite.id, invite.group.id, invite.group.name)">
           <ion-card-header><ion-card-title>{{invite.group.name}}</ion-card-title></ion-card-header>
           <ion-card-content>{{$t('groups.sentBy')}}: {{invite.invitor.name}}</ion-card-content>
         </ion-card>
@@ -79,7 +79,12 @@ export default {
       });
       return modal.present();
     },
-    async invitationActionSheet(id){
+    setDefaultGroup(invitedGroupId,invitedGroupName){
+      if(!this.defaultGroupId){
+        this.$store.commit('setGroupData', {groupId: invitedGroupId, groupName:invitedGroupName})
+      }
+    },
+    async invitationActionSheet(id, invitedGroupId, invitedGroupName){
       const inviteActionSheet = await actionSheetController
       .create({
         header:'Accepteren?',
@@ -89,6 +94,7 @@ export default {
             handler: () => {
               axios.post('/acceptinvite', {inviteId:id})
               .then(this.$router.push({name: 'lists'}))
+              .then(this.setDefaultGroup(invitedGroupId, invitedGroupName))
               .catch(error=> {
                 this.errorMessage = error.message;
                 console.error('there was an error!', error)

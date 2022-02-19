@@ -55,6 +55,7 @@ class GroupController extends Controller
         $response = Group::where('id',$id)
         ->with('stores')
         ->with('users')
+        ->with('admins')
         ->with('openInvitesRegistered')
         ->with('openInvitesUnregistered', function ($query) {
             $query->select('unregistered_email','group_id');
