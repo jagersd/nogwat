@@ -18,7 +18,7 @@
       </ion-item>
       <ion-item>
       <ion-label position="floating" color="secondary">{{$t('shoppingList.addModal.amountExamples')}}</ion-label>
-        <ion-select v-model="form.measurementType">
+        <ion-select v-model="form.measurementType" interface="popover">
           <ion-select-option value="st">{{$t('misc.measurements.pc')}}</ion-select-option>
           <ion-select-option value="gr">{{$t('misc.measurements.gr')}}</ion-select-option>
           <ion-select-option value="kg">{{$t('misc.measurements.kg')}}</ion-select-option>
@@ -28,7 +28,7 @@
       </ion-item>
       <ion-item v-if="storeArray.length">
         <ion-label position="stacked" color="secondary">{{$t('shoppingList.addModal.selectStore')}}</ion-label>
-        <ion-select v-model="form.storeId">
+        <ion-select v-model="form.storeId" interface="popover">
           <ion-select-option v-for="store in storeArray" :key="store.id" :value="store.id">{{store.name}}</ion-select-option>
         </ion-select>
       </ion-item>

@@ -14,7 +14,7 @@
       </ion-item>
       <ion-item>
         <ion-label position="stacked">liter, gram, kilo</ion-label>
-        <ion-select v-model="form.listItems[0].measurementType">
+        <ion-select v-model="form.listItems[0].measurementType" interface="popover">
           <ion-select-option value="st">st (stuks)</ion-select-option>
           <ion-select-option value="gr">gr (gram)</ion-select-option>
           <ion-select-option value="kg">kg (kilo)</ion-select-option>
@@ -24,7 +24,7 @@
       </ion-item>
       <ion-item v-if="storeArray.length">
         <ion-label position="stacked">(optioneel) selecteer winkel</ion-label>
-        <ion-select v-model="form.listItems[0].storeId">
+        <ion-select v-model="form.listItems[0].storeId" interface="popover">
           <ion-select-option v-for="store in storeArray" :key="store.id" :value="store.id">{{store.name}}</ion-select-option>
         </ion-select>
       </ion-item>

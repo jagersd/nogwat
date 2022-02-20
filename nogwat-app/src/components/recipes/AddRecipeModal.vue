@@ -78,7 +78,7 @@
       </ion-item>
       <ion-item>
         <ion-label position="floating">Eenheid</ion-label>
-        <ion-select v-model="ingredient.amountType">
+        <ion-select v-model="ingredient.amountType" interface="popover">
           <ion-select-option value="st">stuks</ion-select-option>
           <ion-select-option value="el">el (eetlepel)</ion-select-option>
           <ion-select-option value="tl">tl (theelepel)</ion-select-option>

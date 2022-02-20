@@ -14,7 +14,7 @@
       </ion-item>
       <ion-item>
         <ion-label position="stacked" color="secondary">{{$t('shoppingList.addModal.amountExamples')}}</ion-label>
-        <ion-select v-model="form.listItems[0].measurementType">
+        <ion-select v-model="form.listItems[0].measurementType" interface="popover">
           <ion-select-option value="st">{{$t('misc.measurements.pc')}}</ion-select-option>
           <ion-select-option value="gr">{{$t('misc.measurements.gr')}}</ion-select-option>
           <ion-select-option value="kg">{{$t('misc.measurements.kg')}}</ion-select-option>
@@ -24,7 +24,7 @@
       </ion-item>
       <ion-item v-if="storeArray.length">
         <ion-label position="stacked" color="secondary">{{$t('shoppingList.addModal.selectStore')}}</ion-label>
-        <ion-select v-model="form.listItems[0].storeId">
+        <ion-select v-model="form.listItems[0].storeId" interface="popover">
           <ion-select-option v-for="store in storeArray" :key="store.id" :value="store.id">{{store.name}}</ion-select-option>
         </ion-select>
       </ion-item>
@@ -112,7 +112,6 @@ export default defineComponent ({
     --width: 290px;
     --height: 382px;
     --border-radius: 10px;
-    
   }
   ion-datetime{
     --background: 'dark';

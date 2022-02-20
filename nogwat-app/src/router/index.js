@@ -31,7 +31,7 @@ const routes = [
   },
   { 
     path: '/grouphistory/:groupId',
-    component: () => import(/* webpackChunkName: "Lists" */ '../views/History.vue'),
+    component: () => import(/* webpackChunkName: "Grouphistory" */ '../views/History.vue'),
     name: 'grouphistory',
     meta: {
       requiresAuth: true
@@ -39,7 +39,7 @@ const routes = [
   },
   { 
     path: '/recipes',
-    component: () => import(/* webpackChunkName: "Lists" */ '../views/Recipes.vue'),
+    component: () => import(/* webpackChunkName: "Recipes" */ '../views/Recipes.vue'),
     name: 'recipesmenu',
     meta: {
       requiresAuth: true
@@ -47,7 +47,7 @@ const routes = [
   },
   {
     path: '/myrecipes',
-    component: () => import(/* webpackChunkName: "Lists" */ '../views/recipeviews/Myrecipes.vue'),
+    component: () => import(/* webpackChunkName: "Myrecipes" */ '../views/recipeviews/Myrecipes.vue'),
     name: 'myrecipes',
     meta: {
       requiresAuth: true
@@ -55,28 +55,28 @@ const routes = [
   },
   {
   path: '/searchrecipes',
-  component: () => import(/* webpackChunkName: "Lists" */ '../views/recipeviews/Searchrecipes.vue'),
+  component: () => import(/* webpackChunkName: "Searchrecipes" */ '../views/recipeviews/Searchrecipes.vue'),
     meta: {
       requiresAuth: true
     }
   },
   {
     path: '/myfavorites',
-    component: () => import(/* webpackChunkName: "Lists" */ '../views/recipeviews/Myfavorites.vue'),
+    component: () => import(/* webpackChunkName: "Myfavorites" */ '../views/recipeviews/Myfavorites.vue'),
       meta: {
         requiresAuth: true
       }
     },
   {
     path: '/staritems',
-    component: () => import(/* webpackChunkName: "Lists" */ '../views/Staritems.vue'),
+    component: () => import(/* webpackChunkName: "Staritems" */ '../views/Staritems.vue'),
       meta: {
         requiresAuth: true
       }
     },
   {
     path: '/usersettings',
-    component: () => import(/* webpackChunkName: "Lists" */ '../views/Usersettings.vue'),
+    component: () => import(/* webpackChunkName: "Usetsettings" */ '../views/Usersettings.vue'),
       meta: {
         requiresAuth: true
       }
