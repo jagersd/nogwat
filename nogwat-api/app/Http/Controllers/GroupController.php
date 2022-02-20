@@ -243,6 +243,44 @@ class GroupController extends Controller
     }
 
     /**
+     * Allows the admin to promote another user to be admin
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function promoteToAdmin(Request $request)
+    {
+        $userGroupCombo = UserGroup::where('user_id',auth()->user()->id)
+        ->where('group_id',$request->groupId)
+        ->first();
+
+        if($userGroupCombo->is_admin ==1){
+            try{
+                UserGroup::where('user_id',$request->promoteUser)
+                ->where('group_id',$request->groupId)
+                ->update(['is_admin' => 1]);
+
+                $success = true;
+                $message = 'user promoted to group admin';
+            } catch (\Illuminate\Database\QueryException $ex){
+                $success = false;
+                $message = 'request failed';
+            }
+
+        }else{
+            $success = false;
+            $message = 'You are not allowed to perform this operation';
+        }
+
+        $response = [
+            'succes' => $success,
+            'message' => $message
+        ];
+
+        return response()->json($response);
+    }
+
+    /**
     * Alter group name and instruction
     *
     * @param  \Illuminate\Http\Request  $request

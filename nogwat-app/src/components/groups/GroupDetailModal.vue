@@ -23,16 +23,30 @@
       <ion-checkbox v-else disabled="true" checked="true" slot="start"></ion-checkbox>
       <ion-label color="secondary">{{$t('groups.detailsModal.setDefault')}}</ion-label>
     </ion-item>
-
     <i>{{$t('groups.detailsModal.groupCreated')}} {{formattedDate}} </i>
     <ion-button @click="goToGroupHistory" color="tertiary" expand="block">{{$t('groups.detailsModal.historyBtn')}}</ion-button>
+
+    <!--Menu buttons-->
+    <ion-item lines="none">
+      <ion-button size="larger" @click="flipParticipantList">{{$t('groups.detailsModal.participants')}}</ion-button>
+      <ion-button size="larger" @click="flipStoreList">{{$t('groups.detailsModal.storeType')}}</ion-button>
+    </ion-item>
+
     <!--ParticipantList-->
-    <ion-button @click="flipParticipantList">{{$t('groups.detailsModal.participants')}}</ion-button>
     <div class="participantListSection" v-if="showParticipants">
       <ion-list v-for="user in groupInfo.users" :key="user.id">     
         <ion-item>
-          <ion-label color="dark">
-            <h2>{{user.name}} <i class="admin-indicator" v-if="groupAdmins.includes(user.id)">admin</i>
+          <ion-label color="dark" v-if="groupAdmins.includes(user.id)">
+            <h2>{{user.name}} <ion-icon :icon="shield" color="primary"></ion-icon></h2>
+            <p>{{user.email}}</p>
+          </ion-label>
+          <ion-label color="dark" v-else>
+            <h2>{{user.name}} <ion-icon 
+            v-if="groupInfo.adminCheck.is_admin==1" 
+            :icon="shieldCheckmark" 
+            color="secondary"
+            @click="promoteToAdmin(user.id, user.name)"
+            ></ion-icon>
             </h2>
             <p>{{user.email}}</p>
           </ion-label>
@@ -75,7 +89,6 @@
     </div>
 
     <!--Stores-->
-    <ion-button @click="flipStoreList">{{$t('groups.detailsModal.storeType')}}</ion-button>
     <div class="stores-section" v-if="showStores">
       <ion-list v-for="store in groupInfo.stores" :key="store.id">
         <ion-item>
@@ -125,7 +138,7 @@ import axios from 'axios'
 import {
  IonButton, modalController, IonList, IonLabel, IonItem, IonInput, IonCheckbox, toastController, actionSheetController, IonIcon
 } from "@ionic/vue";
-import { pencil, personRemove } from "ionicons/icons";
+import { pencil, personRemove, shield, shieldCheckmark } from "ionicons/icons";
 import moment from 'moment'
 
 import { defineComponent } from 'vue'
@@ -149,7 +162,7 @@ export default defineComponent ({
       defaultGroupChecker: JSON.parse(localStorage.getItem('group')),
       formHidden: true,
       storeFormHidden: true,
-      showParticipants: true,
+      showParticipants: false,
       showStores: false,
       showGroupAdjustForm: false,
       groupAdmins:[],
@@ -191,7 +204,7 @@ export default defineComponent ({
     const closeModal = () => {
     modalController.dismiss();
     }
-    return { closeModal, pencil, personRemove }
+    return { closeModal, pencil, personRemove, shield, shieldCheckmark }
   },
   computed:{
     formattedDate: function(){
@@ -295,7 +308,7 @@ export default defineComponent ({
     async removeFromGroup(userId){
       const removeFromGroupActionSheet = await actionSheetController
       .create({
-        header:'Weet je het zeker?',
+        header:'Persoon uit de groep verwijderen?',
         buttons:[
           {
             text: 'Ja',
@@ -315,6 +328,30 @@ export default defineComponent ({
         ]
       })
       await removeFromGroupActionSheet.present()
+    },
+    async promoteToAdmin(userId, userName){
+      const promoteActiveSheet = await actionSheetController
+      .create({
+        header:'Maak ' + userName +  ' groep admin?',
+        buttons:[
+          {
+            text: 'Ja',
+            handler: () => {
+              axios.post('/promoteuser',{groupId:this.groupId, promoteUser:userId})
+              .then(this.closeModal)
+              .catch(error=>{
+                this.errorMessage = error.message
+                console.error('there was an error!', error)
+              })
+            }
+          },
+          {
+            text: 'Nee',
+            role: 'cancel'
+          }
+        ]
+      })
+      await promoteActiveSheet.present()
     },
     async changeGroupName(){
       axios.post('/changegroupname',this.adjustForm)
@@ -340,11 +377,6 @@ export default defineComponent ({
 <style scoped>
 h1, h4, p, i{
   color: black;
-}
-
-.admin-indicator{
-  font-size: smaller;
-  color: var(--ion-color-primary);
 }
 
 .container{
