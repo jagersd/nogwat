@@ -26,7 +26,6 @@ export default{
   components: {
     IonButton, IonText, 
   },
-
   methods: {
     async openSigninModal() {
       const modal = await modalController.create({

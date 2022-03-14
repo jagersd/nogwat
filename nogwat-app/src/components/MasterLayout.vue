@@ -80,7 +80,6 @@ export default {
     }
   },
   props: ["pageTitle"],
-
   methods: {
     async presentActionSheet(){
       const actionSheet = await actionSheetController
@@ -92,7 +91,7 @@ export default {
             handler: () => {
               this.$store.dispatch('logout')
               window.localStorage.clear()
-              .then(this.$router.push({ path: '/'}))
+              .then(this.$router.push({ name: 'home'}))
             }
           },
           {

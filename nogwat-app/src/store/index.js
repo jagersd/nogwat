@@ -9,6 +9,7 @@ export default createStore({
     locale: localStorage.getItem("locale") || 'nl',
     group: null,
     searchParameters: null,
+    appStatus: null
   },
 
   mutations: {
@@ -21,6 +22,11 @@ export default createStore({
     clearUserData () {
       localStorage.removeItem('user')
       location.reload()
+    },
+
+    setAppstatus(state, readyCheck){
+      state.appStatus = readyCheck
+      localStorage.setItem('appStatus', JSON.stringify(readyCheck))
     },
 
     setUserLocale(state, userLocale) {

@@ -14,7 +14,7 @@
         </ion-item>
         <ion-item>
         <ion-label position="floating">en / nl</ion-label>
-          <ion-select ok-text="Ok" value="nl" v-model="userLocale">
+          <ion-select ok-text="Ok" value="nl" v-model="userLocale" interface="popover">
             <ion-select-option value="nl">Nederlands</ion-select-option>
             <ion-select-option value="en">English</ion-select-option>
           </ion-select>
