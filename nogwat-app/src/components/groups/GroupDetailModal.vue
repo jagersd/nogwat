@@ -215,14 +215,25 @@ export default defineComponent ({
     setGroupAdmins(apiResponse){
       apiResponse.forEach(element=>this.groupAdmins.push(element.user_id))
     },
-    sendInvite(){
-      axios.post('/inviteuser', this.form)
-      .then(this.toastResponse)
-      .then(this.closeModal)
-      .catch(error => {
-        this.errorMessage = error.message;
-        console.error('there was en error!', error)
-      })
+    async sendInvite(){
+      if(this.form.invitee != ""){
+        axios.post('/inviteuser', this.form)
+        .then(this.toastResponse)
+        .then(this.closeModal)
+        .catch(error => {
+          this.errorMessage = error.message;
+          console.error('there was en error!', error)
+        })
+      } else {
+        const toast = await toastController
+        .create({
+          message:'Email adres verplicht',
+          color: 'danger',
+          position: 'top',
+          duration: 2000
+        })
+        return toast.present()
+      }
     },
     async toastResponse(){
       const toast = await toastController

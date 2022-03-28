@@ -24,6 +24,10 @@ class InviteController extends Controller
             return 'you are not the group Admin';
         }
 
+        $validatedData = $request->validate([
+            'invitee' => 'required|email',
+        ]);
+
         if(User::where('email',$request->invitee)->exists()){
             $inviteeId = User::where('email',$request->invitee)->first('id')->id;
 
