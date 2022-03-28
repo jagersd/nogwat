@@ -54,6 +54,35 @@
             "addedBy": "Added by: "
         }
     },
+    "recipes":{
+        "title": "Recipes",
+        "subtitle": "So whats for dinner?",
+        "menu":{
+            "myrecipes": "My recipes",
+            "myfavos": "My favorite recipes",
+            "search": "Search",
+            "addrecipe": "Add a recipe",
+            "searchword": "Searchword (optional)"
+        },
+        "categories":{
+            "breakfast": "Breakfast",
+            "snack" : "Snack",
+            "lunch" : "Lunch",
+            "dinner" : "Dinner"
+        },
+        "add":{
+            "slogan": "Share your best with the rest of the world",
+            "name" : "Name",
+            "type" : "Meal type",
+            "pamount" : "How many people?",
+            "instructions" : "Instructions",
+            "ingredients" : "Ingredients",
+            "product": "Product",
+            "amount" : "Amount",
+            "unit" : "Unit of measurement"
+        },
+        "private" : "Only visible to you?"
+    },
     "misc":{
         "close": "Close",
         "cancel": "Cancel",
@@ -68,7 +97,9 @@
             "gr": "gr (grams)",
             "kg": "kg (kilo's)",
             "bl": "bl (bottles)",
-            "ca": "ca (cases)" 
+            "ca": "ca (cases)",
+            "el": "tablespoon",
+            "tl": "tl (teaspoon)"
         }
     }
 }

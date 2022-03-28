@@ -7,7 +7,7 @@
         <ion-button v-if="(recipeDetails.user_id_created == $store.state.user.user.id)" color="danger" size="small" id="recipe-remove-btn" @click="removeRecipeActionSheet">X</ion-button>
       </ion-card-title>
       <ion-card-subtitle>
-        Gedeeld door: {{ recipeDetails.user.name }}
+        <p>Gedeeld door: {{ recipeDetails.user_id_created == $store.state.user.user.id ?  'jou' : recipeDetails.user.name}}</p>
       </ion-card-subtitle>
     </ion-card-header>
     <ion-card-content>

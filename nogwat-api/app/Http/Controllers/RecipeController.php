@@ -64,6 +64,7 @@ class RecipeController extends Controller
                 'instructions' => $request->instructions,
                 'person_amount' => $request->personAmount,
                 'updatecounter' => 0,
+                'lang' => $request->lang,
                 'private' => $request->private,
             ]);
 

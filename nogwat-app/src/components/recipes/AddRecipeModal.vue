@@ -1,14 +1,14 @@
 <template>
   <div id="mainRecipeSection">
     <ion-item lines="none" color="primary">
-      <ion-text>Deel je beste recepten met de rest van Nederland</ion-text>
+      <ion-text>{{$t('recipes.add.slogan')}}</ion-text>
     </ion-item>
     <ion-item>
-      <ion-label position="floating">naam:</ion-label>
+      <ion-label position="floating">{{$t('recipes.add.name')}}:</ion-label>
       <ion-input type="text" required="true" v-model="form.name"></ion-input>
     </ion-item>
     <ion-item>
-      <ion-label position="floating">omschrijving:</ion-label>
+      <ion-label position="floating">{{$t('misc.description')}}:</ion-label>
       <ion-input
         type="text"
         required="true"
@@ -16,21 +16,21 @@
       ></ion-input>
     </ion-item>
     <ion-item>
-      <ion-label position="floating">maaltijd soort:</ion-label>
+      <ion-label position="floating">{{$t('recipes.add.type')}}:</ion-label>
       <ion-select
         aria-placeholder="diner"
         v-model="form.mealType"
         value="diner"
       >
-        <ion-select-option value="ontbijt">ontbijt</ion-select-option>
+        <ion-select-option value="ontbijt">{{$t('recipes.categories.breakfast')}}</ion-select-option>
         <ion-select-option value="ontbijt">Second Breakfast</ion-select-option>
-        <ion-select-option value="lunch">lunch</ion-select-option>
-        <ion-select-option value="snack">snack</ion-select-option>
-        <ion-select-option value="diner">diner</ion-select-option>
+        <ion-select-option value="lunch">{{$t('recipes.categories.lunch')}}</ion-select-option>
+        <ion-select-option value="snack">{{$t('recipes.categories.snack')}}</ion-select-option>
+        <ion-select-option value="diner">{{$t('recipes.categories.dinner')}}</ion-select-option>
       </ion-select>
     </ion-item>
     <ion-item>
-      <ion-label position="floating">Aantal personen:</ion-label>
+      <ion-label position="floating">{{$t('recipes.add.pamount')}}:</ion-label>
       <ion-select required="true" v-model="form.personAmount" value="1">
         <ion-select-option value="1">1</ion-select-option>
         <ion-select-option value="2">2</ion-select-option>
@@ -45,7 +45,7 @@
       </ion-select>
     </ion-item>
     <ion-item lines="none">
-      <ion-label position="floating">Instructies: <small><i>{{charactersRemaining}}</i></small></ion-label>
+      <ion-label position="floating">{{$t('recipes.add.instructions')}}: <small><i>{{charactersRemaining}}</i></small></ion-label>
       <ion-textarea
         type="text"
         required="true"
@@ -63,9 +63,9 @@
       v-for="(ingredient, k) in form.ingredients"
       :key="k"
     >
-      <ion-text color="primary">Ingrediënten</ion-text>
+      <ion-text color="primary">{{$t('recipes.add.ingredients')}}</ion-text>
       <ion-item>
-        <ion-label position="floating">Product</ion-label>
+        <ion-label position="floating">{{$t('recipes.add.product')}}</ion-label>
         <ion-input
           type="text"
           required="true"
@@ -73,27 +73,27 @@
         ></ion-input>
       </ion-item>
       <ion-item>
-        <ion-label position="floating">Hoeveelheid</ion-label>
+        <ion-label position="floating">{{$t('recipes.add.amount')}}</ion-label>
         <ion-input type="number" v-model="ingredient.amount"></ion-input>
       </ion-item>
       <ion-item>
-        <ion-label position="floating">Eenheid</ion-label>
+        <ion-label position="floating">{{$t('recipes.add.unit')}}</ion-label>
         <ion-select v-model="ingredient.amountType" interface="popover">
-          <ion-select-option value="st">stuks</ion-select-option>
-          <ion-select-option value="el">el (eetlepel)</ion-select-option>
-          <ion-select-option value="tl">tl (theelepel)</ion-select-option>
-          <ion-select-option value="gr">gr (gram)</ion-select-option>
-          <ion-select-option value="kg">kg (kilo)</ion-select-option>
+          <ion-select-option value="st">{{$t('misc.measurements.pc')}}</ion-select-option>
+          <ion-select-option value="el">{{$t('misc.measurements.el')}}</ion-select-option>
+          <ion-select-option value="tl">{{$t('misc.measurements.tl')}}</ion-select-option>
+          <ion-select-option value="gr">{{$t('misc.measurements.gr')}}</ion-select-option>
+          <ion-select-option value="kg">{{$t('misc.measurements.kg')}}</ion-select-option>
         </ion-select>
       </ion-item>
       <ion-button @click="addIngredient()">+</ion-button>
     </div>
     <ion-item>
-      <small>Alleen door jou te vinden?</small>
+      <small>{{$t('recipes.private')}}</small>
       <ion-checkbox v-model="form.private" slot="end"></ion-checkbox>
     </ion-item>
-    <ion-button @click="saveRecipe">Opslaan</ion-button>
-    <ion-button @click="closeModal">Sluit</ion-button>
+    <ion-button @click="saveRecipe">{{$t('misc.save')}}</ion-button>
+    <ion-button @click="closeModal">{{$t('misc.close')}}</ion-button>
   </div>
 </template>
 
@@ -136,6 +136,7 @@ export default defineComponent({
         mealType: "diner",
         instructions: "",
         personAmount: "1",
+        lang: localStorage.getItem('locale'),
         private: false,
         ingredients: [
           {

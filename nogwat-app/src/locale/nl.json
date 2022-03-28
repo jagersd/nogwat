@@ -54,6 +54,35 @@
             "addedBy": "Toegevoegd door: "
         }
     },
+    "recipes":{
+        "title": "Recepten",
+        "subtitle": "Wat eten we vandaag?",
+        "menu":{
+            "myrecipes": "Mijn Recepten",
+            "myfavos": "Mijn favoriete recepten",
+            "search": "Zoeken",
+            "addrecipe": "Voeg recept toe",
+            "searchword": "Zoekwoord (optioneel)"
+        },
+        "categories":{
+            "breakfast": "Ontbijt",
+            "snack" : "Snack",
+            "lunch" : "Lunch",
+            "dinner" : "Dinner"
+        },
+        "add":{
+            "slogan": "Deel je beste recepten met de rest van Nederland",
+            "name" : "Naam",
+            "type" : "Maaltijd soort",
+            "pamount" : "Aantal personen",
+            "instructions" : "Instructies",
+            "product": "Product",
+            "ingredients" : "Ingrediënten",
+            "amount" : "Hoeveelheid",
+            "unit" : "Eenheid"
+        },
+        "private" : "Alleen door jou te vinden?"
+    },
     "misc":{
         "close": "Sluiten",
         "cancel": "Annuleren",
@@ -68,7 +97,9 @@
             "gr": "gr (gram)",
             "kg": "kg (kilo)",
             "bl": "fl (flessen)",
-            "ca": "kr (kratten)" 
+            "ca": "kr (kratten)",
+            "el": "el (eetlepel)",
+            "tl": "tl (theelepel)"
         }
     }
 }

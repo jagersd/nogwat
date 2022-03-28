@@ -1,39 +1,39 @@
 <template>
-  <master-layout pageTitle="Recepten">
+  <master-layout :pageTitle="$t('recipes.title')">
 	<div class="container">
-    <ion-text>Wat eten we vanavond?</ion-text>
+    <ion-text>{{$t('recipes.subtitle')}}</ion-text>
 		<ion-list>
-      <ion-button expand="block" router-link="/myrecipes">Mijn Recepten</ion-button>
-      <ion-button expand="block" router-link="/myfavorites">Mijn Favoriete Recepten</ion-button>
-      <ion-button expand="block" @click="flipSearchbox()">Zoeken</ion-button>
+      <ion-button expand="block" router-link="/myrecipes">{{$t('recipes.menu.myrecipes')}}</ion-button>
+      <ion-button expand="block" router-link="/myfavorites">{{$t('recipes.menu.myfavos')}}</ion-button>
+      <ion-button expand="block" @click="flipSearchbox()">{{$t('recipes.menu.search')}}</ion-button>
       <ion-card color="tertiary" v-if="showSearchbox == true">
         <ion-card-content>
           <ul>
             <li>
               <ion-checkbox @click="setMealTypesArray('ontbijt')"></ion-checkbox>
-              <ion-label>Ontbijt</ion-label>
+              <ion-label>{{$t('recipes.categories.breakfast')}}</ion-label>
             </li>
             <li>
               <ion-checkbox @click="setMealTypesArray('snack')"></ion-checkbox>
-              <ion-label>Snack</ion-label>
+              <ion-label>{{$t('recipes.categories.snack')}}</ion-label>
             </li>
             <li>
               <ion-checkbox @click="setMealTypesArray('lunch')"></ion-checkbox>
-              <ion-label>Lunch</ion-label>
+              <ion-label>{{$t('recipes.categories.lunch')}}</ion-label>
             </li>
             <li>
               <ion-checkbox @click="setMealTypesArray('diner')" checked></ion-checkbox>
-              <ion-label>Diner</ion-label>
+              <ion-label>{{$t('recipes.categories.dinner')}}</ion-label>
             </li>
           </ul>
           <ion-item>
-            <ion-label position="floating" color="secondary">Zoekwoord (optioneel)</ion-label>
+            <ion-label position="floating" color="secondary">{{$t('recipes.menu.searchword')}}</ion-label>
             <ion-input v-model="searchString" color="secondary" type="text"></ion-input>
           </ion-item>
           <ion-button @click="toSearchResults()">OK</ion-button>
         </ion-card-content>
       </ion-card>
-      <ion-button color="tertiary" class="ion-margin-top" @click="openAddRecipeModal()">+ voeg recept toe</ion-button>
+      <ion-button color="tertiary" class="ion-margin-top" @click="openAddRecipeModal()">+ {{$t('recipes.menu.addrecipe')}}</ion-button>
 		</ion-list>
 	</div>
   </master-layout>
