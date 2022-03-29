@@ -15,9 +15,9 @@ class CreateUserStatsTable extends Migration
     {
         Schema::create('user_stats', function (Blueprint $table) {
             $table->id();
-            $table->integer('user_id');
+            $table->integer('user_id')->unique();
             $table->dateTime('last_login');
-            $table->integer('mails_triggered')->nullable();
+            $table->integer('mails_triggered')->default(0);
             $table->integer('password_resets')->default(0);
             $table->dateTime('last_password_reset')->nullable();
             $table->integer('errors_triggered')->nullable();

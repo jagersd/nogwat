@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 use App\Models\GroupInvite;
 use App\Models\PasswordReset;
+use App\Models\UserStat;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Http\Request;
 use App\Mail\SendDevMessage;
@@ -96,6 +97,11 @@ class Auth extends Controller
             'user' => $user,
             'token' => $token
         ];
+
+        UserStat::updateOrCreate(
+            ['user_id' => $user->id],
+            ['last_login' => \Carbon\Carbon::now()]
+        );
 
         return response()->json($response, 201);
     }
@@ -188,6 +194,14 @@ class Auth extends Controller
             [
                 'token'=>Crypt::encrypt($resetToken),
                 'created_at'=>\Carbon\Carbon::now()->addMinutes(10)->toDateTimeString()
+            ]
+        );
+
+        UserStat::updateOrCreate(
+            ['user_id' => $user->id],
+            [
+                'last_password_reset' => \Carbon\Carbon::now(),
+                'mails_triggered' => \DB::raw('mails_triggered + 1')
             ]
         );
 

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\UserGroup;
 use App\Models\GroupInvite;
 use App\Models\User;
+use App\Models\UserStat;
 use App\Mail\SendInvite;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Crypt;
@@ -55,7 +56,6 @@ class InviteController extends Controller
                 $success = true;
                 $message = 'Invite Sent';
     
-    
             } catch (\Illuminate\Database\QueryException $ex) {
                 $success = false;
                 $message = $ex->getMessage();
@@ -79,14 +79,15 @@ class InviteController extends Controller
                 $message = $ex->getMessage();
             }
         }
-        
-
-
 
         $response = [
             'success' => $success,
             'message' => $message,
         ];
+
+        if($success === true){
+            UserStat::where('user_id',$request->user()->id)->increment('mails_triggered');
+        }
 
         return response($response, 201);
     }
