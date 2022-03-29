@@ -44,6 +44,7 @@
     },
     "shoppingList":{
         "title": "Boodschappenlijst",
+        "nogroup": "Maak een groep aan of accepteer een uitnodiging om gebruik te kunnen maken van de boodschappenlijst.",
         "addModal":{
             "titel": "Voeg toe aan de boodschappenlijst",
             "product": "Product",

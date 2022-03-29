@@ -1,5 +1,8 @@
 <template>
   <master-layout :pageTitle="$t('shoppingList.title')">
+    <ion-item v-if="nogroups" lines="none" id="nogroup">
+      {{$t('shoppingList.nogroup')}}
+    </ion-item>
     <swiper
     @reachBeginning="currentSlider = 0"
     @slideNextTransitionStart="sliderMovedUp"
@@ -76,6 +79,7 @@ export default {
     return {
       listInfo: {},
       currentSlider: 0,
+      nogroups: false
     };
   },
   setup(){
@@ -92,7 +96,7 @@ export default {
   methods: {
     async initiateList(){
       axios.get("/mylist")
-      .then((response) => (this.listInfo = response.data))
+      .then((response) => (this.listInfo = response.data)(this.nogroups = response.status == 204 ? true : false))
       .then(() => this.listShown = localStorage.getItem('group') !== null ? JSON.parse(localStorage.getItem('group')).groupId : this.listInfo[0].id)
       .then(() => this.listInfo.sort(
         function(x,y){ 
@@ -193,6 +197,10 @@ export default {
   margin-left: 2rem;
   color: var(--ion-color-primary);
   font-weight: bold;
+}
+
+#nogroup{
+  margin-top: 40vh;
 }
 
 ion-checkbox {

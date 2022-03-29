@@ -44,6 +44,7 @@
     },
     "shoppingList":{
         "title": "Shopping List",
+        "nogroup": "Create a group or join one and off you go. :)",
         "addModal":{
             "titel": "Add to your grocery list",
             "product": "Product",

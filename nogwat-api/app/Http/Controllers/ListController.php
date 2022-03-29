@@ -87,6 +87,10 @@ class ListController extends Controller
         ->get('group_id')
         ->toArray();
 
+        if(empty($groups)){
+            return response('no-groups', 204);
+        }
+
         foreach($groups as $group){
             $response[] = Group::where('id',$group)
             ->with('stores')
