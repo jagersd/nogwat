@@ -5,10 +5,10 @@
                 <h1>Welkom bij de "Nogwat" website!</h1>
             </div>
         </div>
-
         <div class="container">
+
             <div class="row main-text">
-                <h4>Stel je voor: </h4>
+                <h4>Stel je voor! </h4>
                 <p>Je bent even bij het winkelcentrum in de buurt, het is een drukke dag en je wilt na werk nog richting de sportschool...
                 </p>
                 <p>Even de supermarkt in want je zou nog een pot pindakaas ophalen voor thuis en 'oh ja!' de rijstwafels in de keuken op werk zijn op!
@@ -41,6 +41,10 @@
                 </ul>
             </div>
 
+            <div id="logo-image">
+                <img src="/images/nogwat-logo.png" alt="">
+            </div>
+
             <div class="row tech-section">
                 <div class="col-12">
                 <h4>Benieuwd naar ontwikkelingen?</h4>
@@ -58,7 +62,7 @@
 
 <script>
 export default {
-
+    name: 'home'
 }
 </script>
 
@@ -72,8 +76,17 @@ export default {
         max-width: 80vw;
     }
 
+    #logo-image{
+        text-align: center;
+        margin-top: 3rem;
+    }
+
+    #logo-image img{
+        width: 10vw;
+    }
+
     .main-text{
-        margin-top: 5rem;
+        margin-top: 2rem;
         background-color: #d5865c;
         padding: 2rem;
         border: 5px solid black;
@@ -92,7 +105,7 @@ export default {
     }
 
     .tech-section{
-        margin-top: 4rem;
+        margin-top: 2rem;
         font-size: 18px;
         padding-bottom: 5vh;
         text-align: center;

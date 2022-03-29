@@ -3,6 +3,19 @@ import axios from 'axios'
 
 axios.defaults.baseURL = process.env.VUE_APP_ROOT_API
 
+// axios.interceptors.response.use(null, error => {
+//   if (!error.response) {
+//     router.push({ name: 'Error'})
+//   }
+//   let path = '/error';
+//   switch (error.response.status) {
+//     case 401: path = '/login'; break;
+//     case 404: path = '/404'; break;
+//   }
+//   router.push(path);
+//   return Promise.reject(error);
+// });
+
 export default createStore({
   state: {
     user: null,

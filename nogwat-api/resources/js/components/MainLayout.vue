@@ -16,7 +16,7 @@ export default {
 @import url('https://fonts.googleapis.com/css2?family=Mali&display=swap');
 
 body{
-    background-color: #ecc19c;
+    background-color: #ffc2a0;
     color: #000;
     font-family: 'Mali', cursive;
     font-size: 20px;

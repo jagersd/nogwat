@@ -4,7 +4,8 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="{{ mix('css/app.css') }}" />
-        <title>Nogwat Webhome</title>
+        <link rel="shortcut icon" href="{{ asset('favicon-16x16.png') }}">
+        <title>NogWat App!</title>
 
     </head>
     <body>

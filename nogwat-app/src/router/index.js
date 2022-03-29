@@ -13,6 +13,11 @@ const routes = [
     component: About,
     name: 'About'
   },
+  {
+    path: '/error',
+    component: () => import(/* webpackChunkName: "Errors" */ '../views/errors/generic.vue'),
+    name: 'Error'
+  },
   { 
     path: '/groups',
     component: () => import(/* webpackChunkName: "Groups" */ '../views/Groups.vue'),

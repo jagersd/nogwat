@@ -30,9 +30,18 @@ export default defineComponent({
     axios.interceptors.response.use(
       response => response,
       error => {
-        if (error.response.status === 401) {
-          this.$store.dispatch('logout')
+        if (!error.response){
+          this.$router.push({name: 'Error'})
         }
+        switch (error.response.status){
+          case 401: this.$store.dispatch('logout')
+          break
+          case 404: this.$router.push({name: 'Home'})
+          break
+        }
+        // if (error.response.status === 401) {
+        //   this.$store.dispatch('logout')
+        // }
         return Promise.reject(error)
       }
     )
