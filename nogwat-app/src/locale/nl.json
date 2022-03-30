@@ -7,7 +7,8 @@
     "home":{
         "title": "Welkom",
         "opener": "Welkom bij de NogWat app!",
-        "subtitle": "Het idee achter de app is dat het krijtbord in de keuken altijd meegenomen kan worden naar de stad / het winkelcentrum."
+        "subtitle": "Het idee achter de app is dat het krijtbord in de keuken altijd meegenomen kan worden naar de stad / het winkelcentrum.",
+        "content": "Leuk dat je meedoet met de Alpha test!"
     },
     "groups":{
         "subtitle1": "Hey {user}!",

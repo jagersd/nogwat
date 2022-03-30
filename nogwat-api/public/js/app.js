@@ -2174,6 +2174,20 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   name: 'home'
 });
@@ -17549,7 +17563,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_laravel_mix_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n#header[data-v-63cd6604]{\n    background-color: #1e847f;\n    border: 5px solid black;\n    box-shadow: 4px 2px 15px 0px rgba(0,0,0,0.6);\n    border-radius: 5px;\n    margin-top: 1rem;\n    max-width: 80vw;\n}\n#logo-image[data-v-63cd6604]{\n    text-align: center;\n    margin-top: 3rem;\n}\n#logo-image img[data-v-63cd6604]{\n    width: 10vw;\n}\n.main-text[data-v-63cd6604]{\n    margin-top: 2rem;\n    background-color: #d5865c;\n    padding: 2rem;\n    border: 5px solid black;\n    border-radius: 5px;\n    box-shadow: 4px 2px 15px 0px rgba(0,0,0,0.6);\n}\n.second-text[data-v-63cd6604]{\n    margin-top: 3rem;\n    background-color: #1e847f;\n    padding: 1rem;\n    border: 5px solid black;\n    border-radius: 5px;\n    color: #ecc19c;\n    box-shadow: 4px 2px 15px 0px rgba(0,0,0,0.6);\n}\n.tech-section[data-v-63cd6604]{\n    margin-top: 2rem;\n    font-size: 18px;\n    padding-bottom: 5vh;\n    text-align: center;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n#header[data-v-63cd6604]{\n    background-color: #1e847f;\n    border: 5px solid black;\n    box-shadow: 4px 2px 15px 0px rgba(0,0,0,0.6);\n    border-radius: 5px;\n    margin-top: 1rem;\n    max-width: 80vw;\n}\n#logo-image[data-v-63cd6604]{\n    text-align: center;\n    margin-top: 3rem;\n}\n#logo-image img[data-v-63cd6604]{\n    width: 10vw;\n}\n.main-text[data-v-63cd6604]{\n    margin-top: 2rem;\n    background-color: #d5865c;\n    padding: 2rem;\n    border: 5px solid black;\n    border-radius: 5px;\n    box-shadow: 4px 2px 15px 0px rgba(0,0,0,0.6);\n}\n.second-text[data-v-63cd6604]{\n    margin-top: 3rem;\n    background-color: #1e847f;\n    padding: 1rem;\n    border: 5px solid black;\n    border-radius: 5px;\n    color: #ecc19c;\n    box-shadow: 4px 2px 15px 0px rgba(0,0,0,0.6);\n}\n.good-to-know[data-v-63cd6604]{\n    margin-top: 2rem;\n}\n.tech-section[data-v-63cd6604]{\n    margin-top: 2rem;\n    font-size: 18px;\n    padding-bottom: 5vh;\n    text-align: center;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -38438,6 +38452,52 @@ var render = function () {
           _c("li", [
             _vm._v(
               "Data over jouw boodschappengedrag en voorkeuren doorspelen naar derden."
+            ),
+          ]),
+        ]),
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "row good-to-know" }, [
+        _c("h4", [_vm._v("Goed te weten voor installatie / aanmelding:")]),
+        _vm._v(" "),
+        _c("p", [
+          _vm._v(
+            "Allereerst, leuk dat je overweegt gebruik te maken van de NogWat App!"
+          ),
+        ]),
+        _vm._v(" "),
+        _c("p", [
+          _vm._v(
+            "De applicatie bevind zich in een Alpha status. Daarom zijn er een paar dingen om rekening mee te houden."
+          ),
+        ]),
+        _vm._v(" "),
+        _c("ul", [
+          _c("li", [_vm._v("Potentiele bug bugs bugs.")]),
+          _vm._v(" "),
+          _c("li", [
+            _vm._v("Additionele features zullen nog geintroduceerd worden."),
+          ]),
+          _vm._v(" "),
+          _c("li", [_vm._v("Meertaligheid nog niet compleet.")]),
+          _vm._v(" "),
+          _c("li", [
+            _vm._v(
+              "De app zal binnenkort in gesloten testfase beschikbaar zijn op de Android store."
+            ),
+          ]),
+          _vm._v(" "),
+          _c("li", [
+            _vm._v("Voor IOS gebruikers kan Safari gebruikt worden door "),
+            _c("a", { attrs: { href: "https://web.nogwat-app.nl" } }, [
+              _vm._v("hier"),
+            ]),
+            _vm._v(" in te loggen."),
+          ]),
+          _vm._v(" "),
+          _c("li", [
+            _vm._v(
+              "In uiterste noodzaak zal de database compleet leeggehaald moeten worden waardoor alle data verloren gaat. Mocht dit nodig zijn zullen gebruikers hiervan vooraf op de hoogte worden gebracht."
             ),
           ]),
         ]),

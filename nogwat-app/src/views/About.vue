@@ -41,16 +41,6 @@
           </ul>
       </ion-text>
       </div>
-      <!--
-      <ion-text>
-          <h4>Benieuwd naar ontwikkelingen?</h4>
-          <p>De app wordt gebouwd uit liefhebberij en leergierigheid voor web development en is momenteel een 1-persoons project dus het kan een tijdje duren voordat het (wellicht ooit) in de appstore en playstore te vinden is.</p>
-          <i>Technische details voor de geinteresseerden: </i>
-          <p>Volledige code en voortgang is <a href="https://github.com/jagersd">hier</a> in te zien.</p>
-          <p>De backend betreft een PHP/Laravel API. <br>
-          En de App zelf is een Ionic project met het VueJS framework.</p>
-      </ion-text>
-      -->
       <ion-text>
         <h4>Good to know prior to participation:</h4>
         <p>First and foremost, it is great that you are considering using such an application!</p>
@@ -59,9 +49,10 @@
           <li>bugs bugs bugs are a near certainty</li>
           <li>Missende Features (like not being able to adjust and delete a recipe)</li>
           <li>Translation to English is not completed. In app notifications and email are still exclusively Dutch.</li>
-          <li>Currently the App runs in the browser. Meaning that updates can be rolled out faster than through the App store. However, the app will be less responsive than it will be once it is an executable through the app stores.</li>
+          <li>Currently the App runs in the browser and a closed beta through the Android Playstore.</li>
           <li>There could be a time where the app needs to completely regenerate its backend meaning that all data would be lost. In case this is nessecary users will be informed upfront</li>
         </ul>
+        <i>version id: {{frontEndVersion}}</i>
       </ion-text>
     </div>
     <div v-else class="container">
@@ -105,16 +96,6 @@
           </ul>
       </ion-text>
       </div>
-      <!--
-      <ion-text>
-          <h4>Benieuwd naar ontwikkelingen?</h4>
-          <p>De app wordt gebouwd uit liefhebberij en leergierigheid voor web development en is momenteel een 1-persoons project dus het kan een tijdje duren voordat het (wellicht ooit) in de appstore en playstore te vinden is.</p>
-          <i>Technische details voor de geinteresseerden: </i>
-          <p>Volledige code en voortgang is <a href="https://github.com/jagersd">hier</a> in te zien.</p>
-          <p>De backend betreft een PHP/Laravel API. <br>
-          En de App zelf is een Ionic project met het VueJS framework.</p>
-      </ion-text>
-      -->
       <ion-text>
         <h4>Goed te weten voor aanmelding:</h4>
         <p>Allereerst, heel erg leuk dat je overweegt gebruik te maken van deze applicatie!</p>
@@ -123,9 +104,10 @@
           <li>Potentiele bugs bugs bugs</li>
           <li>Missende Features (zoals het niet kunnen aanpassen of verwijderen van recepten)</li>
           <li>Meertaligheid is nog niet compleet</li>
-          <li>De app werkt momenteel via de browser. Hierdoor zijn updates sneller geleverd want deze hoeven niet via de appstore gedownload te worden. Echter is de applicatie hierdoor iets langzamer dan dat het zal zijn wanneer deze installeerbaar is via zo'n appstore</li>
+          <li>De app werkt momenteel via de browser of een gesloten beta test in de Android Playstore.</li>
           <li>In uiterste noodzaak kan het zo zijn dat de database compleet opnieuw opgebouwd moet worden waardoor alle informatie (gebruikers, groepen, recepten, etc) verloren gaat. Mocht dit nodig zijn zullen gebruikers hier vooraf van op de hoogte worden gebracht.</li>
         </ul>
+        <i>versie id: {{frontEndVersion}}</i>
       </ion-text>
     </div>
 
@@ -139,6 +121,11 @@ import MasterLayout from "@/components/MasterLayout.vue";
 export default {
   name: "About",
   components: { MasterLayout, IonText },
+  data() {
+    return {
+      frontEndVersion : 'Alpha - 22.03.1'
+    }
+  }
 };
 </script>
 

@@ -7,7 +7,8 @@
     "home":{
         "title": "Welcome!",
         "opener": "Welcome to the NogWat app!",
-        "subtitle": "This app aims to provide you the ability to take your kitchen chalk board with you to the stores."
+        "subtitle": "This app aims to provide you the ability to take your kitchen chalk board with you to the stores.",
+        "content": "Thanks for participating in the Alhpa test!"
     },
     "groups":{
         "subtitle1": "Hey {user}!",

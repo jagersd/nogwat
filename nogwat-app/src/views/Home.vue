@@ -5,9 +5,9 @@
           <h1>{{$t("home.title")}}</h1>
         </ion-text>
         <ion-text class="ion-padding-horizontal" color="primary">
-          {{$t("home.subtitle")}}
+          <p>{{$t("home.subtitle")}}</p>
+          <p>{{$t("home.content")}}</p>
         </ion-text>
-
       <ion-button v-if="!$store.state.user" class="ion-margin-top" expand="block" @click="openSigninModal">Log in</ion-button>
 
       <ion-button v-if="!$store.state.user" class="ion-margin-top" expand="block" @click="openSignupModal">Registreren</ion-button>
@@ -61,7 +61,6 @@ export default{
 #container p {
   font-size: 16px;
   line-height: 22px;
-  color: #8c8c8c;
   margin: 0;
 }
 

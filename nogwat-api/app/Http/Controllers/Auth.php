@@ -98,7 +98,7 @@ class Auth extends Controller
             'token' => $token
         ];
 
-        UserStat::updateOrCreate(
+        UserStat::updateOrInsert(
             ['user_id' => $user->id],
             ['last_login' => \Carbon\Carbon::now()]
         );
@@ -197,10 +197,11 @@ class Auth extends Controller
             ]
         );
 
-        UserStat::updateOrCreate(
+        UserStat::updateOrInsert(
             ['user_id' => $user->id],
             [
                 'last_password_reset' => \Carbon\Carbon::now(),
+                'password_resets' => \DB::raw('password_resets + 1'),
                 'mails_triggered' => \DB::raw('mails_triggered + 1')
             ]
         );

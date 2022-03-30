@@ -41,6 +41,20 @@
                 </ul>
             </div>
 
+            <div class="row good-to-know">
+                <h4>Goed te weten voor installatie / aanmelding:</h4>
+                <p>Allereerst, leuk dat je overweegt gebruik te maken van de NogWat App!</p>
+                <p>De applicatie bevind zich in een Alpha status. Daarom zijn er een paar dingen om rekening mee te houden.</p>
+                <ul>
+                    <li>Potentiele bug bugs bugs.</li>
+                    <li>Additionele features zullen nog geintroduceerd worden.</li>
+                    <li>Meertaligheid nog niet compleet.</li>
+                    <li>De app zal binnenkort in gesloten testfase beschikbaar zijn op de Android store.</li>
+                    <li>Voor IOS gebruikers kan Safari gebruikt worden door <a href="https://web.nogwat-app.nl">hier</a> in te loggen.</li>
+                    <li>In uiterste noodzaak zal de database compleet leeggehaald moeten worden waardoor alle data verloren gaat. Mocht dit nodig zijn zullen gebruikers hiervan vooraf op de hoogte worden gebracht.</li>
+                </ul>
+            </div>
+
             <div id="logo-image">
                 <img src="/images/nogwat-logo.png" alt="">
             </div>
@@ -102,6 +116,10 @@ export default {
         border-radius: 5px;
         color: #ecc19c;
         box-shadow: 4px 2px 15px 0px rgba(0,0,0,0.6);
+    }
+
+    .good-to-know{
+        margin-top: 2rem;
     }
 
     .tech-section{
