@@ -14,17 +14,18 @@ class DashboardController extends Controller
     *
     * @return \Illuminate\Http\Response
     */
-    public function index()
+    public function index($locale)
     {
         $lastUserDashboard = UserStat::where('user_id',auth()->user()->id)
         ->first()->last_dashboard;
 
         $maxDashId = Dashboard::max('id');
 
-        if($lastUserDashboard == 0 || $lastUserDashboard == $maxDashId){
+        if($lastUserDashboard == $maxDashId){
             return response('No new dashboard messages available', 200);
         } else {
             $messages = Dashboard::where('id','>',$lastUserDashboard)
+            ->where('locale',$locale)
             ->limit(3)
             ->get();
 

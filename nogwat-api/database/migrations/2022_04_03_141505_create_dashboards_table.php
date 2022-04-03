@@ -19,6 +19,7 @@ class CreateDashboardsTable extends Migration
             $table->mediumText('content');
             $table->mediumText('content1')->nullable();
             $table->mediumText('content2')->nullable();
+            $table->string('locale', 2)->default('nl');
             $table->tinyInteger('active');
             $table->string('type')->default('update');
             $table->timestamps();

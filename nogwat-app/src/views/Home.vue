@@ -17,22 +17,24 @@
 </template>
 
 <script>
-import { IonButton, modalController, IonText } from '@ionic/vue'
+import { IonButton, modalController, IonText} from '@ionic/vue'
 import axios from 'axios'
 import SigninModal from '../components/auth/SigninModal.vue'
 import SignupModal from '../components/auth/SignupModal.vue'
+import DashboardModal from '../components/DashboardModal.vue'
 
 export default{
   name: 'Home',
   components: {
-    IonButton, IonText, 
+    IonButton, IonText,
   },
   ionViewDidEnter(){
     this.dashboardMessages()
   },
   data(){
     return {
-      newMessages: undefined
+      newMessages: undefined,
+      dashboardModal: "false"
     }
   },
   methods: {
@@ -49,13 +51,12 @@ export default{
       return modal.present();
     },
     async dashboardMessages(){
+      this.newMessages = undefined
       let lastCheck = JSON.parse(localStorage.getItem('user')).dashboard.lastCheck
-      if(lastCheck && lastCheck < (Date.now() / 1000) -7200){
-        console.log(lastCheck)
-        console.log(Date.now()-7200)
-        console.log(Date.now())
-        axios.get('/dashboard')
+      if(lastCheck && lastCheck < (Date.now() / 1000) - 7200){
+        axios.get(`/dashboard/${localStorage.getItem('locale')}`)
         .then(response => (this.newMessages = response.data))
+        .then(this.presentDashboardModal(this.newMessages))
         .then(this.resetLastChecked())
         .catch(error => console.log(error))
       }
@@ -64,6 +65,19 @@ export default{
       let userObject = JSON.parse(localStorage.getItem('user'))
       userObject.dashboard.lastCheck = Date.now() / 1000
       localStorage.setItem('user', JSON.stringify(userObject))
+    },
+    async presentDashboardModal(messages){
+      const modal = await modalController
+      .create({
+        component: DashboardModal,
+        componentProps:{
+          content: messages
+        },
+        swipeToClose:false,
+        initialBreakpoint: 0.5,
+        breakpoints: [0.25, 0.5, 1]
+      })
+      return modal.present()
     }
   }
 
