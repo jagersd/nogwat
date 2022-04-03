@@ -3,19 +3,6 @@ import axios from 'axios'
 
 axios.defaults.baseURL = process.env.VUE_APP_ROOT_API
 
-// axios.interceptors.response.use(null, error => {
-//   if (!error.response) {
-//     router.push({ name: 'Error'})
-//   }
-//   let path = '/error';
-//   switch (error.response.status) {
-//     case 401: path = '/login'; break;
-//     case 404: path = '/404'; break;
-//   }
-//   router.push(path);
-//   return Promise.reject(error);
-// });
-
 export default createStore({
   state: {
     user: null,
@@ -28,6 +15,7 @@ export default createStore({
   mutations: {
     setUserData (state, userData) {
       state.user = userData
+      userData.dashboard = {"lastMessage":undefined,"lastCheck":Date.now() / 1000}
       localStorage.setItem('user', JSON.stringify(userData))
       axios.defaults.headers.common.Authorization = `Bearer ${userData.token}`
     },
@@ -77,6 +65,6 @@ export default createStore({
 
   getters : {
     isLogged: state => !!state.user,
-    getAppLanguage: (state) => state.locale
+    getAppLanguage: (state) => state.locale,
   }
 })

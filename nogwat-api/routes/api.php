@@ -9,6 +9,7 @@ use App\Http\Controllers\InviteController;
 use App\Http\Controllers\ListController;
 use App\Http\Controllers\StoreController;
 use App\Http\Controllers\FavoriteController;
+use App\Http\Controllers\DashboardController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,6 +25,7 @@ Route::post('/submitresettoken',[Auth::class,'updatePasswordWithToken']);
 Route::middleware('auth:sanctum')->group( function() {
     //global routes
     Route::get('/me',[Auth::class, 'me']);
+    Route::get('/dashboard', [DashboardController::class,'index']);
     Route::post('/changepassword', [Auth::class,'changePassword']);
     Route::post('/sendfeedback',[Auth::class,'sendFeedback']);
 

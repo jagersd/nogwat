@@ -17,6 +17,7 @@ class CreateUserStatsTable extends Migration
             $table->id();
             $table->integer('user_id')->unique();
             $table->dateTime('last_login');
+            $table->integer('last_dashboard')->default(0);
             $table->integer('mails_triggered')->default(0);
             $table->integer('password_resets')->default(0);
             $table->dateTime('last_password_reset')->nullable();

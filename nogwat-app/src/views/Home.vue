@@ -18,6 +18,7 @@
 
 <script>
 import { IonButton, modalController, IonText } from '@ionic/vue'
+import axios from 'axios'
 import SigninModal from '../components/auth/SigninModal.vue'
 import SignupModal from '../components/auth/SignupModal.vue'
 
@@ -25,6 +26,14 @@ export default{
   name: 'Home',
   components: {
     IonButton, IonText, 
+  },
+  ionViewDidEnter(){
+    this.dashboardMessages()
+  },
+  data(){
+    return {
+      newMessages: undefined
+    }
   },
   methods: {
     async openSigninModal() {
@@ -38,7 +47,24 @@ export default{
         component:SignupModal,
       })
       return modal.present();
-    }    
+    },
+    async dashboardMessages(){
+      let lastCheck = JSON.parse(localStorage.getItem('user')).dashboard.lastCheck
+      if(lastCheck && lastCheck < (Date.now() / 1000) -7200){
+        console.log(lastCheck)
+        console.log(Date.now()-7200)
+        console.log(Date.now())
+        axios.get('/dashboard')
+        .then(response => (this.newMessages = response.data))
+        .then(this.resetLastChecked())
+        .catch(error => console.log(error))
+      }
+    },
+    resetLastChecked(){
+      let userObject = JSON.parse(localStorage.getItem('user'))
+      userObject.dashboard.lastCheck = Date.now() / 1000
+      localStorage.setItem('user', JSON.stringify(userObject))
+    }
   }
 
 };

@@ -21,6 +21,7 @@
         aria-placeholder="diner"
         v-model="form.mealType"
         value="diner"
+        interface="popover"
       >
         <ion-select-option value="ontbijt">{{$t('recipes.categories.breakfast')}}</ion-select-option>
         <ion-select-option value="ontbijt">Second Breakfast</ion-select-option>
@@ -31,7 +32,7 @@
     </ion-item>
     <ion-item>
       <ion-label position="floating">{{$t('recipes.add.pamount')}}:</ion-label>
-      <ion-select required="true" v-model="form.personAmount" value="1">
+      <ion-select required="true" v-model="form.personAmount" value="1" interface="popover">
         <ion-select-option value="1">1</ion-select-option>
         <ion-select-option value="2">2</ion-select-option>
         <ion-select-option value="3">3</ion-select-option>

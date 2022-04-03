@@ -2,7 +2,7 @@
   <ion-page id="main">
     <ion-header>
       <ion-toolbar>
-        <ion-button id="home-icon" href="/" shape="round" slot="start">
+        <ion-button id="home-icon" router-link="/" shape="round" slot="start">
         <ion-icon :icon="home" slot="start"></ion-icon>
         </ion-button>
         <ion-title>{{ pageTitle }}</ion-title>
