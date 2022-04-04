@@ -19,10 +19,10 @@ class DashboardController extends Controller
         $lastUserDashboard = UserStat::where('user_id',auth()->user()->id)
         ->first()->last_dashboard;
 
-        $maxDashId = Dashboard::max('id');
+        $maxDashId = Dashboard::max('id') ?? 0;
 
-        if($lastUserDashboard == $maxDashId){
-            return response('No new dashboard messages available', 200);
+        if($lastUserDashboard == $maxDashId || $maxDashId == 0){
+            return response('No new dashboard messages available', 204);
         } else {
             $messages = Dashboard::where('id','>',$lastUserDashboard)
             ->where('locale',$locale)

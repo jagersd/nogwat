@@ -29,11 +29,11 @@ export default{
     IonButton, IonText,
   },
   ionViewDidEnter(){
+    this.newMessages = undefined
     this.dashboardMessages()
   },
   data(){
     return {
-      newMessages: undefined,
       dashboardModal: "false"
     }
   },
@@ -51,12 +51,10 @@ export default{
       return modal.present();
     },
     async dashboardMessages(){
-      this.newMessages = undefined
       let lastCheck = JSON.parse(localStorage.getItem('user')).dashboard.lastCheck
       if(lastCheck && lastCheck < (Date.now() / 1000) - 7200){
         axios.get(`/dashboard/${localStorage.getItem('locale')}`)
-        .then(response => (this.newMessages = response.data))
-        .then(this.presentDashboardModal(this.newMessages))
+        .then(response => (response.status !== 204 ? this.presentDashboardModal(response.data) : null))
         .then(this.resetLastChecked())
         .catch(error => console.log(error))
       }
@@ -70,8 +68,8 @@ export default{
       const modal = await modalController
       .create({
         component: DashboardModal,
-        componentProps:{
-          content: messages
+        componentProps: {
+          messagesObject: messages
         },
         swipeToClose:false,
         initialBreakpoint: 0.5,

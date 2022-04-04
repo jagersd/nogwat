@@ -1,8 +1,6 @@
 <template>
   <div class="container">
-    <ion-button slot="end" @click="closeModal">{{$t('misc.close')}}</ion-button>
-    <ion-list v-for="content in contents" :key="content.id" slot="content">
-      <ion-item>
+      <ion-item v-for="content in messagesObject" :key="content.id" slot="content">
         <ion-text>
         <h5>{{content.title}}</h5>
         <div v-html="content.content"></div>
@@ -10,7 +8,7 @@
         <div v-html="content.content2"></div>
         </ion-text>
       </ion-item>
-    </ion-list>
+      <ion-button expand="block" @click="closeModal">{{$t('misc.close')}}</ion-button>
   </div>
 </template>
 
@@ -20,7 +18,6 @@ import {
   IonItem,
   IonText,
   IonButton,
-  IonList,
   modalController,
 } from "@ionic/vue";
 import { defineComponent } from "vue";
@@ -28,13 +25,10 @@ import { defineComponent } from "vue";
 export default defineComponent({
   name: "DashboardModal",
   components: {
-    IonItem,IonText, IonButton, IonList
+    IonItem,IonText, IonButton,
   },
-  props: ['content'],
-  data(){
-    return{
-      contents: this.content
-    }
+  props:{
+    messagesObject: {type: Object}
   },
   methods:{
     closeModal(){
@@ -47,10 +41,6 @@ export default defineComponent({
 <style scoped>
   .container{
     padding:1rem;
-  }
-
-  .container h5{
-    text-align: center;
   }
 
 </style>
