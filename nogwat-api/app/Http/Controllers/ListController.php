@@ -150,6 +150,7 @@ class ListController extends Controller
             ->with('measurement')
             ->with('addedUser:id,name')
             ->with('purchasedUser:id,name')
+            ->orderBy('date_purchased', 'desc')
             ->get();
             
             return response($response, 200);

@@ -20,5 +20,11 @@ class UserGroup extends Model
         'updated_at'
     ];
 
+    protected $fillable = [
+        'user_id',
+        'group_id',
+        'is_admin',
+    ];
+
 
 }
