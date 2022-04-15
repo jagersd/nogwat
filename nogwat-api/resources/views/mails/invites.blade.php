@@ -7,9 +7,9 @@
     </head>
     <body>
         <h3>Hey! </h3>
-        <p>{{$invitorName}} heeft je uitgenodigd voor een boodschappenlijst groep in de Nog Wat App.</p>
+        <p>{{$invitorName}} heeft je uitgenodigd voor een boodschappenlijst groep in de NogWat-App.</p>
 
-        <p>Voor meer informatie check https://nogwat.stefandejager.nl</p>
+        <p>Voor meer informatie kijk op https://nogwat-app.nl/</p>
         <br>
         <p>Veel plezier en doe {{$invitorName}} de groetjes!</p>
     </body>
