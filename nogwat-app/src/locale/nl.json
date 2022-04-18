@@ -101,7 +101,10 @@
             "bl": "fl (flessen)",
             "ca": "kr (kratten)",
             "el": "el (eetlepel)",
-            "tl": "tl (theelepel)"
+            "tl": "tl (theelepel)",
+            "ml": "ml (milliliter)",
+            "l": "l (liter)",
+            "dl": "dl (decileter"
         }
     }
 }
