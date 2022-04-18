@@ -17563,7 +17563,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_laravel_mix_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n#header[data-v-63cd6604]{\n    background-color: #1e847f;\n    border: 5px solid black;\n    box-shadow: 4px 2px 15px 0px rgba(0,0,0,0.6);\n    border-radius: 5px;\n    margin-top: 1rem;\n    max-width: 80vw;\n}\n#logo-image[data-v-63cd6604]{\n    text-align: center;\n    margin-top: 3rem;\n}\n#logo-image img[data-v-63cd6604]{\n    width: 10vw;\n}\n.main-text[data-v-63cd6604]{\n    margin-top: 2rem;\n    background-color: #d5865c;\n    padding: 2rem;\n    border: 5px solid black;\n    border-radius: 5px;\n    box-shadow: 4px 2px 15px 0px rgba(0,0,0,0.6);\n}\n.second-text[data-v-63cd6604]{\n    margin-top: 3rem;\n    background-color: #1e847f;\n    padding: 1rem;\n    border: 5px solid black;\n    border-radius: 5px;\n    color: #ecc19c;\n    box-shadow: 4px 2px 15px 0px rgba(0,0,0,0.6);\n}\n.good-to-know[data-v-63cd6604]{\n    margin-top: 2rem;\n}\n.tech-section[data-v-63cd6604]{\n    margin-top: 2rem;\n    font-size: 18px;\n    padding-bottom: 5vh;\n    text-align: center;\n}\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n#header[data-v-63cd6604]{\n    background-color: #1e847f;\n    border: 5px solid black;\n    box-shadow: 4px 2px 15px 0px rgba(0,0,0,0.6);\n    border-radius: 5px;\n    margin-top: 1rem;\n    max-width: 80vw;\n}\n#logo-image[data-v-63cd6604]{\n    text-align: center;\n    margin-top: 3rem;\n}\n#logo-image img[data-v-63cd6604]{\n    width: 10vw;\n}\n@media only screen and (max-width: 600px){\n#header h1[data-v-63cd6604]{\n        font-size: 25px;\n}\n.container[data-v-63cd6604]{\n        font-size: 18px;\n        padding-left: 10vw;\n        padding-right: 10vw;\n}\n.tech-section p[data-v-63cd6604]{\n        font-size: 16px;\n}\n.tech-section i[data-v-63cd6604]{\n        font-size: 16px;\n}\n}\n.main-text[data-v-63cd6604]{\n    margin-top: 2rem;\n    background-color: #d5865c;\n    padding: 2rem;\n    border: 5px solid black;\n    border-radius: 5px;\n    box-shadow: 4px 2px 15px 0px rgba(0,0,0,0.6);\n}\n.second-text[data-v-63cd6604]{\n    margin-top: 3rem;\n    background-color: #1e847f;\n    padding: 1rem;\n    border: 5px solid black;\n    border-radius: 5px;\n    color: #ecc19c;\n    box-shadow: 4px 2px 15px 0px rgba(0,0,0,0.6);\n}\n.good-to-know[data-v-63cd6604]{\n    margin-top: 2rem;\n}\n.tech-section[data-v-63cd6604]{\n    margin-top: 2rem;\n    font-size: 18px;\n    padding-bottom: 5vh;\n    text-align: center;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -38483,7 +38483,7 @@ var render = function () {
           _vm._v(" "),
           _c("li", [
             _vm._v(
-              "De app zal binnenkort in gesloten testfase beschikbaar zijn op de Android store."
+              "De Android app is uitsluitend in besloten test status beschikbaar bij de Playstore."
             ),
           ]),
           _vm._v(" "),
@@ -38492,7 +38492,7 @@ var render = function () {
             _c("a", { attrs: { href: "https://web.nogwat-app.nl" } }, [
               _vm._v("hier"),
             ]),
-            _vm._v(" in te loggen."),
+            _vm._v(" (https://web.nogwat-app.nl) in te loggen."),
           ]),
           _vm._v(" "),
           _c("li", [
@@ -38513,7 +38513,7 @@ var render = function () {
           _vm._v(" "),
           _c("p", [
             _vm._v(
-              "De app wordt gebouwd uit liefhebberij en leergierigheid voor web development en is momenteel een 1-persoons project dus het kan een tijdje duren voordat het (wellicht ooit) in de appstore en playstore te vinden is."
+              "De app wordt gebouwd uit liefhebberij en leergierigheid voor web development en is momenteel een 1-persoons project dus het kan een lang duren voordat het openbaar in de Apple Appstore en de Android Playstore te vinden is."
             ),
           ]),
           _vm._v(" "),
@@ -38521,9 +38521,16 @@ var render = function () {
           _vm._v(" "),
           _c("p", [
             _vm._v("Volledige code en voortgang is "),
-            _c("a", { attrs: { href: "https://github.com/jagersd" } }, [
-              _vm._v("hier"),
-            ]),
+            _c(
+              "a",
+              {
+                attrs: {
+                  href: "https://github.com/jagersd/nogwat",
+                  target: "_blank",
+                },
+              },
+              [_vm._v("hier")]
+            ),
             _vm._v(" in te zien."),
           ]),
           _vm._v(" "),

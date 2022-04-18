@@ -49,8 +49,8 @@
                     <li>Potentiele bug bugs bugs.</li>
                     <li>Additionele features zullen nog geintroduceerd worden.</li>
                     <li>Meertaligheid nog niet compleet.</li>
-                    <li>De app zal binnenkort in gesloten testfase beschikbaar zijn op de Android store.</li>
-                    <li>Voor IOS gebruikers kan Safari gebruikt worden door <a href="https://web.nogwat-app.nl">hier</a> in te loggen.</li>
+                    <li>De Android app is uitsluitend in besloten test status beschikbaar bij de Playstore.</li>
+                    <li>Voor IOS gebruikers kan Safari gebruikt worden door <a href="https://web.nogwat-app.nl">hier</a> (https://web.nogwat-app.nl) in te loggen.</li>
                     <li>In uiterste noodzaak zal de database compleet leeggehaald moeten worden waardoor alle data verloren gaat. Mocht dit nodig zijn zullen gebruikers hiervan vooraf op de hoogte worden gebracht.</li>
                 </ul>
             </div>
@@ -62,9 +62,9 @@
             <div class="row tech-section">
                 <div class="col-12">
                 <h4>Benieuwd naar ontwikkelingen?</h4>
-                <p>De app wordt gebouwd uit liefhebberij en leergierigheid voor web development en is momenteel een 1-persoons project dus het kan een tijdje duren voordat het (wellicht ooit) in de appstore en playstore te vinden is.</p>
+                <p>De app wordt gebouwd uit liefhebberij en leergierigheid voor web development en is momenteel een 1-persoons project dus het kan een lang duren voordat het openbaar in de Apple Appstore en de Android Playstore te vinden is.</p>
                 <i>Technische details voor de geinteresseerden: </i>
-                <p>Volledige code en voortgang is <a href="https://github.com/jagersd">hier</a> in te zien.</p>
+                <p>Volledige code en voortgang is <a href="https://github.com/jagersd/nogwat" target="_blank">hier</a> in te zien.</p>
                 <p>De backend betreft een PHP/Laravel API. <br>
                 En de App zelf is een Ionic project met het VueJS framework.</p>
                 </div>
@@ -97,6 +97,25 @@ export default {
 
     #logo-image img{
         width: 10vw;
+    }
+
+    @media only screen and (max-width: 600px){
+        #header h1{
+            font-size: 25px;
+        }
+        
+        .container{
+            font-size: 18px;
+            padding-left: 10vw;
+            padding-right: 10vw;
+        }
+
+        .tech-section p{
+            font-size: 16px;
+        }
+        .tech-section i{
+            font-size: 16px;
+        }
     }
 
     .main-text{
