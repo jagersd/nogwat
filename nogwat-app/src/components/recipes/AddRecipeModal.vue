@@ -1,11 +1,13 @@
 <template>
   <ion-item lines="none" color="primary">
-    <ion-text>{{$t('recipes.add.slogan')}}</ion-text>
+    <ion-text class="ion-text-center"><p>{{$t('recipes.add.slogan')}}</p></ion-text>
   </ion-item>
-  <div class="container">
   <swiper @swiper="onSwiper">
     <swiper-slide>
-      <ion-text color="primary">Algemeen</ion-text>
+      <ion-item lines="none" class="ion-text-end">
+        <p class="slide-header">{{$t('recipes.add.ingredients')}}</p>
+        <ion-icon :icon="chevronForward" color="primary"></ion-icon>
+      </ion-item>
       <ion-item>
         <ion-label position="floating">{{$t('recipes.add.name')}}:</ion-label>
         <ion-input type="text" required="true" v-model="form.name"></ion-input>
@@ -62,7 +64,10 @@
       </ion-item>
     </swiper-slide>
     <swiper-slide>
-      <ion-text color="primary">{{$t('recipes.add.ingredients')}}</ion-text>
+      <ion-item lines="none" class="ion-text-end">
+        <ion-icon :icon="chevronBack" color="primary"></ion-icon>
+        <p class="slide-header">{{$t('misc.description')}}</p>
+      </ion-item>
       <div
         class="addIngredient"
         v-for="(ingredient, k) in form.ingredients"
@@ -99,7 +104,6 @@
       </div>
     </swiper-slide>
   </swiper>
-  </div>
   <ion-item>
     <small>{{$t('recipes.private')}}</small>
     <ion-checkbox v-model="form.private" slot="end"></ion-checkbox>
@@ -110,7 +114,7 @@
 
 <script>
 import axios from "axios";
-
+import { chevronBack, chevronForward } from "ionicons/icons";
 import { Swiper, SwiperSlide} from 'swiper/vue';
 import '@ionic/vue/css/ionic-swiper.css';
 import 'swiper/swiper.min.css';
@@ -221,39 +225,30 @@ export default defineComponent({
       swiper.update();
       }, 500);
     };
-    return { closeModal , onSwiper};
+    return { closeModal , onSwiper, chevronBack, chevronForward};
   },
 });
 </script>
 
 <style scoped>
 
-.swiper-slide{
-  min-height: 65vh;
-}
-
-/*
-#mainRecipeSection {
-  min-height: 50vh;
-  max-height: 60vh;
-  overflow-x: scroll;
-}
-
-#ingredienListSection {
-  border-top: 2px solid var(--ion-color-primary);
-  min-height: 40vh;
-  overflow-x: scroll;
-  padding-left: 1rem;
-  padding-top: 1rem;
-}
-
-#addRecipeModal {
-  min-height: 100%;
+ion-textarea{
+  min-height: 20vh;
 }
 
 .swiper-slide{
-  margin-top: 3vh;
-  min-height: 80vh;
+  margin-top: 20px;
+  height: 70vh;
+  border: 5px solid var(--ion-color-primary);
+  border-radius: 10px;
+  padding: 10px;
+  overflow-x: scroll;
 }
-*/
+
+.slide-header{
+  font-size: large;
+  font-weight: bold;
+  color:var(--ion-color-primary)
+}
+
 </style>
