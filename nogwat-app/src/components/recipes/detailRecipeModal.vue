@@ -5,6 +5,7 @@
       <ion-card-title>
         {{ recipeDetails.name }}
         <ion-button v-if="(recipeDetails.user_id_created == $store.state.user.user.id)" color="danger" size="small" id="recipe-remove-btn" @click="removeRecipeActionSheet">X</ion-button>
+        <ion-icon v-if="(recipeDetails.user_id_created == $store.state.user.user.id)" :icon="pencil" color="tertiary" @click="amendRecipe()"></ion-icon>
       </ion-card-title>
       <ion-card-subtitle>
         <p>Gedeeld door: {{ recipeDetails.user_id_created == $store.state.user.user.id ?  'jou' : recipeDetails.user.name}}</p>
@@ -56,7 +57,8 @@
 
 <script>
 import axios from 'axios'
-import { defineComponent } from "vue";
+import { defineComponent } from "vue"
+
 import {
   modalController,
   IonButton,
@@ -73,7 +75,9 @@ import {
   IonItem,
   actionSheetController,
 } from "@ionic/vue";
-import { person, people, star, starOutline, removeCircle } from "ionicons/icons";
+
+import AmendRecipeModal from "../recipes/AmendRecipeModal.vue";
+import { person, people, star, starOutline, removeCircle, pencil } from "ionicons/icons";
 
 export default defineComponent({
   name: "detailRecipeModal",
@@ -98,7 +102,7 @@ export default defineComponent({
     const closeModal = () => {
       modalController.dismiss()
     }
-    return { closeModal, person, people, star, starOutline, removeCircle }
+    return { closeModal, person, people, star, starOutline, removeCircle, pencil }
   },
   ionViewDidEnter(){
     this.recipeDetails.recipe_items.forEach((item) =>{
@@ -141,11 +145,16 @@ export default defineComponent({
         console.error("There was an error!", error);
       })
 		},
-    testMethod(){
-      this.recipeDetails.recipe_items.forEach((item) =>{
-          console.log(item.checkedForList)
-
-      })
+    async amendRecipe(){
+      const modal = await modalController.create({
+        id:'amend-item-modal',
+        component: AmendRecipeModal,
+        cssClass: "amendRecipeModal",
+        componentProps: {
+          recipeToAmend: this.recipeDetails,
+        },
+      });
+      return modal.present();
     },
     addToFavorites(){
       axios.post('/addfavorite',this.favoForm)

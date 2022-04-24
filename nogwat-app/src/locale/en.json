@@ -83,6 +83,10 @@
             "amount" : "Amount",
             "unit" : "Unit of measurement"
         },
+        "amend":{
+            "slogan": "Update your incredible recipe",
+            "useIngredients": "Use existing Ingredients"
+        },
         "private" : "Only visible to you?"
     },
     "misc":{

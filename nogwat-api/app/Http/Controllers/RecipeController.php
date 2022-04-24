@@ -105,7 +105,7 @@ class RecipeController extends Controller
     {   
         $recipe = Recipe::where('id',$request->recipeId)->first();
 
-        if($recipe->user_id_created != $request->user()->id){
+        if($recipe->user_id_created != auth()->user()->id){
             return response('only the original creater is allowed to update the recipe');
         }
 
@@ -114,7 +114,6 @@ class RecipeController extends Controller
                 'name' => $request->name,
                 'description' => $request->description,
                 'meal_type' => $request->mealType,
-                'user_id_created' => $request->user()->id,
                 'instructions' => $request->instructions,
                 'person_amount' => $request->personAmount,
                 'updatecounter' => $recipe->updatecounter + 1
@@ -127,7 +126,7 @@ class RecipeController extends Controller
                 RecipeItem::create([
                     'recipe_id' => $recipe->id,
                     'item_name' => $recipeItem['name'],
-                    'measurement_type_id' => $this->getMeasurementTypeId($recipeItem['amount_type']),
+                    'measurement_type_id' => $this->getMeasurementTypeId($recipeItem['amountType']),
                     'measurement_amount' => $recipeItem['amount']
                 ]);
             }

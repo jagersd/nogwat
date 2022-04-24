@@ -49,7 +49,7 @@ Route::middleware('auth:sanctum')->group( function() {
 
     //recipe routes
     Route::post('/createrecipe',[RecipeController::class, 'create']);
-    Route::put('/updaterecipe',[RecipeController::class, 'update']);
+    Route::post('/amendrecipe',[RecipeController::class, 'update']);
     Route::post('/deleterecipe',[RecipeController::class, 'delete']);
     Route::get('/myrecipes',[RecipeController::class,'myIndex']);
     Route::get('/searchrecipes',[RecipeController::class,'searchIndex']);

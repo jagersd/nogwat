@@ -1,6 +1,6 @@
 <template>
   <ion-item lines="none" color="primary">
-    <ion-text class="ion-text-center"><p>{{$t('recipes.add.slogan')}}</p></ion-text>
+    <ion-text class="ion-text-center"><p>{{$t('recipes.amend.slogan')}}</p></ion-text>
   </ion-item>
   <swiper @swiper="onSwiper" :space-between="50">
     <swiper-slide>
@@ -37,7 +37,7 @@
       </ion-item>
       <ion-item>
         <ion-label position="floating">{{$t('recipes.add.pamount')}}:</ion-label>
-        <ion-select required="true" v-model="form.personAmount" value="1" interface="popover">
+        <ion-select required="true" v-model="form.personAmount" interface="popover">
           <ion-select-option value="1">1</ion-select-option>
           <ion-select-option value="2">2</ion-select-option>
           <ion-select-option value="3">3</ion-select-option>
@@ -68,6 +68,7 @@
         <ion-icon :icon="chevronBack" color="primary"></ion-icon>
         <p class="slide-header">{{$t('misc.description')}}</p>
       </ion-item>
+      <ion-button @click="parseAmendableRecipe()" size="small">{{$t('recipes.amend.useIngredients')}}</ion-button>
       <div
         class="addIngredient"
         v-for="(ingredient, k) in form.ingredients"
@@ -136,8 +137,7 @@ import { defineComponent } from "vue";
 
 
 export default defineComponent({
-  name: "AddRecipeModal",
-  //inheritAttrs: false,
+  name: "AmendRecipeModal",
   components: {
     IonText,
     IonButton,
@@ -152,6 +152,12 @@ export default defineComponent({
     Swiper,
     SwiperSlide,
   },
+  props: {
+		recipeToAmend: {
+      type: Object,
+      required: true
+    }
+	},
   setup() {
     const closeModal = () => {
       modalController.dismiss();
@@ -168,14 +174,15 @@ export default defineComponent({
     return {
       maxCharacters: 500,
       form: {
-        mode: "add",
-        name: "",
-        description: "",
-        mealType: "diner",
-        instructions: "",
-        personAmount: "1",
+        recipeId: this.recipeToAmend.id,
+        mode: "amend",
+        name: this.recipeToAmend.name,
+        description: this.recipeToAmend.description,
+        mealType: this.recipeToAmend.meal_type,
+        instructions: this.recipeToAmend.instructions,
+        personAmount: parseInt(this.recipeToAmend.person_amount),
         lang: localStorage.getItem('locale'),
-        private: false,
+        private: this.recipeToAmend.private,
         ingredients: [
           {
             name: "",
@@ -195,6 +202,18 @@ export default defineComponent({
     },
   },
   methods: {
+    parseAmendableRecipe(){
+      if(this.form.ingredients[0].name==""){
+        this.form.ingredients.shift()
+      }
+      this.recipeToAmend.recipe_items.forEach(element => {
+        this.form.ingredients.push({
+          name: element.item_name,
+          amountType: element.measurement.abbreviation,
+          amount: element.measurement_amount
+        })
+      })
+    },
     addIngredient() {
       this.form.ingredients.unshift({
         name: "",
@@ -211,7 +230,7 @@ export default defineComponent({
       if(checkerArray.includes(true) || this.form.name == "" || this.form.description == "" || this.form.instructions == ""){
         this.toastResponse()
       }else{
-        axios.post("/createrecipe", this.form)
+        axios.post("/amendrecipe", this.form)
         .then(this.closeModal)
         .catch((error) => {
           this.errorMessage = error.message;

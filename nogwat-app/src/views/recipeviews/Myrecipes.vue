@@ -33,6 +33,7 @@ export default {
   methods: {
     async openDetailRecipeModal(recipe) {
       const modal = await modalController.create({
+        id: 'item-detail-modal',
         component: detailRecipeModal,
         componentProps: {
           recipeDetails: recipe,

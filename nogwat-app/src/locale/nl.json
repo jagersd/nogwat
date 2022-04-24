@@ -83,6 +83,10 @@
             "amount" : "Hoeveelheid",
             "unit" : "Eenheid"
         },
+        "amend":{
+            "slogan": "Werk je geweldige recipt bij",
+            "useIngredients": "Ingredienten laden"
+        },
         "private" : "Alleen door jou te vinden?"
     },
     "misc":{
