@@ -100,7 +100,7 @@ export default defineComponent({
 	},
   setup() {
     const closeModal = () => {
-      modalController.dismiss()
+    modalController.dismiss();
     }
     return { closeModal, person, people, star, starOutline, removeCircle, pencil }
   },

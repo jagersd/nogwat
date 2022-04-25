@@ -42,7 +42,7 @@
               <ion-icon v-if="listItem.date_purchased != null" slot="end" :icon="checkmark"></ion-icon>
             </ion-item>
           </ion-list>
-          <ion-button class="add-btn" @click="openAddItemModal(listGroup.id, listGroup.stores)">+</ion-button>
+          <ion-button @click="openAddItemModal(listGroup.id, listGroup.stores)">+</ion-button>
       </swiper-slide>
     </swiper>
   </master-layout>

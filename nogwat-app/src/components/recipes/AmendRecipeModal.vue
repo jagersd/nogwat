@@ -68,7 +68,7 @@
         <ion-icon :icon="chevronBack" color="primary"></ion-icon>
         <p class="slide-header">{{$t('misc.description')}}</p>
       </ion-item>
-      <ion-button @click="parseAmendableRecipe()" size="small">{{$t('recipes.amend.useIngredients')}}</ion-button>
+      <ion-button v-if="!ingredientsLoaded" @click="parseAmendableRecipe()" size="small">{{$t('recipes.amend.useIngredients')}}</ion-button>
       <div
         class="addIngredient"
         v-for="(ingredient, k) in form.ingredients"
@@ -156,7 +156,7 @@ export default defineComponent({
 		recipeToAmend: {
       type: Object,
       required: true
-    }
+    },
 	},
   setup() {
     const closeModal = () => {
@@ -172,6 +172,7 @@ export default defineComponent({
   },
   data() {
     return {
+      ingredientsLoaded: false,
       maxCharacters: 500,
       form: {
         recipeId: this.recipeToAmend.id,
@@ -213,6 +214,7 @@ export default defineComponent({
           amount: element.measurement_amount
         })
       })
+      this.ingredientsLoaded = true
     },
     addIngredient() {
       this.form.ingredients.unshift({
@@ -231,7 +233,9 @@ export default defineComponent({
         this.toastResponse()
       }else{
         axios.post("/amendrecipe", this.form)
-        .then(this.closeModal)
+        .then(modalController.dismiss())
+        .then(modalController.dismiss({message: 'I am closing a modal'}, 'confirm', 'recipe-detail-modal'))
+        .then(this.$router.push({name:'recipesmenu'}))
         .catch((error) => {
           this.errorMessage = error.message;
           console.error("This was an error!", error);
