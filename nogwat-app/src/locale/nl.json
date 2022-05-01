@@ -41,6 +41,9 @@
             "headers":"Lijst item / Aangekocht door / Toegevoegd door",
             "added": "Toegevoegd op:",
             "bought": "Gekocht op:"
+        },
+        "stores":{
+            "deleteConfirm": "Weet je zeker dat je deze winkel wilt verwijderen?"
         }
     },
     "shoppingList":{
@@ -90,6 +93,8 @@
         "private" : "Alleen door jou te vinden?"
     },
     "misc":{
+        "yes": "Ja",
+        "no" : "Nee",
         "close": "Sluiten",
         "cancel": "Annuleren",
         "save": "Opslaan",

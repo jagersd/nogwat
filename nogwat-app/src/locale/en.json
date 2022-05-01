@@ -41,6 +41,9 @@
             "headers":"List item / purchased by / added by",
             "added": "Added on:",
             "bought": "Purchased on:"
+        },
+        "stores":{
+            "deleteConfirm": "Are you sure you want to delete this store?"
         }
     },
     "shoppingList":{
@@ -90,6 +93,8 @@
         "private" : "Only visible to you?"
     },
     "misc":{
+        "yes": "Yes",
+        "no" : "No",
         "close": "Close",
         "cancel": "Cancel",
         "save": "Save",

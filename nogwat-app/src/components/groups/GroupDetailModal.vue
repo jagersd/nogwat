@@ -90,6 +90,15 @@
 
     <!--Stores-->
     <div class="stores-section" v-if="showStores">
+      <ion-button v-if="groupInfo.adminCheck.is_admin==1" class="ion-margin-top" @click="storeFormHidden = false" slot="end">+</ion-button>
+      <ion-item v-if="!storeFormHidden">
+        <ion-label position="stacked">{{$t('groups.detailsModal.storeName')}}</ion-label>
+        <ion-input type="text" required="true" v-model="storeForm.name" placeholder="Voorbeeld: Buurtboer" maxlength="30"></ion-input>
+        <ion-label position="stacked">{{$t('misc.description')}}</ion-label>
+        <ion-input type="text" required="true" v-model="storeForm.description" placeholder="Voorbeeld: supermarkt" maxlength="150"></ion-input>
+        <ion-button @click="addStore">{{$t('misc.add')}}</ion-button>
+        <ion-button @click="storeFormHidden = true">{{$t('misc.cancel')}}</ion-button>
+      </ion-item>
       <ion-list v-for="store in groupInfo.stores" :key="store.id">
         <ion-item>
           <ion-label color="dark">
@@ -111,19 +120,11 @@
           <ion-label position="stacked">{{$t('misc.description')}}</ion-label>
           <ion-input type="text" :placeholder="store.description" v-model="storeAdjustFrom.description" maxlength="150"></ion-input>
           <ion-button @click="adjustStoreDetails(store.id)">{{$t('misc.save')}}</ion-button>
+          <ion-button @click="adjustStoreDetails(store.id, true)" color="danger">{{$t('misc.delete')}}</ion-button>
           <ion-button @click="storeAdjustId = null">{{$t('misc.cancel')}}</ion-button>
         </ion-item>
       </ion-list>
       <p v-if="groupInfo.adminCheck.is_admin!=1">{{$t('groups.detailsModal.adminExp')}}</p>
-      <ion-button v-if="groupInfo.adminCheck.is_admin==1" class="ion-margin-top" @click="storeFormHidden = false">+</ion-button>
-      <ion-item v-if="!storeFormHidden">
-        <ion-label position="stacked">{{$t('groups.detailsModal.storeName')}}</ion-label>
-        <ion-input type="text" required="true" v-model="storeForm.name" placeholder="Voorbeeld: Buurtboer" maxlength="30"></ion-input>
-        <ion-label position="stacked">{{$t('misc.description')}}</ion-label>
-        <ion-input type="text" required="true" v-model="storeForm.description" placeholder="Voorbeeld: supermarkt" maxlength="150"></ion-input>
-        <ion-button @click="addStore">{{$t('misc.add')}}</ion-button>
-        <ion-button @click="storeFormHidden = true">{{$t('misc.cancel')}}</ion-button>
-      </ion-item>
     </div>
   </div>
   <div class="slot-menu">  
@@ -372,14 +373,42 @@ export default defineComponent ({
         console.error('there was an error!', error)
       })
     },
-    async adjustStoreDetails(storeId){
+    async adjustStoreDetails(storeId, deleteAction=false){
       this.storeAdjustFrom.storeId = storeId
-      axios.post('/adjuststorename',this.storeAdjustFrom)
-      .catch(error=> {
-        this.errorMessage = error.message;
-        console.error('there was an error!', error)
-      })
-      .then(this.closeModal)
+      if(deleteAction == true){
+        const deleteStoreActionSheet = await actionSheetController
+        .create({
+          header: this.$t('groups.stores.deleteConfirm'),
+          buttons:[
+            {
+              text: this.$t('misc.yes'),
+              handler: () => {
+              axios.put('/deletestore',{
+              groupId:this.groupId,
+              storeId:this.storeAdjustFrom.storeId
+              })
+              .catch(error=> {
+                this.errorMessage = error.message;
+                console.error('there was an error!', error)
+              })
+              .then(this.closeModal)
+              }
+            },
+            {
+              text: this.$t('misc.no'),
+              role: 'cancel'
+            }
+          ]
+        })
+        await deleteStoreActionSheet.present()
+      }else{
+        axios.post('/adjuststorename',this.storeAdjustFrom)
+        .catch(error=> {
+          this.errorMessage = error.message;
+          console.error('there was an error!', error)
+        })
+        .then(this.closeModal)
+      }
     }
   }
 });

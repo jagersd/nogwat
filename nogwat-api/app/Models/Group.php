@@ -57,7 +57,8 @@ class Group extends Model
     }
 
     public function stores(){
-        return $this->hasMany(Store::class, 'group_id');
+        return $this->hasMany(Store::class, 'group_id')
+        ->where('deleted',0);
     }
 
     public function admins(){

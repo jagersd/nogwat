@@ -70,7 +70,6 @@ Route::middleware('auth:sanctum')->group( function() {
 
     //star items
     Route::get('/staritems',[Listcontroller::class,'starItems']);
-    
 
     //store routes
     Route::post('addstore',[StoreController::class,'create']);
