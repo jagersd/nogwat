@@ -246,13 +246,32 @@ export default defineComponent ({
       })
       return toast.present()
     },
-    addStore(){
-      axios.post('/addstore', this.storeForm)
-      .then(this.closeModal)
-      .catch(error=> {
-        this.errorMessage = error.message;
-        console.error('there was an error!', error)
-      })
+    async addStore(){
+      if(this.storeForm.name == "" || this.storeForm.description == ""){
+        const toast = await toastController
+        .create({
+          message:'Naam en omschrijving zijn verplicht',
+          color: 'danger',
+          position: 'middle',
+          duration: 2000
+        })
+        return toast.present()
+      }else{
+        axios.post('/addstore', this.storeForm)
+        .then(this.closeModal)
+        .catch(error=> {
+          this.errorMessage = error.message;
+          console.error('there was an error!', error)
+        })
+        const toast = await toastController
+        .create({
+          message:'Nieuwe winkel toegevoegd',
+          color: 'primary',
+          position: 'middle',
+          duration: 2000
+        })
+        return toast.present()
+      }
     },
     setDefaultGroup(){
       this.$store.commit('setGroupData', {groupId: this.groupId, groupName:this.groupInfo.name})
