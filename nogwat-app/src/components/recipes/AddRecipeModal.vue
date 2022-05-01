@@ -242,6 +242,7 @@ ion-textarea{
 }
 
 .swiper-slide{
+  max-width: 100vw;
   margin-top: 20px;
   height: 70vh;
   border: 5px solid var(--ion-color-primary);
