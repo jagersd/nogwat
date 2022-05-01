@@ -250,7 +250,7 @@ export default defineComponent ({
       if(this.storeForm.name == "" || this.storeForm.description == ""){
         const toast = await toastController
         .create({
-          message:'Naam en omschrijving zijn verplicht',
+          message:this.$t('groups.stores.addError'),
           color: 'danger',
           position: 'middle',
           duration: 2000
@@ -265,7 +265,7 @@ export default defineComponent ({
         })
         const toast = await toastController
         .create({
-          message:'Nieuwe winkel toegevoegd',
+          message:this.$t('groups.stores.addConfirm'),
           color: 'primary',
           position: 'middle',
           duration: 2000

@@ -43,7 +43,9 @@
             "bought": "Gekocht op:"
         },
         "stores":{
-            "deleteConfirm": "Weet je zeker dat je deze winkel wilt verwijderen?"
+            "deleteConfirm": "Weet je zeker dat je deze winkel wilt verwijderen?",
+            "addError":"We hebben een naam en omschrijving nodig.",
+            "addConfirm":"Nieuwe winkel opgeslagen."
         }
     },
     "shoppingList":{

@@ -17,6 +17,7 @@
             <ion-icon v-if="currentSlider != listInfo.length-1" color="primary" slot="end" :icon="chevronForward"></ion-icon>
           </ion-item>
           <!--ListItem Loop-->
+          <ion-button v-if="listGroup.active_lists.length >= 8" @click="openAddItemModal(listGroup.id, listGroup.stores)">+</ion-button>
           <ion-list v-for="listItem in listGroup.active_lists" :key="listItem.id">
             <ion-item>
               <ion-label>
@@ -42,7 +43,7 @@
               <ion-icon v-if="listItem.date_purchased != null" slot="end" :icon="checkmark"></ion-icon>
             </ion-item>
           </ion-list>
-          <ion-button @click="openAddItemModal(listGroup.id, listGroup.stores)">+</ion-button>
+          <ion-button id="addBtn" @click="openAddItemModal(listGroup.id, listGroup.stores)">+</ion-button>
       </swiper-slide>
     </swiper>
   </master-layout>

@@ -43,7 +43,9 @@
             "bought": "Purchased on:"
         },
         "stores":{
-            "deleteConfirm": "Are you sure you want to delete this store?"
+            "deleteConfirm": "Are you sure you want to delete this store?",
+            "addError":"We need a name and a description",
+            "addConfirm":"New store saved."
         }
     },
     "shoppingList":{
