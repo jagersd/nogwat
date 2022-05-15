@@ -7,19 +7,28 @@
     @reachBeginning="currentSlider = 0"
     @slideNextTransitionStart="sliderMovedUp"
     @slidePrevTransitionStart="sliderMovedDown"
+    @slideChange="clearStoreFilter"
     >
     <!--GroupID Loop-->
       <swiper-slide v-for="listGroup in listInfo" :key="listGroup.id" >
           <ion-item lines="none">
             <ion-icon v-if="currentSlider != 0" color="primary" slot="start" :icon="chevronBack"></ion-icon>
             <p id="group-name">{{ listGroup.name }}</p>
-            <ion-badge color="danger">{{listGroup.active_lists.filter(item => item.user_id_purchased == null).length}}</ion-badge>
+            <ion-badge color="primary">{{listGroup.active_lists.filter(item => item.user_id_purchased == null).length}}</ion-badge>
             <ion-icon v-if="currentSlider != listInfo.length-1" color="primary" slot="end" :icon="chevronForward"></ion-icon>
           </ion-item>
           <!--ListItem Loop-->
           <ion-button v-if="listGroup.active_lists.length >= 8" @click="openAddItemModal(listGroup.id, listGroup.stores)">+</ion-button>
+          <ion-icon id="filterIcon" v-if="listGroup.stores.length" @click="setStoreFilter(listGroup.active_lists)" :icon="filterCircle" size="large" color="secondary"></ion-icon>
+          <ion-radio-group>
+            <ion-item v-for="store in storeFilter" :key="store">
+              <ion-label color="secondary">{{store}}</ion-label>
+              <ion-radio slot="start" :value=store @click="this.selectedStore={storeName:store, groupId:listGroup.id}"></ion-radio>
+            </ion-item>
+          </ion-radio-group>
+
           <ion-list v-for="listItem in listGroup.active_lists" :key="listItem.id">
-            <ion-item>
+            <ion-item v-if="(selectedStore.groupId && selectedStore.groupId == listGroup.id && listItem.store && listItem.store.name == selectedStore.storeName) || !selectedStore.storeName">
               <ion-label>
                 <h2 v-if="listItem.date_purchased != null" @click="reversePurchasedActionSheet(listItem.id)">
                   <s>{{ listItem.item_name }}</s>
@@ -37,7 +46,6 @@
                   </i>
                 </p>
                 <p v-if="(listItem.measurement_amount ==null && listItem.store != null)">{{listItem.store.name}}</p>
-                
               </ion-label>
               <ion-checkbox v-if="listItem.date_purchased == null" color="primary" slot="end" @click="markPurchased(listItem.id)"></ion-checkbox>
               <ion-icon v-if="listItem.date_purchased != null" slot="end" :icon="checkmark"></ion-icon>
@@ -60,6 +68,8 @@ import {
 	IonBadge,
   actionSheetController,
   IonIcon,
+  IonRadio,
+  IonRadioGroup
 } from "@ionic/vue";
 
 import { Swiper, SwiperSlide} from 'swiper/vue';
@@ -67,19 +77,21 @@ import 'swiper/swiper.min.css';
 import '@ionic/vue/css/ionic-swiper.css';
 
 
-import { checkmark, restaurant, chevronBack, chevronForward } from "ionicons/icons";
+import { checkmark, restaurant, chevronBack, chevronForward, filterCircle } from "ionicons/icons";
 import axios from "axios";
 import AddItemModal from "../components/list/AddItemModal.vue";
 import ItemDetailsModal from "../components/list/ItemDetailsModal.vue";
 
 export default {
   name: "Lists",
-  components: { IonList, IonLabel, IonItem, IonCheckbox, IonButton, IonBadge, IonIcon, Swiper, SwiperSlide},
+  components: { IonList, IonLabel, IonItem, IonCheckbox, IonButton, IonBadge, IonIcon, Swiper, SwiperSlide, IonRadio, IonRadioGroup},
   data() {
     return {
       listInfo: {},
       currentSlider: 0,
-      nogroups: false
+      nogroups: false,
+      storeFilter: [],
+      selectedStore: {}
     };
   },
   setup(){
@@ -88,6 +100,7 @@ export default {
       restaurant,
       chevronBack,
       chevronForward,
+      filterCircle
     }
   },
   ionViewWillEnter() {
@@ -138,6 +151,18 @@ export default {
       .then(() =>{
         this.initiateList();
       })
+    },
+    setStoreFilter(itemList){
+      if(this.storeFilter.length){
+        this.clearStoreFilter()
+      } else {
+        let storeArray = [...new Set(itemList.map(item => item.store ? item.store.name : null))]
+        this.storeFilter = storeArray.filter(store => store)
+      }
+    },
+    clearStoreFilter(){
+      this.storeFilter = []
+      this.selectedStore = {}
     },
     async openAddItemModal(groupId, stores) {
       const modal = await modalController.create({
@@ -213,5 +238,10 @@ ion-button {
 
 ion-badge{
 	margin-left:1rem;
+}
+
+#filterIcon{
+  position: absolute;
+  right: 10vw;
 }
 </style>

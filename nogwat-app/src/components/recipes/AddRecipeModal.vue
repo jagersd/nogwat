@@ -2,7 +2,7 @@
   <ion-item lines="none" color="primary">
     <ion-text class="ion-text-center"><p>{{$t('recipes.add.slogan')}}</p></ion-text>
   </ion-item>
-  <swiper @swiper="onSwiper" :space-between="50">
+  <swiper @swiper="onSwiper" :space-between="0">
     <swiper-slide>
       <ion-item lines="none" class="ion-text-end">
         <p class="slide-header">{{$t('recipes.add.ingredients')}}</p>
@@ -247,7 +247,6 @@ ion-textarea{
   height: 70vh;
   border: 5px solid var(--ion-color-primary);
   border-radius: 10px;
-  padding: 10px;
   overflow-x: scroll;
 }
 
