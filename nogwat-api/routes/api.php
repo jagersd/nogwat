@@ -67,6 +67,7 @@ Route::middleware('auth:sanctum')->group( function() {
     Route::get('/mylist',[ListController::class,'myList']);
     Route::get('/gethistory',[Listcontroller::class,'getHistory']);
     Route::delete('/removelistitem',[Listcontroller::class,'destroy']);
+    Route::get('/addedRecipeDetails/{groupId}/{recipeId}',[Listcontroller::class,'showRecipe']);
 
     //star items
     Route::get('/staritems',[Listcontroller::class,'starItems']);

@@ -123,7 +123,7 @@ export default {
   components: { MasterLayout, IonText },
   data() {
     return {
-      frontEndVersion : 'Alpha - 22.05.1'
+      frontEndVersion : 'Alpha - 22.05.2'
     }
   }
 };

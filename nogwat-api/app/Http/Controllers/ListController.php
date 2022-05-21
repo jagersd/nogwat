@@ -10,6 +10,7 @@ use App\Models\ActiveList;
 use App\Models\UserGroup;
 use App\Models\Group;
 use App\Models\Measurement;
+use App\Models\Recipe;
 
 class ListController extends Controller
 {
@@ -210,6 +211,28 @@ class ListController extends Controller
         } else {
             return response('operation failed', 500);
         }
+    }
+
+    /**
+    * Show recipe instructions for active listitem
+    * @param  int  $groupId
+    * @param  int  $recipeId
+    * @return \Illuminate\Http\Response
+    */
+    public function showRecipe($groupId, $recipeId)
+    {   
+        $baseItem = ActiveList::where('group_id',$groupId)->where('recipe_id',$recipeId)->orderBy('created_at', 'desc')->first();
+
+        $recipe = Recipe::select('name', 'instructions')->where('id',$baseItem->recipe_id)->first();
+
+        $activeItems = ActiveList::where('group_id',$groupId)
+        ->where('recipe_id',$recipeId)
+        ->where('created_at',$baseItem->created_at)
+        ->get();
+        
+        $response = ['recipe'=>$recipe,'items'=>$activeItems];
+
+        return response($response, 200);
     }
 
 
