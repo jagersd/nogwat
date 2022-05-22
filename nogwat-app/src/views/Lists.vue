@@ -28,16 +28,16 @@
           </ion-radio-group>
 
           <ion-list v-for="listItem in listGroup.active_lists" :key="listItem.id">
-            <ion-item v-if="(selectedStore.groupId && selectedStore.groupId == listGroup.id && listItem.store && listItem.store.name == selectedStore.storeName) || !selectedStore.storeName">
+            <ion-item lines="none" v-if="(selectedStore.groupId && selectedStore.groupId == listGroup.id && listItem.store && listItem.store.name == selectedStore.storeName) || !selectedStore.storeName">
               <ion-label>
-                <h2 v-if="listItem.date_purchased != null" @click="reversePurchasedActionSheet(listItem.id)">
-                  <s>{{ listItem.item_name }}</s>
-                  <ion-icon v-if="listItem.recipe_id" color="primary" size="small" :icon="restaurant"></ion-icon>
-                </h2>
-                <h2 v-if="listItem.date_purchased == null" @click="openItemDetailsModal(listItem, listGroup.stores)">
-                  {{ listItem.item_name }}
-                  <ion-icon v-if="listItem.recipe_id" color="primary" size="small" :icon="restaurant"></ion-icon>
-                </h2>
+                <h3 v-if="listItem.date_purchased != null">
+                  <s @click="reversePurchasedActionSheet(listItem.id)">{{ listItem.item_name }}</s>
+                  <ion-icon id="recipe-icon" v-if="listItem.recipe_id" color="primary" size="small" :icon="restaurant" @click="openRecipeQuickViewModal(listItem.group_id,listItem.recipe_id)"></ion-icon>
+                </h3>
+                <h3 v-if="listItem.date_purchased == null">
+                  <b @click="openItemDetailsModal(listItem, listGroup.stores)">{{ listItem.item_name }}</b>
+                  <ion-icon id="recipe-icon" v-if="listItem.recipe_id" color="primary" size="small" :icon="restaurant" @click="openRecipeQuickViewModal(listItem.group_id,listItem.recipe_id)"></ion-icon>
+                </h3>
                 <p v-if="(listItem.measurement_amount!=null)">
                   {{ listItem.measurement_amount }}
                   {{ listItem.measurement.abbreviation }} |
@@ -81,6 +81,7 @@ import { checkmark, restaurant, chevronBack, chevronForward, filterCircle } from
 import axios from "axios";
 import AddItemModal from "../components/list/AddItemModal.vue";
 import ItemDetailsModal from "../components/list/ItemDetailsModal.vue";
+import RecipeQuickViewModal from "../components/list/RecipeQuickViewModal.vue";
 
 export default {
   name: "Lists",
@@ -198,6 +199,17 @@ export default {
       });
       return modal.present();
     },
+    async openRecipeQuickViewModal(group, recipe){
+      const modal = await modalController.create({
+        component: RecipeQuickViewModal,
+        id:'recipe-quick-view-modal',
+        componentProps:{
+          groupId: group,
+          recipeId: recipe
+        }
+      })
+      return modal.present();
+    },
     sliderMovedUp(){
       this.currentSlider+=1
     },
@@ -214,7 +226,7 @@ export default {
 
 .swiper-slide{
   margin-top: 3vh;
-  min-height: 80vh;
+  min-height: 60vh;
 }
 
 #group-name{
@@ -243,5 +255,9 @@ ion-badge{
 #filterIcon{
   position: absolute;
   right: 10vw;
+}
+
+#recipe-icon{
+  padding-left: 5px;
 }
 </style>

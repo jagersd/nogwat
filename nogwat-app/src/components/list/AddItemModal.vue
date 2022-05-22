@@ -5,7 +5,7 @@
     </ion-card-header>
     <ion-card-content>
       <ion-item>
-        <ion-label position="stacked" color="primary">{{$t('shoppingList.addModal.product')}}</ion-label>
+        <ion-label position="stacked" color="primary"><b>{{$t('shoppingList.addModal.product')}}</b></ion-label>
         <ion-input type="text" required="true" v-model="form.listItems[0].itemName" maxlength="35" id="name"></ion-input>
       </ion-item>
       <ion-item>

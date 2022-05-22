@@ -59,6 +59,9 @@
             "selectStore": "Select store",
             "dueDesc": "Buy before",
             "addedBy": "Added by: "
+        },
+        "recipeViewModal":{
+            "header": "Ingrediënts on your list:"
         }
     },
     "recipes":{

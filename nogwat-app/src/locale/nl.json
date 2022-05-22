@@ -59,6 +59,9 @@
             "selectStore": "Selecteer winkel",
             "dueDesc": "In huis halen voor",
             "addedBy": "Toegevoegd door: "
+        },
+        "recipeViewModal":{
+            "header": "Ingrediënten op je lijst:"
         }
     },
     "recipes":{
