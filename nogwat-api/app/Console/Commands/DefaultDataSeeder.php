@@ -49,6 +49,7 @@ class DefaultDataSeeder extends Command
             'st'=>'stuks',
             'fl'=>'fles',
             'kr'=>'krat',
+            'pk'=>'pak',
         ];
 
         foreach($measurements as $key=>$arrayItem){

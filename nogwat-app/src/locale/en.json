@@ -118,7 +118,8 @@
             "tl": "tl (teaspoon)",
             "ml": "ml (milliliter)",
             "l": "l (liter)",
-            "dl": "dl (decileter"
+            "dl": "dl (decileter",
+            "pk": "pk (packets)"
         }
     }
 }

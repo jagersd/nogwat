@@ -118,7 +118,8 @@
             "tl": "tl (theelepel)",
             "ml": "ml (milliliter)",
             "l": "l (liter)",
-            "dl": "dl (decileter"
+            "dl": "dl (deciliter)",
+            "pk": "pk (pakken)"
         }
     }
 }
