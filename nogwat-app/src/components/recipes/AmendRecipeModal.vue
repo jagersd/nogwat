@@ -2,6 +2,7 @@
   <ion-item lines="none" color="primary">
     <ion-text class="ion-text-center"><p>{{$t('recipes.amend.slogan')}}</p></ion-text>
   </ion-item>
+  <div class="container">
   <swiper @swiper="onSwiper" :space-between="50">
     <swiper-slide>
       <ion-item lines="none" class="ion-text-end">
@@ -104,12 +105,15 @@
       </div>
     </swiper-slide>
   </swiper>
+  </div>
+  <div class="bottom-menu">
   <ion-item>
     <small>{{$t('recipes.private')}}</small>
     <ion-checkbox v-model="form.private" slot="end"></ion-checkbox>
   </ion-item>
   <ion-button @click="saveRecipe">{{$t('misc.save')}}</ion-button>
   <ion-button @click="closeModal">{{$t('misc.close')}}</ion-button>
+  </div>
 </template>
 
 <script>
@@ -264,10 +268,18 @@ ion-textarea{
   min-height: 20vh;
 }
 
+.bottom-menu{
+  min-height: 15vh;
+}
+
+.bottom-menu ion-button{
+  margin-left: 20px;
+}
+
 .swiper-slide{
   max-width: 100vw;
   margin-top: 20px;
-  height: 70vh;
+  height: 80vh;
   border: 5px solid var(--ion-color-primary);
   border-radius: 10px;
   padding: 10px;
