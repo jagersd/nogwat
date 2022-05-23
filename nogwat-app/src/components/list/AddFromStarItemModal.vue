@@ -5,31 +5,32 @@
     </ion-card-header>
     <ion-card-content>
       <ion-item>
-        <ion-label position="floating">Product</ion-label>
+        <ion-label position="floating">{{$t('shoppingList.addModal.product')}}</ion-label>
         <ion-input type="text" required="true" v-model="form.listItems[0].itemName" id="name"></ion-input>
       </ion-item>
       <ion-item>
-        <ion-label position="floating">Hoeveelheid</ion-label>
+        <ion-label position="floating">{{$t('shoppingList.addModal.amount')}}</ion-label>
         <ion-input type="number" v-model="form.listItems[0].amount" id="amount"></ion-input>
       </ion-item>
       <ion-item>
-        <ion-label position="stacked">liter, gram, kilo</ion-label>
+        <ion-label position="stacked">{{$t('shoppingList.addModal.amountExamples')}}</ion-label>
         <ion-select v-model="form.listItems[0].measurementType" interface="popover">
-          <ion-select-option value="st">st (stuks)</ion-select-option>
-          <ion-select-option value="gr">gr (gram)</ion-select-option>
-          <ion-select-option value="kg">kg (kilo)</ion-select-option>
-          <ion-select-option value="fl">fl (flessen)</ion-select-option>
-          <ion-select-option value="kr">kr (kratten)</ion-select-option>
+          <ion-select-option value="st">{{$t('misc.measurements.pc')}}</ion-select-option>
+          <ion-select-option value="pk">{{$t('misc.measurements.pk')}}</ion-select-option>
+          <ion-select-option value="gr">{{$t('misc.measurements.gr')}}</ion-select-option>
+          <ion-select-option value="kg">{{$t('misc.measurements.kg')}}</ion-select-option>
+          <ion-select-option value="fl">{{$t('misc.measurements.bl')}}</ion-select-option>
+          <ion-select-option value="kr">{{$t('misc.measurements.ca')}}</ion-select-option>
         </ion-select>
       </ion-item>
       <ion-item v-if="storeArray.length">
-        <ion-label position="stacked">(optioneel) selecteer winkel</ion-label>
+        <ion-label position="stacked">{{$t('shoppingList.addModal.selectStore')}}</ion-label>
         <ion-select v-model="form.listItems[0].storeId" interface="popover">
           <ion-select-option v-for="store in storeArray" :key="store.id" :value="store.id">{{store.name}}</ion-select-option>
         </ion-select>
       </ion-item>
-      <ion-button expand="fill" @click="addItem()">Opslaan</ion-button>
-      <ion-button @click="closeModal">Sluit</ion-button>
+      <ion-button expand="fill" @click="addItem()">{{$t('misc.save')}}</ion-button>
+      <ion-button @click="closeModal">{{$t('misc.close')}}</ion-button>
     </ion-card-content>
   </ion-card>
 </template>

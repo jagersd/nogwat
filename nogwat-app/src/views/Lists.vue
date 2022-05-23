@@ -17,7 +17,6 @@
             <ion-badge color="primary">{{listGroup.active_lists.filter(item => item.user_id_purchased == null).length}}</ion-badge>
             <ion-icon v-if="currentSlider != listInfo.length-1" color="primary" slot="end" :icon="chevronForward"></ion-icon>
           </ion-item>
-          <!--ListItem Loop-->
           <ion-button v-if="listGroup.active_lists.length >= 8" @click="openAddItemModal(listGroup.id, listGroup.stores)">+</ion-button>
           <ion-icon id="filterIcon" v-if="listGroup.stores.length" @click="setStoreFilter(listGroup.active_lists)" :icon="filterCircle" size="large" color="secondary"></ion-icon>
           <ion-radio-group>
@@ -27,17 +26,18 @@
             </ion-item>
           </ion-radio-group>
 
+          <!--ListItem Loop-->
           <ion-list v-for="listItem in listGroup.active_lists" :key="listItem.id">
             <ion-item lines="none" v-if="(selectedStore.groupId && selectedStore.groupId == listGroup.id && listItem.store && listItem.store.name == selectedStore.storeName) || !selectedStore.storeName">
               <ion-label>
-                <h3 v-if="listItem.date_purchased != null">
+                <h2 v-if="listItem.date_purchased != null">
                   <s @click="reversePurchasedActionSheet(listItem.id)">{{ listItem.item_name }}</s>
                   <ion-icon id="recipe-icon" v-if="listItem.recipe_id" color="primary" size="small" :icon="restaurant" @click="openRecipeQuickViewModal(listItem.group_id,listItem.recipe_id)"></ion-icon>
-                </h3>
-                <h3 v-if="listItem.date_purchased == null">
+                </h2>
+                <h2 v-if="listItem.date_purchased == null">
                   <b @click="openItemDetailsModal(listItem, listGroup.stores)">{{ listItem.item_name }}</b>
                   <ion-icon id="recipe-icon" v-if="listItem.recipe_id" color="primary" size="small" :icon="restaurant" @click="openRecipeQuickViewModal(listItem.group_id,listItem.recipe_id)"></ion-icon>
-                </h3>
+                </h2>
                 <p v-if="(listItem.measurement_amount!=null)">
                   {{ listItem.measurement_amount }}
                   {{ listItem.measurement.abbreviation }} |
@@ -238,6 +238,10 @@ export default {
 
 #nogroup{
   margin-top: 40vh;
+}
+
+ion-list{
+  padding:0;
 }
 
 ion-checkbox {

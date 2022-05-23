@@ -20,6 +20,7 @@
       <ion-label position="floating" color="secondary">{{$t('shoppingList.addModal.amountExamples')}}</ion-label>
         <ion-select v-model="form.measurementType" interface="popover">
           <ion-select-option value="st">{{$t('misc.measurements.pc')}}</ion-select-option>
+          <ion-select-option value="pk">{{$t('misc.measurements.pk')}}</ion-select-option>
           <ion-select-option value="gr">{{$t('misc.measurements.gr')}}</ion-select-option>
           <ion-select-option value="kg">{{$t('misc.measurements.kg')}}</ion-select-option>
           <ion-select-option value="fl">{{$t('misc.measurements.bl')}}</ion-select-option>
