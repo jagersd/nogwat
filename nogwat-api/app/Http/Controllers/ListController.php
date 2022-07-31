@@ -65,6 +65,10 @@ class ListController extends Controller
     public function update(Request $request)
     {
         $listItem = ActiveList::where('id',$request->listItemId)->first();
+
+        if($request->amount != null && $request->measurementType == null){
+            $request->measurementType = "st";
+        }
         
         $listItem->update([
             'store_id' => $request->storeId,
