@@ -27,29 +27,34 @@
           </ion-radio-group>
 
           <!--ListItem Loop-->
-          <ion-list v-for="listItem in listGroup.active_lists" :key="listItem.id">
-            <ion-item lines="none" v-if="(selectedStore.groupId && selectedStore.groupId == listGroup.id && listItem.store && listItem.store.name == selectedStore.storeName) || !selectedStore.storeName">
-              <ion-label>
-                <h2 v-if="listItem.date_purchased != null">
-                  <s @click="reversePurchasedActionSheet(listItem.id)">{{ listItem.item_name }}</s>
-                  <ion-icon id="recipe-icon" v-if="listItem.recipe_id" color="primary" size="small" :icon="restaurant" @click="openRecipeQuickViewModal(listItem.group_id,listItem.recipe_id)"></ion-icon>
-                </h2>
-                <h2 v-if="listItem.date_purchased == null">
-                  <b @click="openItemDetailsModal(listItem, listGroup.stores)">{{ listItem.item_name }}</b>
-                  <ion-icon id="recipe-icon" v-if="listItem.recipe_id" color="primary" size="small" :icon="restaurant" @click="openRecipeQuickViewModal(listItem.group_id,listItem.recipe_id)"></ion-icon>
-                </h2>
-                <p v-if="(listItem.measurement_amount!=null)">
-                  {{ listItem.measurement_amount }}
-                  {{ listItem.measurement.abbreviation }} |
-                  <i v-if="listItem.store">
-                  {{listItem.store.name}}
-                  </i>
-                </p>
-                <p v-if="(listItem.measurement_amount ==null && listItem.store != null)">{{listItem.store.name}}</p>
-              </ion-label>
-              <ion-checkbox v-if="listItem.date_purchased == null" color="primary" slot="end" @click="markPurchased(listItem.id)"></ion-checkbox>
-              <ion-icon v-if="listItem.date_purchased != null" slot="end" :icon="checkmark"></ion-icon>
-            </ion-item>
+          <ion-list>
+            <ion-reorder-group @ionItemReorder="doReorder($event)" :disabled="false">
+              <div v-for="listItem in listGroup.active_lists" :key="listItem.id">
+              <ion-item lines="none" v-if="(selectedStore.groupId && selectedStore.groupId == listGroup.id && listItem.store && listItem.store.name == selectedStore.storeName) || !selectedStore.storeName">
+                <ion-reorder slot="start"></ion-reorder>
+                <ion-label>
+                  <h2 v-if="listItem.date_purchased != null">
+                    <s @click="reversePurchasedActionSheet(listItem.id)">{{ listItem.item_name }}</s>
+                    <ion-icon id="recipe-icon" v-if="listItem.recipe_id" color="primary" size="small" :icon="restaurant" @click="openRecipeQuickViewModal(listItem.group_id,listItem.recipe_id)"></ion-icon>
+                  </h2>
+                  <h2 v-if="listItem.date_purchased == null">
+                    <b @click="openItemDetailsModal(listItem, listGroup.stores)">{{ listItem.item_name }}</b>
+                    <ion-icon id="recipe-icon" v-if="listItem.recipe_id" color="primary" size="small" :icon="restaurant" @click="openRecipeQuickViewModal(listItem.group_id,listItem.recipe_id)"></ion-icon>
+                  </h2>
+                  <p v-if="(listItem.measurement_amount!=null)">
+                    {{ listItem.measurement_amount }}
+                    {{ listItem.measurement.abbreviation }} |
+                    <i v-if="listItem.store">
+                    {{listItem.store.name}}
+                    </i>
+                  </p>
+                  <p v-if="(listItem.measurement_amount ==null && listItem.store != null)">{{listItem.store.name}}</p>
+                </ion-label>
+                <ion-checkbox v-if="listItem.date_purchased == null" color="primary" slot="end" @click="markPurchased(listItem.id)"></ion-checkbox>
+                <ion-icon v-if="listItem.date_purchased != null" slot="end" :icon="checkmark"></ion-icon>
+              </ion-item>
+              </div>
+            </ion-reorder-group>
           </ion-list>
           <ion-button id="addBtn" @click="openAddItemModal(listGroup.id, listGroup.stores)">+</ion-button>
       </swiper-slide>
@@ -69,7 +74,9 @@ import {
   actionSheetController,
   IonIcon,
   IonRadio,
-  IonRadioGroup
+  IonRadioGroup,
+  IonReorder, 
+  IonReorderGroup
 } from "@ionic/vue";
 
 import { Swiper, SwiperSlide} from 'swiper/vue';
@@ -85,7 +92,7 @@ import RecipeQuickViewModal from "../components/list/RecipeQuickViewModal.vue";
 
 export default {
   name: "Lists",
-  components: { IonList, IonLabel, IonItem, IonCheckbox, IonButton, IonBadge, IonIcon, Swiper, SwiperSlide, IonRadio, IonRadioGroup},
+  components: { IonList, IonLabel, IonItem, IonCheckbox, IonButton, IonBadge, IonIcon, Swiper, SwiperSlide, IonRadio, IonRadioGroup, IonReorder, IonReorderGroup},
   data() {
     return {
       listInfo: {},
@@ -96,12 +103,16 @@ export default {
     };
   },
   setup(){
+    const doReorder = (event) => {
+      event.detail.complete();
+    }
     return {
       checkmark, 
       restaurant,
       chevronBack,
       chevronForward,
-      filterCircle
+      filterCircle,
+      doReorder
     }
   },
   ionViewWillEnter() {
