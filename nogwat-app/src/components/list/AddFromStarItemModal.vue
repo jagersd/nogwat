@@ -20,6 +20,7 @@
           <ion-select-option value="gr">{{$t('misc.measurements.gr')}}</ion-select-option>
           <ion-select-option value="kg">{{$t('misc.measurements.kg')}}</ion-select-option>
           <ion-select-option value="fl">{{$t('misc.measurements.bl')}}</ion-select-option>
+          <ion-select-option value="l">{{$t('misc.measurements.l')}}</ion-select-option>
           <ion-select-option value="kr">{{$t('misc.measurements.ca')}}</ion-select-option>
         </ion-select>
       </ion-item>

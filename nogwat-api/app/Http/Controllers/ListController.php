@@ -128,7 +128,7 @@ class ListController extends Controller
             ->where('user_id_added',auth()->user()->id)
             ->groupBy('active_lists.item_name','group_id')
             ->orderBy('name_counter', 'DESC')
-            ->take(5)
+            ->take(10)
             ->get();
         }
 
