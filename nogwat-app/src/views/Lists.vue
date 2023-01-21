@@ -124,7 +124,7 @@ export default {
       .then((response) => (this.listInfo = response.data)(this.nogroups = response.status == 204 ? true : false))
       .then(() => this.listShown = localStorage.getItem('group') !== null ? JSON.parse(localStorage.getItem('group')).groupId : this.listInfo[0].id)
       .then(() => this.listInfo.sort(
-        function(x,y){ 
+          (x,y)=>{ 
           return x.id == JSON.parse(localStorage.getItem('group')).groupId ? -1 : y.id == JSON.parse(localStorage.getItem('group')).groupId ? 1 : 0; 
           }
         ))

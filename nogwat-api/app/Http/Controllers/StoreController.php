@@ -15,12 +15,12 @@ class StoreController extends Controller
     */
     public function create(Request $request)
     {
-        if ($this->isGroupAdmin($request->user()->id, $request->groupId) == false){
+        if ($this->isGroupAdmin(auth()->user()->id, $request->groupId) == false){
             return 'you are not the group Admin';
         }
 
         try{
-            $store = Store::create([
+            Store::create([
                 'name' => $request->name,
                 'group_id' => $request->groupId,
                 'description' => $request->description,
@@ -49,7 +49,7 @@ class StoreController extends Controller
     */
     public function update(Request $request)
     {   
-        if ($this->isGroupAdmin($request->user()->id, $request->groupId) == false){
+        if ($this->isGroupAdmin(auth()->user()->id, $request->groupId) == false){
             return 'you are not the group Admin';
         }
 
@@ -67,7 +67,7 @@ class StoreController extends Controller
 
         } catch (\Illuminate\Database\QueryException $ex){
             $success = false;
-            $message = 'Store update failed';
+            $message = 'Store update failed ' . $ex;
         }
 
         $response = [
@@ -101,7 +101,7 @@ class StoreController extends Controller
 
         } catch(\Illuminate\Database\QueryException $ex) {
             $success = false;
-            $message = 'Store update failed';
+            $message = 'Store update failed' . $ex;
         }
 
         $response = [
@@ -116,7 +116,7 @@ class StoreController extends Controller
     /**
     * Checks whether the user is group admin
     */
-    private function isGroupAdmin($user, $group)
+    private function isGroupAdmin($user, $group): bool
     {
         $adminCheck = UserGroup::where('user_id',$user)
         ->where('group_id',$group)

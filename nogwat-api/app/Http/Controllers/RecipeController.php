@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use App\Models\Recipe;
 use App\Models\RecipeItem;
 use App\Models\Measurement;
@@ -16,7 +17,7 @@ class RecipeController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function searchIndex(Request $request)
-    {   
+    {
         $mealTypes = $request->mealTypes ?: null;
         $searchString = $request->searchString ?: null;
 
@@ -60,7 +61,7 @@ class RecipeController extends Controller
                 'name' => $request->name,
                 'description' => $request->description,
                 'meal_type' => $request->mealType,
-                'user_id_created' => $request->user()->id,
+                'user_id_created' => Auth::id(),
                 'instructions' => $request->instructions,
                 'person_amount' => $request->personAmount,
                 'updatecounter' => 0,
@@ -102,7 +103,7 @@ class RecipeController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request)
-    {   
+    {
         $recipe = Recipe::where('id',$request->recipeId)->first();
 
         if($recipe->user_id_created != auth()->user()->id){
@@ -152,7 +153,7 @@ class RecipeController extends Controller
     * Get the measurement type id based on the abbreviated version
     *
     */
-    private function getMeasurementTypeId($abbreviation)
+    private function getMeasurementTypeId($abbreviation):int
     {
         return Measurement::where('abbreviation', $abbreviation)->first('id')->id;
     }
@@ -207,7 +208,7 @@ class RecipeController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function myFavorites()
-    {   
+    {
         $userFavos = Favorite::where('user_id', auth()->user()->id)
         ->pluck('recipe_id')->toArray();
 

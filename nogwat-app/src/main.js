@@ -35,10 +35,10 @@ const i18n = createI18n({
 })
 
 const app = createApp(App)
-  .use(IonicVue)
-  .use(router)
-  .use(store)
-  .use(i18n)
+    .use(IonicVue)
+    .use(router)
+    .use(store)
+    .use(i18n)
 
 router.isReady().then(() => {
   app.component('master-layout', MasterLayout);

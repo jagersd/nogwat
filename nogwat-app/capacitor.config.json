@@ -1,6 +1,21 @@
 {
-  "appId": "nl.nogwat-app.www",
-  "appName": "NogWat",
-  "webDir": "dist",
-  "bundledWebRuntime": false
+    "appId": "nl.nogwat-app.www",
+    "appName": "NogWat",
+    "webDir": "dist",
+    "bundledWebRuntime": false,
+    "plugins": {
+        "SplashScreen": {
+            "launchShowDuration": 2000,
+            "launchAutoHide": true,
+            "androidSplashResourceName": "splash",
+            "androidScaleType": "CENTER_CROP",
+            "showSpinner": true,
+            "androidSpinnerStyle": "large",
+            "iosSpinnerStyle": "small",
+            "splashFullScreen": true,
+            "splashImmersive": true,
+            "layoutName": "launch_screen",
+            "useDialog": true
+        }
+    }
 }
