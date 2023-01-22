@@ -136,10 +136,9 @@ import {
   toastController,
   IonIcon,
 } from "@ionic/vue";
-import { defineComponent } from "vue";
 
 
-export default defineComponent({
+export default{
   name: "AddRecipeModal",
   //inheritAttrs: false,
   components: {
@@ -216,6 +215,7 @@ export default defineComponent({
         this.toastResponse()
       }else{
         axios.post("/createrecipe", this.form)
+        .then(this.resetForm)
         .then(this.closeModal)
         .catch((error) => {
           this.errorMessage = error.message;
@@ -232,11 +232,30 @@ export default defineComponent({
         duration: 2000
       })
       return toast.present()
+    },
+    resetForm(){
+      this.form = {
+        mode: "add",
+        name: "",
+        description: "",
+        mealType: "diner",
+        instructions: "",
+        personAmount: "1",
+        lang: localStorage.getItem('locale'),
+        private: false,
+        ingredients: [
+          {
+            name: "",
+            amountType: "gr",
+            amount: null,
+          },
+        ],
+      }
     }
   },
 
   
-});
+};
 </script>
 
 <style scoped>

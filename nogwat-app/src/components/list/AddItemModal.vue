@@ -6,7 +6,7 @@
     <ion-card-content>
       <ion-item>
         <ion-label position="stacked" color="primary"><b>{{$t('shoppingList.addModal.product')}}</b></ion-label>
-        <ion-input type="text" required="true" v-model="form.listItems[0].itemName" maxlength="35" id="name"></ion-input>
+        <ion-input autocapitalize="on" type="text" required="true" v-model="form.listItems[0].itemName" maxlength="35" id="name"></ion-input>
       </ion-item>
       <ion-item>
         <ion-label position="stacked" color="secondary">{{$t('shoppingList.addModal.amount')}}</ion-label>
@@ -56,9 +56,8 @@ import {
   IonCard,IonCardHeader,IonCardTitle,IonCardContent,IonItem,IonLabel,IonInput,IonButton,modalController, IonSelect, IonSelectOption, IonDatetime, IonModal, IonContent
 } from "@ionic/vue"
 import moment from 'moment'
-import { defineComponent } from 'vue'
 
-export default defineComponent ({
+export default{
   name: 'AddItemModal',
   components: {
     IonCard,IonCardHeader,IonCardTitle,IonCardContent,IonItem,IonLabel,IonInput,IonButton, IonSelect, IonSelectOption, IonDatetime, IonModal, IonContent
@@ -67,25 +66,14 @@ export default defineComponent ({
   data() {
     return {
       storeArray: this.stores,
-      form: {
-        listItems: [{
-          groupId: this.groupId,
-          itemName: "",
-          measurementType:"",
-          amount: "",
-          storeId:null,
-          dueDate:null
-        }]
-      },
+      form: this.initAddForm(),
       errors: [],
     };
   },
   setup() {
     const customYearValues = [new Date().getFullYear() ,new Date().getFullYear() +1];
-    const closeModal = () => {
-    modalController.dismiss(undefined,undefined,'add-item-modal');
-    }
-    return { closeModal, customYearValues }
+    
+    return { customYearValues }
   },
   computed:{
     formattedDate: function(){
@@ -96,7 +84,6 @@ export default defineComponent ({
     addItem() {
       axios.post('/additem', this.form)
       .then(this.closeModal)
-
       .catch(error => {
       this.errorMessage = error.message;
       console.error("There was an error!", error);
@@ -105,8 +92,24 @@ export default defineComponent ({
     autoFillMeasurement() {
       this.form.listItems[0].measurementType = (this.form.listItems[0].amount) ? 'st' : ''
     },
+    closeModal(){
+      this.form = this.initAddForm()
+      modalController.dismiss(undefined,undefined,'add-item-modal')
+    },
+    initAddForm(){
+      return {
+        listItems: [{
+          groupId: this.groupId,
+          itemName: "",
+          measurementType:"",
+          amount: "",
+          storeId:null,
+          dueDate:null
+        }]
+      }
+    }
   }
-});
+};
 </script>
 
 <style scoped>

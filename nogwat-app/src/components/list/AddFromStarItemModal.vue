@@ -42,18 +42,39 @@ import {
   IonCard,IonCardHeader,IonCardTitle,IonCardContent,IonItem,IonLabel,IonInput,IonButton,modalController, IonSelect, IonSelectOption, toastController
 } from "@ionic/vue";
 
-import { defineComponent } from 'vue'
 
-export default defineComponent ({
+export default{
   name: 'AddFromStarItem',
   components: {
     IonCard,IonCardHeader,IonCardTitle,IonCardContent,IonItem,IonLabel,IonInput,IonButton, IonSelect, IonSelectOption
   },
   props: ['groupId', 'stores', 'listItem'],
+  updated(){
+    this.form = this.initForm()
+  },
   data() {
     return {
       storeArray: this.stores,
-      form: {
+      form: this.initForm(),
+      errors: []
+    };
+  },
+  methods: {
+    addItem() {
+      axios.post('/additem', this.form)
+      .then(this.closeModal)
+      .then(this.toastResponse)
+      .catch(error => {
+      this.errorMessage = error.message;
+      console.error("There was an error!", error);
+      })
+    },
+    closeModal(){
+      this.form = this.initForm()
+      modalController.dismiss()
+    },
+    initForm(){
+      return{
         listItems: [{
           groupId: this.groupId,
           itemName: this.listItem,
@@ -61,26 +82,7 @@ export default defineComponent ({
           amount: "",
           storeId:null,
         }]
-      },
-      errors: []
-    };
-  },
-  setup() {
-  const closeModal = () => {
-    modalController.dismiss();
-    }
-    return { closeModal }
-  },
-  methods: {
-    addItem() {
-      axios.post('/additem', this.form)
-      .then(this.closeModal)
-      .then(this.toastResponse)
-
-      .catch(error => {
-      this.errorMessage = error.message;
-      console.error("There was an error!", error);
-      })
+      }
     },
     async toastResponse(){
       const toast = await toastController
@@ -93,5 +95,5 @@ export default defineComponent ({
       return toast.present()
     }
   }
-});
+};
 </script>

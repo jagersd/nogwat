@@ -24,38 +24,37 @@ import {
   IonCard,IonCardHeader,IonCardTitle,IonCardContent,IonItem,IonLabel,IonInput,IonButton,modalController
 } from "@ionic/vue";
 
-import { defineComponent } from 'vue'
-
-export default defineComponent ({
+export default {
   name: 'CreateGroupModal',
-    components: {
+  components: {
     IonCard,IonCardHeader,IonCardTitle,IonCardContent,IonItem,IonLabel,IonInput,IonButton
   },
   data() {
     return {
-      form: {
-        name: "",
-        admin_instructions: "",
-      },
+      form: this.initGroupForm(),
       errors: []
     };
   },
-  setup() {
-  const closeModal = () => {
-    modalController.dismiss();
-  }
-  return { closeModal }
-  },
   methods: {
-        createGroup() {
-        axios.post('/creategroup', this.form)
+    createGroup() {
+      axios.post('/creategroup', this.form)
         .then(response => this.articleId = response.data.id)
         .then(this.closeModal)
         .catch(error => {
-        this.errorMessage = error.message;
-        console.error("There was an error!", error);
+          this.errorMessage = error.message;
+          console.error("There was an error!", error);
         });
+    },
+    closeModal(){
+      this.form = this.initGroupForm()
+      modalController.dismiss()
+    },
+    initGroupForm(){
+      return {
+        name: "",
+        admin_instructions: "",
+      }
     }
   }
-});
+};
 </script>
