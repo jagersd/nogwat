@@ -5,7 +5,7 @@
         "recipes": "Recepten"
     },
     "home":{
-        "title": "Welkom",
+        "title": "Welkom terug!",
         "opener": "Welkom bij de NogWat app!",
         "subtitle": "Het idee achter de app is dat het krijtbord in de keuken altijd meegenomen kan worden naar de stad / het winkelcentrum.",
         "content": "Leuk dat je meedoet met de Alpha test!"
@@ -78,7 +78,8 @@
             "breakfast": "Ontbijt",
             "snack" : "Snack",
             "lunch" : "Lunch",
-            "dinner" : "Dinner"
+            "dinner" : "Dinner",
+            "dessert" : "Dessert"
         },
         "add":{
             "slogan": "Deel je beste recepten met de rest van Nederland",

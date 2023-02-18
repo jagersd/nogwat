@@ -25,6 +25,10 @@
               <ion-checkbox @click="setMealTypesArray('diner')" checked></ion-checkbox>
               <ion-label>{{$t('recipes.categories.dinner')}}</ion-label>
             </li>
+            <li>
+              <ion-checkbox @click="setMealTypesArray('dessert')"></ion-checkbox>
+              <ion-label>{{$t('recipes.categories.dessert')}}</ion-label>
+            </li>
           </ul>
           <ion-item>
             <ion-label position="floating" color="secondary">{{$t('recipes.menu.searchword')}}</ion-label>

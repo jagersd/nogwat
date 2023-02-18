@@ -24,7 +24,7 @@ export default {
   data() {
     return {
       foundRecipes: {},
-			mealTypes: "",
+      mealTypes: "",
       seachString: "",
     };
   },
@@ -34,17 +34,17 @@ export default {
   },
 
   methods: {
-		async initiateSearch(){
-			axios.get("/searchrecipes", {
+    async initiateSearch(){
+      axios.get("/searchrecipes", {
         params: {
           mealTypes: JSON.parse(localStorage.getItem("searchParameters")).mealTypes,
           searchString: JSON.parse(localStorage.getItem("searchParameters")).searchString,
         },
       })
-			.then((response) => (this.foundRecipes = response.data))
-			.then(this.$store.commit('clearSeachParameters'))
-			.catch((error) => console.log(error));
-		},
+        .then((response) => (this.foundRecipes = response.data))
+        .then(this.$store.commit('clearSeachParameters'))
+        .catch((error) => console.log(error));
+    },
     async openDetailRecipeModal(recipe) {
       const modal = await modalController.create({
         component: detailRecipeModal,

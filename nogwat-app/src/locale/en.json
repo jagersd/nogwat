@@ -5,7 +5,7 @@
         "recipes": "Recipes"
     },
     "home":{
-        "title": "Welcome!",
+        "title": "Welcome back!",
         "opener": "Welcome to the NogWat app!",
         "subtitle": "This app aims to provide you the ability to take your kitchen chalk board with you to the stores.",
         "content": "Thanks for participating in the Alhpa test!"
@@ -78,7 +78,8 @@
             "breakfast": "Breakfast",
             "snack" : "Snack",
             "lunch" : "Lunch",
-            "dinner" : "Dinner"
+            "dinner" : "Dinner",
+            "dessert" : "Dessert"
         },
         "add":{
             "slogan": "Share your best with the rest of the world",

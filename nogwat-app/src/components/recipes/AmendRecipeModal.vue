@@ -34,6 +34,7 @@
           <ion-select-option value="lunch">{{$t('recipes.categories.lunch')}}</ion-select-option>
           <ion-select-option value="snack">{{$t('recipes.categories.snack')}}</ion-select-option>
           <ion-select-option value="diner">{{$t('recipes.categories.dinner')}}</ion-select-option>
+          <ion-select-option value="dessert">{{$t('recipes.categories.dessert')}}</ion-select-option>
         </ion-select>
       </ion-item>
       <ion-item>
