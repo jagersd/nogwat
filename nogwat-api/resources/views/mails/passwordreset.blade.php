@@ -11,7 +11,7 @@
 
         <p>
             Heb jij geen reset token aangevraagd maak hier zo snel mogelijk melding van via de app middels de 'Stuur feedback' mogelijkheid in de de app instellingen
-            of stuur een email naar contact@nogwat-app.nl
+            of stuur een email naar test-nogwat@stefandejager.nl
         </p>
         <br>
     </body>
