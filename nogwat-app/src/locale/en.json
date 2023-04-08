@@ -82,6 +82,7 @@
             "dessert" : "Dessert"
         },
         "add":{
+            "new": "New Recipe",
             "slogan": "Share your best with the rest of the world",
             "name" : "Name",
             "type" : "Meal type",

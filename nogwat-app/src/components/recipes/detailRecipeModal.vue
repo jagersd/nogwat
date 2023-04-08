@@ -19,7 +19,7 @@
         Ingredienten voor {{ personAmount }} personen
       </h2>
       <ion-range
-				v-model="personAmount"
+		v-model="personAmount"
         min="1"
         max="10"
         step="1"
@@ -47,12 +47,14 @@
     </ion-card-content>
   </ion-card>
   <ion-text color="secondary">
-    <p>{{ recipeDetails.instructions }}</p>
+    <div id="instructions-section" v-for="i in this.recipeDetails.instructions.split('. ')">
+    {{i}}.<br>
+    </div>
   </ion-text>
   </div>
   <ion-text color="danger" v-if="!groupChecker">Stel een standaard groep in om de ingredienten toe te voegen aan je boodschappenlijst.</ion-text>
-  <ion-button v-if="groupChecker" expand="block" @click="addToList">Voeg toe aan lijst</ion-button>
-  <ion-button expand="block" @click="closeModal">Sluit</ion-button>
+  <ion-button class="menu-button" v-if="groupChecker" expand="block" @click="addToList">Voeg toe aan lijst</ion-button>
+  <ion-button class="menu-button" color="tertiary" expand="block" @click="closeModal">Sluit</ion-button>
 </template>
 
 <script>
@@ -96,8 +98,8 @@ export default defineComponent({
     IonItem
   },
   props: {
-		recipeDetails: Object
-	},
+    recipeDetails: Object
+  },
   setup() {
     const closeModal = () => {
     modalController.dismiss();
@@ -112,39 +114,43 @@ export default defineComponent({
   data() {
     return {
       groupChecker: JSON.parse(localStorage.getItem('group')),
-			originalPersonAmount: this.recipeDetails.person_amount,
-			personAmount: this.recipeDetails.person_amount,
+      originalPersonAmount: this.recipeDetails.person_amount,
+      personAmount: this.recipeDetails.person_amount,
       recipeFavorited: this.recipeDetails.favorited,
-			form: {
-				listItems:[]
-			},
+      form: {
+        listItems:[]
+      },
       favoForm: {
         recipeId: this.recipeDetails.id
       },
+      parsedInstructions: ""
     }
   },
-	methods:{
-		addToList(){
-			this.form.listItems = [];
-			this.recipeDetails.recipe_items.forEach((value) => {
+  methods:{
+    splitInstructions(instructionString){
+      return instructionString.split(". ")
+    },
+    addToList(){
+      this.form.listItems = [];
+      this.recipeDetails.recipe_items.forEach((value) => {
         if (value.checkedForList !== false){
-        this.form.listItems.push({
-          groupId: JSON.parse(localStorage.getItem('group')).groupId,
-          itemName: value.item_name,
-          measurementType: value.measurement.abbreviation,
-          amount: (value.measurement_amount/this.originalPersonAmount) * this.personAmount,
-          recipeId: this.recipeDetails.id,
-        })
-      }
-		})
-			axios.post('/additem', this.form)
+          this.form.listItems.push({
+            groupId: JSON.parse(localStorage.getItem('group')).groupId,
+            itemName: value.item_name,
+            measurementType: value.measurement.abbreviation,
+            amount: (value.measurement_amount/this.originalPersonAmount) * this.personAmount,
+            recipeId: this.recipeDetails.id,
+          })
+        }
+      })
+      axios.post('/additem', this.form)
         .then(this.closeModal)
 
         .catch(error => {
-        this.errorMessage = error.message;
-        console.error("There was an error!", error);
-      })
-		},
+          this.errorMessage = error.message;
+          console.error("There was an error!", error);
+        })
+    },
     async amendRecipe(){
       const modal = await modalController.create({
         id:'amend-item-modal',
@@ -158,19 +164,19 @@ export default defineComponent({
     },
     addToFavorites(){
       axios.post('/addfavorite',this.favoForm)
-      .then(this.recipeFavorited = 'true')
-      .catch(error => {
-        this.errorMessage = error.message;
-        console.error("There was an error!", error);
-      })
+        .then(this.recipeFavorited = 'true')
+        .catch(error => {
+          this.errorMessage = error.message;
+          console.error("There was an error!", error);
+        })
     },
     removeFromFavorites(){
       axios.post('/removefavorite',this.favoForm)
-      .then(this.recipeFavorited = 'false')
-      .catch(error => {
-        this.errorMessage = error.message;
-        console.error("There was an error!", error);
-      })
+        .then(this.recipeFavorited = 'false')
+        .catch(error => {
+          this.errorMessage = error.message;
+          console.error("There was an error!", error);
+        })
     },
     async removeRecipeActionSheet(){
       const removeRecipeAction = await actionSheetController
@@ -231,5 +237,15 @@ ion-checkbox{
 
 ion-text {
   padding: 2rem;
+}
+
+.menu-button{
+  min-height: 35px;
+}
+
+#instructions-section{
+  margin-left: 15px;
+  margin-right: 15px;
+  padding: 0;
 }
 </style>

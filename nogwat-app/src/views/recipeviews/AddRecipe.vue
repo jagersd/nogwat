@@ -1,13 +1,11 @@
 <template>
-  <ion-item lines="none" color="primary">
-    <ion-text class="ion-text-center"><p>{{$t('recipes.add.slogan')}}</p></ion-text>
-  </ion-item>
+  <master-layout pageTitle="AddRecipe">
   <div class="container">
-  <swiper @swiper="onSwiper" :space-between="0" :slidesPerView="1">
+  <swiper @swiper="onSwiper" :space-between="50">
     <swiper-slide>
-      <ion-item lines="none" class="ion-text-end">
-        <p class="slide-header">{{$t('recipes.add.ingredients')}}</p>
-        <ion-icon :icon="chevronForward" color="primary"></ion-icon>
+      <ion-item lines="none"> 
+        <IonText slot="start" id="header-text" color="primary"><b>{{$t('recipes.add.new')}} (1/3)</b></IonText>
+        <ion-icon slot="end" :icon="chevronForward" color="primary" size="large"></ion-icon>
       </ion-item>
       <ion-item>
         <ion-label position="floating">{{$t('recipes.add.name')}}:</ion-label>
@@ -39,7 +37,7 @@
       </ion-item>
       <ion-item>
         <ion-label position="floating">{{$t('recipes.add.pamount')}}:</ion-label>
-        <ion-select required="true" v-model="form.personAmount" value="1" interface="popover">
+        <ion-select required="true" v-model="form.personAmount" interface="popover">
           <ion-select-option value="1">1</ion-select-option>
           <ion-select-option value="2">2</ion-select-option>
           <ion-select-option value="3">3</ion-select-option>
@@ -53,22 +51,14 @@
         </ion-select>
       </ion-item>
       <ion-item lines="none">
-        <ion-label position="floating">{{$t('recipes.add.instructions')}}: <small><i>{{charactersRemaining}}</i></small></ion-label>
-        <ion-textarea
-          type="text"
-          required="true"
-          autoGrow="true"
-          inputmode="text"
-          placeholder="Stap 1:...."
-          maxlength="500"
-          v-model="form.instructions"
-        ></ion-textarea>
+        <small>{{$t('recipes.private')}}</small>
+        <ion-checkbox v-model="form.private" slot="end"></ion-checkbox>
       </ion-item>
     </swiper-slide>
     <swiper-slide>
       <ion-item lines="none" class="ion-text-end">
-        <ion-icon :icon="chevronBack" color="primary"></ion-icon>
-        <p class="slide-header">{{$t('misc.description')}}</p>
+        <Ion-text color="primary"><b>{{$t('recipes.add.ingredients')}} (2/3)</b></Ion-text>
+        <ion-icon slot="end" :icon="chevronForward" color="primary"></ion-icon>
       </ion-item>
       <div
         class="addIngredient"
@@ -104,16 +94,31 @@
         </ion-item>
       </div>
     </swiper-slide>
+    <swiper-slide>
+      <ion-item lines="none"> 
+        <ion-icon slot="start" :icon="chevronBack" color="primary" size="large"></ion-icon>
+        <IonText slot="start" id="header-text" color="primary"><b>{{$t('misc.description')}} (3/3)</b></IonText>
+      </ion-item>
+      <ion-item lines="none">
+        <ion-label position="floating">{{$t('recipes.add.instructions')}}: <small><i>{{charactersRemaining}}</i></small></ion-label>
+        <ion-textarea
+          type="text"
+          required="true"
+          autoGrow="true"
+          inputmode="text"
+          placeholder="Stap 1:...."
+          maxlength="500"
+          v-model="form.instructions"
+        ></ion-textarea>
+      </ion-item>
+      <div class="close-menu">
+        <ion-button @click="saveRecipe">{{$t('misc.save')}}</ion-button>
+        <ion-button color="tertiary" @click="closeMenu">{{$t('misc.cancel')}}</ion-button>
+      </div>
+    </swiper-slide>
   </swiper>
   </div>
-  <div class="bottom-menu">
-  <ion-item>
-    <small>{{$t('recipes.private')}}</small>
-    <ion-checkbox v-model="form.private" slot="end"></ion-checkbox>
-  </ion-item>
-  <ion-button @click="saveRecipe">{{$t('misc.save')}}</ion-button>
-  <ion-button @click="closeModal">{{$t('misc.close')}}</ion-button>
-  </div>
+  </master-layout>
 </template>
 
 <script>
@@ -125,7 +130,6 @@ import 'swiper/swiper.min.css';
 
 import {
   IonText,
-  modalController,
   IonButton,
   IonLabel,
   IonInput,
@@ -140,8 +144,7 @@ import {
 
 
 export default{
-  name: "AddRecipeModal",
-  //inheritAttrs: false,
+  name: "AddRecipe",
   components: {
     IonText,
     IonButton,
@@ -157,16 +160,13 @@ export default{
     SwiperSlide,
   },
   setup() {
-    const closeModal = () => {
-      modalController.dismiss();
-    };
     const onSwiper = (swiper) => {
       setTimeout(function () {
         swiper.update();
       }, 500);
     };
 
-    return { closeModal , onSwiper, chevronBack, chevronForward};
+    return { onSwiper, chevronBack, chevronForward};
   },
   data() {
     return {
@@ -217,7 +217,7 @@ export default{
       }else{
         axios.post("/createrecipe", this.form)
         .then(this.resetForm)
-        .then(this.closeModal)
+        .then(this.$router.push({name: "recipesmenu"}))
         .catch((error) => {
           this.errorMessage = error.message;
           console.error("This was an error!", error);
@@ -233,6 +233,10 @@ export default{
         duration: 2000
       })
       return toast.present()
+    },
+    closeMenu(){
+      this.resetForm()
+      this.$router.push({name: "recipesmenu"})
     },
     resetForm(){
       this.form = {
@@ -254,42 +258,28 @@ export default{
       }
     }
   },
-
-  
 };
+
 </script>
 
 <style scoped>
 
 ion-textarea{
-  min-height: 20vh;
-}
-
-.bottom-menu{
-  min-height: 15vh;
-}
-
-.bottom-menu ion-button{
-  margin-left: 20px;
+  min-height: 40vh;
 }
 
 .swiper-slide{
+  height: 70vh;
+  max-width: 100vw;
   margin-top: 20px;
-  height: 80vh;
   border: 5px solid var(--ion-color-primary);
   border-radius: 10px;
-  width: auto;
+  padding: 10px;
   overflow-x: scroll;
 }
 
-.container{
-  overflow-x: scroll;
-}
-
-.slide-header{
-  font-size: large;
-  font-weight: bold;
-  color:var(--ion-color-primary)
+.close-menu{
+  margin-bottom: 0px;
 }
 
 </style>

@@ -66,6 +66,14 @@ const routes = [
     }
   },
   {
+  path: '/addrecipe',
+  component: () => import(/* webpackChunkName: "Addrecipe" */ '../views/recipeviews/AddRecipe.vue'),
+    name: 'AddRecipe',
+    meta: {
+      requiresAuth: true
+    }
+  },
+  {
     path: '/myfavorites',
     component: () => import(/* webpackChunkName: "Myfavorites" */ '../views/recipeviews/Myfavorites.vue'),
       meta: {

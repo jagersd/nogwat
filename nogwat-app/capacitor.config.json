@@ -1,5 +1,5 @@
 {
-    "appId": "nl.nogwat-app.www",
+    "appId": "nl.nogwatapp.www",
     "appName": "NogWat",
     "webDir": "dist",
     "bundledWebRuntime": false,

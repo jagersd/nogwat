@@ -70,7 +70,7 @@ import {
   IonCheckbox,
   IonButton,
   modalController,
-	IonBadge,
+  IonBadge,
   actionSheetController,
   IonIcon,
   IonRadio,
@@ -134,9 +134,9 @@ export default {
       axios.put("/purchaseditem", {
         listItemId: itemId,
       })
-			.then(() => {
-				this.initiateList();
-			});
+        .then(() => {
+          this.initiateList();
+        });
     },
     async reversePurchasedActionSheet(itemId){
       const actionSheet = await actionSheetController.create({

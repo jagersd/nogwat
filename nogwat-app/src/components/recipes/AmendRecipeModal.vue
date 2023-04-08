@@ -258,8 +258,6 @@ export default defineComponent({
       return toast.present()
     }
   },
-
-  
 });
 </script>
 
@@ -279,8 +277,7 @@ ion-textarea{
 
 .swiper-slide{
   max-width: 100vw;
-  margin-top: 20px;
-  height: 80vh;
+  max-height: 80vh;
   border: 5px solid var(--ion-color-primary);
   border-radius: 10px;
   padding: 10px;

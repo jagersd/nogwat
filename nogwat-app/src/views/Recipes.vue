@@ -37,7 +37,7 @@
           <ion-button @click="toSearchResults()">OK</ion-button>
         </ion-card-content>
       </ion-card>
-      <ion-button color="tertiary" class="ion-margin-top" @click="openAddRecipeModal()">+ {{$t('recipes.menu.addrecipe')}}</ion-button>
+      <ion-button color="tertiary" router-link="/addrecipe">+ {{$t('recipes.menu.addrecipe')}}</ion-button>
 		</ion-list>
 	</div>
   </master-layout>
@@ -48,15 +48,13 @@ import {
   IonButton,
   IonText,
   IonList,
-  modalController,
   IonCheckbox,
   IonInput,
   IonLabel,
-	IonCard,
-	IonCardContent,
-	IonItem,
+  IonCard,
+  IonCardContent,
+  IonItem,
 } from "@ionic/vue";
-import AddRecipeModal from "../components/recipes/AddRecipeModal.vue";
 
 export default {
   name: "Recipes",
@@ -82,34 +80,27 @@ export default {
 		}
 	},
   methods: {
-    async openAddRecipeModal() {
-      const modal = await modalController.create({
-        component: AddRecipeModal,
-        cssClass: "addRecipeModal",
-      });
-      return modal.present();
+    flipSearchbox(){
+      this.showSearchbox == false ? this.showSearchbox = true : this.showSearchbox =false
     },
-		flipSearchbox(){
-			this.showSearchbox == false ? this.showSearchbox = true : this.showSearchbox =false
-		},
-		setMealTypesArray(value){
-			if (this.mealTypes.includes(value)){
-				for(let i = 0; i < this.mealTypes.length; i++){ 
-					if (this.mealTypes[i] === value) { 
-						this.mealTypes.splice(i, 1); 
-					}
-				}
-			} else {
-				this.mealTypes.push(value)
-			}
-		},
-		toSearchResults(){
-			this.$store.commit('setSearchParameters', {
-				mealTypes: this.mealTypes.toString(),
-				searchString: this.searchString
-			})
-			this.$router.push({ path: '/searchrecipes' })
-		}
+    setMealTypesArray(value){
+      if (this.mealTypes.includes(value)){
+        for(let i = 0; i < this.mealTypes.length; i++){ 
+          if (this.mealTypes[i] === value) { 
+            this.mealTypes.splice(i, 1); 
+          }
+        }
+      } else {
+        this.mealTypes.push(value)
+      }
+    },
+    toSearchResults(){
+      this.$store.commit('setSearchParameters', {
+        mealTypes: this.mealTypes.toString(),
+        searchString: this.searchString
+      })
+      this.$router.push({ path: '/searchrecipes' })
+    }
   },
 };
 </script>

@@ -82,6 +82,7 @@
             "dessert" : "Dessert"
         },
         "add":{
+            "new": "Nieuw recept",
             "slogan": "Deel je beste recepten met de rest van Nederland",
             "name" : "Naam",
             "type" : "Maaltijd soort",
