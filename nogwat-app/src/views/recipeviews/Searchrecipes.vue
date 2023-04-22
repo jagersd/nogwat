@@ -5,6 +5,7 @@
         <ion-label>{{ foundRecipe.name }}
           <p>{{ foundRecipe.description }}</p>
         </ion-label>
+        <small slot="end" v-if="foundRecipe.favorited_count != 0"> <ion-icon :icon="star" color="primary"></ion-icon> ({{ foundRecipe.favorited_count }}) </small>
       </ion-item>
     </ion-list>
     <ion-item lines="none" id="expl">
@@ -14,13 +15,17 @@
 </template>
 
 <script>
-import { IonList, IonItem, IonLabel, modalController } from "@ionic/vue";
+import { IonList, IonItem, IonLabel, modalController, IonIcon } from "@ionic/vue";
 import axios from "axios";
 import detailRecipeModal from "@/components/recipes/detailRecipeModal.vue";
+import {star} from "ionicons/icons"
 
 export default {
   name: "Searchrecipes",
-  components: { IonList, IonItem, IonLabel },
+  components: { IonList, IonItem, IonLabel, IonIcon},
+  setup(){
+    return {star}
+  },
   data() {
     return {
       foundRecipes: {},
@@ -32,7 +37,6 @@ export default {
   ionViewWillEnter() {
     this.initiateSearch()
   },
-
   methods: {
     async initiateSearch(){
       axios.get("/searchrecipes", {

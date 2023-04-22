@@ -25,6 +25,7 @@ class RecipeController extends Controller
         ->with('user:id,name')
         ->where('private',false)
         ->where('deleted',0)
+        ->withCount('favorited')
         ->when($mealTypes !== null, function($query) use ($mealTypes){
             $query->whereIn('meal_type',explode(",",$mealTypes));
         })
@@ -37,13 +38,7 @@ class RecipeController extends Controller
         ->get();
 
         foreach($response as $r){
-            $favoCheck = Favorite::where('recipe_id', $r->id)
-            ->where('user_id', auth()->user()->id)
-            ->first();
-
             unset($r->user->id);
-
-            $r->favorited = ($favoCheck !==null) ? "true" : "false";
         }
 
         return response($response, 200);
