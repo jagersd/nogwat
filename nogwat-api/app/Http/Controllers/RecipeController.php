@@ -37,7 +37,16 @@ class RecipeController extends Controller
         ->limit(20)
         ->get();
 
+        $favoCheck = Favorite::where('user_id', auth()->user()->id)
+        ->pluck('recipe_id')->toArray();
+
         foreach($response as $r){
+            if (in_array($r->id, $favoCheck)){
+                $r->favorited = "true";
+            } else {
+                $r->favorited = "false";
+            }
+
             unset($r->user->id);
         }
 

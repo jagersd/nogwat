@@ -14,7 +14,12 @@
     <ion-card-content>
       <i>{{ recipeDetails.description }}</i>
       <ion-icon v-if="recipeFavorited == 'true'" id="favo-icon" slot="end" :icon="star" color="warning" @click="removeFromFavorites()"></ion-icon>
-      <ion-icon v-if="recipeFavorited == 'false'" id="favo-icon" slot="end" :icon="starOutline" color="warning" @click="addToFavorites()"></ion-icon>
+      <ion-icon v-if="recipeFavorited == 'false' && recipeDetails.user_id_created != $store.state.user.user.id" 
+        id="favo-icon" slot="end" 
+        :icon="starOutline" 
+        color="warning" 
+        @click="addToFavorites()">
+      </ion-icon>
       <h2 id="ingredient-header">
         Ingredienten voor {{ personAmount }} personen
       </h2>

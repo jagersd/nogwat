@@ -5,7 +5,7 @@
         <ion-label>{{ foundRecipe.name }}
           <p>{{ foundRecipe.description }}</p>
         </ion-label>
-        <small slot="end" v-if="foundRecipe.favorited_count != 0"> <ion-icon :icon="star" color="primary"></ion-icon> ({{ foundRecipe.favorited_count }}) </small>
+        <small id="favo-counter" slot="end" v-if="foundRecipe.favorited_count != 0"> <ion-icon :icon="star" color="primary"></ion-icon> ({{ foundRecipe.favorited_count }}) </small>
       </ion-item>
     </ion-list>
     <ion-item lines="none" id="expl">
@@ -61,3 +61,11 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+  #favo-counter{
+    color: var(--ion-color-secondary);
+    padding-left: 0;
+    margin-left: 0;
+  }
+</style>
