@@ -20,14 +20,14 @@ class ListController extends Controller
     * @return \Illuminate\Http\Response
     */
     public function create(Request $request)
-    {   
+    {
         if($this->isInGroup($request->user()->id, $request->listItems[0]['groupId']) == false){
             return response('You are not allowed to add items for this group', 401);
         }
 
         try {
             foreach($request->listItems as $listItem){
-                $list = ActiveList::create([
+                ActiveList::create([
                     'group_id' => $listItem['groupId'],
                     'user_id_added' => $request->user()->id,
                     'store_id' => $listItem['storeId'] ?? null,
@@ -69,7 +69,7 @@ class ListController extends Controller
         if($request->amount != null && $request->measurementType == null){
             $request->measurementType = "st";
         }
-        
+
         $listItem->update([
             'store_id' => $request->storeId,
             'item_name' => $request->itemName,
@@ -87,7 +87,7 @@ class ListController extends Controller
     * @return \Illuminate\Http\Response
     */
     public function myList()
-    {   
+    {
         $groups = UserGroup::where('user_id', auth()->user()->id)
         ->get('group_id')
         ->toArray();
@@ -102,17 +102,17 @@ class ListController extends Controller
             ->with('activeLists')
             ->first();
         }
-        
+
         return response($response, 200);
     }
-    
+
     /**
     * Displays the users shopping Lists
     *
     * @return \Illuminate\Http\Response
     */
     public function starItems()
-    {   
+    {
         $response = UserGroup::where('user_id', auth()->user()->id)
         ->join('groups','user_groups.group_id','=','groups.id')
         ->get(['user_groups.group_id','groups.name']);
@@ -141,7 +141,7 @@ class ListController extends Controller
     * @return \Illuminate\Http\Response
     */
     public function getHistory(Request $request)
-    {   
+    {
         $groupId = $request->groupId ?: null;
 
         if($groupId !== null){
@@ -157,7 +157,7 @@ class ListController extends Controller
             ->with('purchasedUser:id,name')
             ->orderBy('date_purchased', 'desc')
             ->get();
-            
+
             return response($response, 200);
         }
     }
@@ -172,7 +172,7 @@ class ListController extends Controller
     public function purchased(Request $request)
     {
         $listItem = ActiveList::where('id',$request->listItemId)->first();
-        
+
         $listItem->update([
             'date_purchased' => Carbon::now(),
             'user_id_purchased' => $request->user()->id
@@ -190,7 +190,7 @@ class ListController extends Controller
     public function reversePurchase(Request $request)
     {
         $listItem = ActiveList::where('id',$request->listItemId)->first();
-        
+
         $listItem->update([
             'date_purchased' => null,
             'user_id_purchased' => null
@@ -206,7 +206,7 @@ class ListController extends Controller
     * @return \Illuminate\Http\Response
     */
     public function destroy(Request $request)
-    {   
+    {
         $id = $request->id;
         $listItem = ActiveList::where('id',$id)->first();
         if($listItem->user_id_added == auth()->user()->id){
@@ -224,7 +224,7 @@ class ListController extends Controller
     * @return \Illuminate\Http\Response
     */
     public function showRecipe($groupId, $recipeId)
-    {   
+    {
         $baseItem = ActiveList::where('group_id',$groupId)->where('recipe_id',$recipeId)->orderBy('created_at', 'desc')->first();
 
         $recipe = Recipe::select('name', 'instructions')->where('id',$baseItem->recipe_id)->first();
@@ -233,7 +233,7 @@ class ListController extends Controller
         ->where('recipe_id',$recipeId)
         ->where('created_at',$baseItem->created_at)
         ->get();
-        
+
         $response = ['recipe'=>$recipe,'items'=>$activeItems];
 
         return response($response, 200);

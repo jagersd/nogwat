@@ -10,20 +10,21 @@
         <ion-icon :icon="chevronForward" color="primary"></ion-icon>
       </ion-item>
       <ion-item>
-        <ion-label position="floating">{{$t('recipes.add.name')}}:</ion-label>
-        <ion-input type="text" required="true" v-model="form.name"></ion-input>
+        <ion-input :label="$t('recipes.add.name')" label-placement="floating" type="text" required="true" v-model="form.name"></ion-input>
       </ion-item>
       <ion-item>
-        <ion-label position="floating">{{$t('misc.description')}}:</ion-label>
         <ion-input
+          :label="$t('misc.description')"
+          label-placement="floating"
           type="text"
           required="true"
           v-model="form.description"
         ></ion-input>
       </ion-item>
       <ion-item>
-        <ion-label position="floating">{{$t('recipes.add.type')}}:</ion-label>
         <ion-select
+          :label="$t('recipes.add.type')"
+          label-placement="floating"
           aria-placeholder="diner"
           v-model="form.mealType"
           value="diner"
@@ -38,8 +39,7 @@
         </ion-select>
       </ion-item>
       <ion-item>
-        <ion-label position="floating">{{$t('recipes.add.pamount')}}:</ion-label>
-        <ion-select required="true" v-model="form.personAmount" interface="popover">
+        <ion-select :label="$t('recipes.add.pamount')" label-placement="floating" required="true" v-model="form.personAmount" interface="popover">
           <ion-select-option value="1">1</ion-select-option>
           <ion-select-option value="2">2</ion-select-option>
           <ion-select-option value="3">3</ion-select-option>
@@ -79,20 +79,19 @@
         <ion-button @click="addIngredient()">+</ion-button>
         <ion-button v-if="ingredientLength > 1" @click="removeIngredient(k)" color="tertiary">-</ion-button>
         <ion-item>
-          <ion-label position="floating">{{$t('recipes.add.product')}}</ion-label>
           <ion-input
+            :label="$t('recipes.add.product')"
+            label-placement="floating"
             type="text"
             required="true"
             v-model="ingredient.name"
           ></ion-input>
         </ion-item>
         <ion-item>
-          <ion-label position="floating">{{$t('recipes.add.amount')}}</ion-label>
-          <ion-input type="number" v-model="ingredient.amount"></ion-input>
+          <ion-input :label="$t('recipes.add.amount')" label-placement="floating" type="number" v-model="ingredient.amount"></ion-input>
         </ion-item>
         <ion-item>
-          <ion-label position="floating">{{$t('recipes.add.unit')}}</ion-label>
-          <ion-select v-model="ingredient.amountType" interface="popover">
+          <ion-select :label="$t('recipes.add.unit')" label-placement="floating" v-model="ingredient.amountType" interface="popover">
             <ion-select-option value="st">{{$t('misc.measurements.pc')}}</ion-select-option>
             <ion-select-option value="el">{{$t('misc.measurements.el')}}</ion-select-option>
             <ion-select-option value="tl">{{$t('misc.measurements.tl')}}</ion-select-option>

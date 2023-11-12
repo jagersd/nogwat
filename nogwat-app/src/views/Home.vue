@@ -71,7 +71,7 @@ export default{
         componentProps: {
           messagesObject: messages
         },
-        swipeToClose:false,
+        canDismiss:false,
         initialBreakpoint: 0.5,
         breakpoints: [0.25, 0.5, 1]
       })

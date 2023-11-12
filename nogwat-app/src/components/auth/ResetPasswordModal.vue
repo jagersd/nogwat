@@ -5,21 +5,17 @@
     </ion-card-header>
     <ion-card-content>
       <ion-item v-if="!tokenGenerated">
-        <ion-label position="floating">Email</ion-label>
-        <ion-input type="email" name="email" v-model="email"></ion-input>
+        <ion-input label="Email" label-placement="floating" type="email" name="email" v-model="email"></ion-input>
       </ion-item>
       <ion-item v-if="tokenGenerated == 200">
         <p>Er is een token naar je email adress verstuurd</p>
-        <ion-label position="floating">Token</ion-label>
-        <ion-input type="number" name="token" v-model="token"></ion-input>
+        <ion-input label="Token" label-placement="floating" type="number" name="token" v-model="token"></ion-input>
       </ion-item>
       <ion-item v-if="tokenGenerated == 200">
-        <ion-label position="floating">Nieuw Wachtwoord</ion-label>
-        <ion-input type="password" name="new-password" v-model="newPassword"></ion-input>
+        <ion-input label="Nieuw Wachtwoord" label-placement="floating" type="password" name="new-password" v-model="newPassword"></ion-input>
       </ion-item>
       <ion-item v-if="tokenGenerated == 200">
-        <ion-label position="floating">Herhaal nieuw Wachtwoord</ion-label>
-        <ion-input type="password" name="new-password-checker" v-model="newPasswordChecker"></ion-input>
+        <ion-input label="Herhaal nieuw Wachtwoord" label-placement="floating" type="password" name="new-password-checker" v-model="newPasswordChecker"></ion-input>
       </ion-item>
       <ion-item lines="none" color="primary" v-if="tokenError==201">
         <p>Wachtwoord is succesvol geupdate. Je kunt nu inloggen met je nieuwe wachtwoord</p>
@@ -36,7 +32,7 @@
 
 <script>
 import {
-  IonCard,IonCardHeader,IonCardTitle,IonCardContent,IonItem,IonLabel,IonInput,IonButton,modalController,
+  IonCard,IonCardHeader,IonCardTitle,IonCardContent,IonItem,IonInput,IonButton,modalController,
 } from "@ionic/vue";
 import { defineComponent } from 'vue'
 import axios from 'axios'
@@ -44,7 +40,7 @@ import axios from 'axios'
 export default defineComponent({
   name: 'ResetPasswordModal',
   components: {
-    IonCard,IonCardHeader,IonCardTitle,IonCardContent,IonItem,IonLabel,IonInput,IonButton,
+    IonCard,IonCardHeader,IonCardTitle,IonCardContent,IonItem,IonInput,IonButton,
   },
   data () {
     return {

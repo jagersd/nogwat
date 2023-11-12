@@ -5,20 +5,16 @@
     </ion-card-header>
     <ion-card-content>
       <ion-item>
-        <ion-label position="floating">Gebruikersnaam</ion-label>
-        <ion-input type="text" required="true" maxlength="25" v-model="form.name" id="name"></ion-input>
+        <ion-input label="Gebruikersnaam" label-placement="floating" type="text" required="true" maxlength="25" v-model="form.name" id="name"></ion-input>
       </ion-item>
       <ion-item>
-        <ion-label position="floating">Email adres</ion-label>
-        <ion-input type="email" required="true" maxlength="55" v-model="form.email" id="email"></ion-input>
+        <ion-input label="Email adres" label-placement="floating" type="email" required="true" maxlength="55" v-model="form.email" id="email"></ion-input>
       </ion-item>
       <ion-item>
-        <ion-label position="floating">Wachtwoord</ion-label>
-        <ion-input type="password" required="true" minlength="8" v-model="form.password" id="password"></ion-input>
+        <ion-input label="Wachtwoord" label-placement="floating" type="password" required="true" minlength="8" v-model="form.password" id="password"></ion-input>
       </ion-item>
       <ion-item>
-        <ion-label position="floating">Wachtwoord confirmatie</ion-label>
-        <ion-input type="password" required="true" minlength="8" v-model="form.password_confirmation" id="password_confirmation"></ion-input>
+        <ion-input label="Wachtwoord confirmatie" label-placement="floating" type="password" required="true" minlength="8" v-model="form.password_confirmation" id="password_confirmation"></ion-input>
       </ion-item>
       <ion-item lines="none" color="danger" id="error-message" v-if="errorMessage != ''">
         {{errorMessage}}
@@ -32,7 +28,7 @@
 <script>
 import axios from 'axios'
 import {
-  IonCard,IonCardHeader,IonCardTitle,IonCardContent,IonItem,IonLabel,IonInput,IonButton,modalController
+  IonCard,IonCardHeader,IonCardTitle,IonCardContent,IonItem,IonInput,IonButton,modalController
 } from "@ionic/vue";
 
 import { defineComponent } from 'vue'
@@ -40,7 +36,7 @@ import { defineComponent } from 'vue'
 export default defineComponent ({
   name: 'SignupModal',
     components: {
-    IonCard,IonCardHeader,IonCardTitle,IonCardContent,IonItem,IonLabel,IonInput,IonButton
+    IonCard,IonCardHeader,IonCardTitle,IonCardContent,IonItem,IonInput,IonButton
   },
   data() {
     return {

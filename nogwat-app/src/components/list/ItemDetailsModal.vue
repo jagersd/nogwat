@@ -9,16 +9,13 @@
         {{$t('shoppingList.addModal.addedBy')}} {{itemDetails.added_user.name}}
       </ion-text>
       <ion-item>
-        <ion-label position="floating">{{$t('shoppingList.addModal.product')}}</ion-label>
-        <ion-input type="text" required="true" v-model="form.itemName" id="name"></ion-input>
+        <ion-input :label="$t('shoppingList.addModal.product')" label-placement="floating" type="text" required="true" v-model="form.itemName" id="name"></ion-input>
       </ion-item>
       <ion-item>
-        <ion-label position="floating" color="secondary">{{$t('shoppingList.addModal.amount')}}</ion-label>
-        <ion-input type="number" required="true" v-model="form.amount" id="amount"></ion-input>
+        <ion-input :label="$t('shoppingList.addModal.amount')" label-placement="floating" type="number" required="true" v-model="form.amount" id="amount"></ion-input>
       </ion-item>
       <ion-item>
-      <ion-label position="floating" color="secondary">{{$t('shoppingList.addModal.amountExamples')}}</ion-label>
-        <ion-select v-model="form.measurementType" interface="popover">
+        <ion-select :label="$t('shoppingList.addModal.amountExamples')" label-placement="floating" v-model="form.measurementType" interface="popover">
           <ion-select-option value="st">{{$t('misc.measurements.pc')}}</ion-select-option>
           <ion-select-option value="pk">{{$t('misc.measurements.pk')}}</ion-select-option>
           <ion-select-option value="gr">{{$t('misc.measurements.gr')}}</ion-select-option>
@@ -29,14 +26,12 @@
         </ion-select>
       </ion-item>
       <ion-item v-if="storeArray.length">
-        <ion-label position="stacked" color="secondary">{{$t('shoppingList.addModal.selectStore')}}</ion-label>
-        <ion-select v-model="form.storeId" interface="popover">
+        <ion-select :label="$t('shoppingList.addModal.selectStore')" label-placement="stacked" v-model="form.storeId" interface="popover">
           <ion-select-option v-for="store in storeArray" :key="store.id" :value="store.id">{{store.name}}</ion-select-option>
         </ion-select>
       </ion-item>
       <ion-item button="true" id="open-date-input" lines="none"> 
-        <ion-label position="stacked" color="secondary">{{$t('shoppingList.addModal.dueDesc')}}</ion-label>
-        <ion-input :value="formattedDate"/>
+        <ion-input :label="$t('shoppingList.addModal.dueDesc')" label-placement="stacked" :value="formattedDate"/>
         <ion-modal trigger="open-date-input">
           <ion-content force-overscroll="false">
             <ion-datetime v-model="form.dueDate"

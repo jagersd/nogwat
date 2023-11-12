@@ -32,16 +32,15 @@
               <div v-for="listItem in listGroup.active_lists" :key="listItem.id">
               <ion-item lines="none" v-if="(selectedStore.groupId && selectedStore.groupId == listGroup.id && listItem.store && listItem.store.name == selectedStore.storeName) || !selectedStore.storeName">
                 <ion-reorder slot="start"></ion-reorder>
-                <ion-label>
-                  <h2 v-if="listItem.date_purchased != null">
+                  <b v-if="listItem.date_purchased != null">
                     <s @click="reversePurchasedActionSheet(listItem.id)">{{ listItem.item_name }}</s>
                     <ion-icon id="recipe-icon" v-if="listItem.recipe_id" color="primary" size="small" :icon="restaurant" @click="openRecipeQuickViewModal(listItem.group_id,listItem.recipe_id)"></ion-icon>
-                  </h2>
-                  <h2 v-if="listItem.date_purchased == null">
+                  </b>
+                  <b v-if="listItem.date_purchased == null">
                     <b @click="openItemDetailsModal(listItem, listGroup.stores)">{{ listItem.item_name }}</b>
                     <ion-icon id="recipe-icon" v-if="listItem.recipe_id" color="primary" size="small" :icon="restaurant" @click="openRecipeQuickViewModal(listItem.group_id,listItem.recipe_id)"></ion-icon>
-                  </h2>
-                  <p v-if="(listItem.measurement_amount!=null)">
+                  </b>
+                  <p id="additionals" v-if="(listItem.measurement_amount!=null)">
                     {{ listItem.measurement_amount }}
                     {{ listItem.measurement.abbreviation }} |
                     <i v-if="listItem.store">
@@ -49,8 +48,7 @@
                     </i>
                   </p>
                   <p v-if="(listItem.measurement_amount ==null && listItem.store != null)">{{listItem.store.name}}</p>
-                </ion-label>
-                <ion-checkbox v-if="listItem.date_purchased == null" color="primary" slot="end" @click="markPurchased(listItem.id)"></ion-checkbox>
+                <ion-checkbox label="" v-if="listItem.date_purchased == null" color="primary" slot="end" @click="markPurchased(listItem.id)"></ion-checkbox>
                 <ion-icon v-if="listItem.date_purchased != null" slot="end" :icon="checkmark"></ion-icon>
               </ion-item>
               </div>
@@ -121,7 +119,8 @@ export default {
   methods: {
     async initiateList(){
       axios.get("/mylist")
-      .then((response) => (this.listInfo = response.data)(this.nogroups = response.status == 204 ? true : false))
+      .then((response) => this.listInfo = response.data)
+      .then((response)=> this.nogroups = response.status == 204 ? true: false)
       .then(() => this.listShown = localStorage.getItem('group') !== null ? JSON.parse(localStorage.getItem('group')).groupId : this.listInfo[0].id)
       .then(() => this.listInfo.sort(
           (x,y)=>{ 
@@ -251,10 +250,6 @@ export default {
   margin-top: 40vh;
 }
 
-ion-list{
-  padding:0;
-}
-
 ion-checkbox {
   position: relative;
 }
@@ -273,6 +268,10 @@ ion-badge{
 }
 
 #recipe-icon{
+  padding-left: 5px;
+}
+
+#additionals{
   padding-left: 5px;
 }
 </style>

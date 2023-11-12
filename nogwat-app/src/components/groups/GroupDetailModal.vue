@@ -6,12 +6,9 @@
         <ion-icon :icon="pencil"></ion-icon>
       </ion-button>
     </h1>
-
     <ion-item v-if="showGroupAdjustForm == true">
-      <ion-label position="stacked">{{$t('groups.detailsModal.groupName')}}</ion-label>
-      <ion-input type="text" required="true" v-model="adjustForm.name" :placeholder="groupInfo.name" maxlength="30"></ion-input>
-      <ion-label position="stacked">{{$t('misc.description')}}</ion-label>
-      <ion-input type="text" required="true" v-model="adjustForm.instructions" :placeholder="groupInfo.admin_instructions" maxlength="150"></ion-input>
+      <ion-input :label="$t('groups.detailsModal.groupName')" label-placement="stacked" type="text" required="true" v-model="adjustForm.name" :placeholder="groupInfo.name" maxlength="30"></ion-input>
+      <ion-input :label="$t('misc.description')" label-placement="stacked" type="text" required="true" v-model="adjustForm.instructions" :placeholder="groupInfo.admin_instructions" maxlength="150"></ion-input>
       <ion-button @click="changeGroupName">{{$t('misc.save')}}</ion-button>
       <ion-button @click="showGroupAdjustForm=false">{{$t('misc.cancel')}}</ion-button>
     </ion-item>
@@ -19,9 +16,9 @@
     <i>{{groupInfo.admin_instructions}}</i>
     <!--Default groups-->
     <ion-item lines="none">
-      <ion-checkbox v-if="defaultGroupChecker == null || groupInfo.id != defaultGroupChecker.groupId" slot="start" @click="setDefaultGroup" ></ion-checkbox>
-      <ion-checkbox v-else disabled="true" checked="true" slot="start"></ion-checkbox>
-      <ion-label color="secondary">{{$t('groups.detailsModal.setDefault')}}</ion-label>
+      <ion-checkbox label="" v-if="defaultGroupChecker == null || groupInfo.id != defaultGroupChecker.groupId" slot="start" @click="setDefaultGroup" ></ion-checkbox>
+      <ion-checkbox label="" v-else disabled="true" checked="true" slot="start"></ion-checkbox>
+      {{$t('groups.detailsModal.setDefault')}}
     </ion-item>
     <i>{{$t('groups.detailsModal.groupCreated')}} {{formattedDate}} </i>
     <ion-button @click="goToGroupHistory" color="tertiary" expand="block">{{$t('groups.detailsModal.historyBtn')}}</ion-button>
@@ -62,8 +59,7 @@
       <ion-button v-if="groupInfo.adminCheck.is_admin==1" class="ion-margin-top" @click="formHidden = false">+</ion-button>
 
       <ion-item v-if="!formHidden">
-        <ion-label position="stacked">{{$t('misc.email')}}</ion-label>
-        <ion-input inputmode="email" type="email" required="true" v-model="form.invitee" id="inviteForm" placeholder="email@email.com"></ion-input>
+        <ion-input :label="$t('misc.email')" label-placement="stacked" inputmode="email" type="email" required="true" v-model="form.invitee" id="inviteForm" placeholder="email@email.com"></ion-input>
         <ion-button @click="sendInvite">{{$t('groups.detailsModal.sendInviteBtn')}}</ion-button>
         <ion-button @click="formHidden = true">{{$t('misc.cancel')}}</ion-button>
       </ion-item>
@@ -92,10 +88,8 @@
     <div class="stores-section" v-if="showStores">
       <ion-button v-if="groupInfo.adminCheck.is_admin==1" class="ion-margin-top" @click="storeFormHidden = false" slot="end">+</ion-button>
       <ion-item v-if="!storeFormHidden">
-        <ion-label position="stacked">{{$t('groups.detailsModal.storeName')}}</ion-label>
-        <ion-input type="text" required="true" v-model="storeForm.name" placeholder="Voorbeeld: Buurtboer" maxlength="30"></ion-input>
-        <ion-label position="stacked">{{$t('misc.description')}}</ion-label>
-        <ion-input type="text" required="true" v-model="storeForm.description" placeholder="Voorbeeld: supermarkt" maxlength="150"></ion-input>
+        <ion-input :label="$t('groups.detailsModal.storeName')" label-placement="stacked" type="text" required="true" v-model="storeForm.name" placeholder="Voorbeeld: Buurtboer" maxlength="30"></ion-input>
+        <ion-input :label="$t('misc.description')" type="text" required="true" v-model="storeForm.description" placeholder="Voorbeeld: supermarkt" maxlength="150"></ion-input>
         <ion-button @click="addStore">{{$t('misc.add')}}</ion-button>
         <ion-button @click="storeFormHidden = true">{{$t('misc.cancel')}}</ion-button>
       </ion-item>
@@ -115,10 +109,8 @@
         </ion-item>
         <!--store adjust form -->
         <ion-item v-if="storeAdjustId == store.id">
-          <ion-label position="stacked">{{$t('groups.detailsModal.storeName')}}</ion-label>
-          <ion-input type="text" :placeholder="store.name" v-model="storeAdjustFrom.name" maxlength="30"></ion-input>
-          <ion-label position="stacked">{{$t('misc.description')}}</ion-label>
-          <ion-input type="text" :placeholder="store.description" v-model="storeAdjustFrom.description" maxlength="150"></ion-input>
+          <ion-input :label="$t('groups.detailsModal.storeName')" label-placement="stacked" type="text" :placeholder="store.name" v-model="storeAdjustFrom.name" maxlength="30"></ion-input>
+          <ion-input :label="$t('misc.description')" label-placement="stacked" type="text" :placeholder="store.description" v-model="storeAdjustFrom.description" maxlength="150"></ion-input>
           <ion-button @click="adjustStoreDetails(store.id)">{{$t('misc.save')}}</ion-button>
           <ion-button @click="adjustStoreDetails(store.id, true)" color="danger">{{$t('misc.delete')}}</ion-button>
           <ion-button @click="storeAdjustId = null">{{$t('misc.cancel')}}</ion-button>

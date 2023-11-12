@@ -5,16 +5,13 @@
       </ion-card-header>
       <ion-card-content>
         <ion-item>
-          <ion-label position="floating">Email address</ion-label>
-          <ion-input type="email" name="email" v-model="email"></ion-input>
+          <ion-input label="Email address" label-placement="floating" type="email" name="email" v-model="email"></ion-input>
         </ion-item>
         <ion-item>
-          <ion-label position="floating">Wachtwoord</ion-label>
-          <ion-input type="password" name="password" v-model="password"></ion-input>
+          <ion-input label="Wachtwoord" label-placement="floating" type="password" name="password" v-model="password"></ion-input>
         </ion-item>
         <ion-item>
-        <ion-label position="floating">en / nl</ion-label>
-          <ion-select ok-text="Ok" value="nl" v-model="userLocale" interface="popover">
+          <ion-select label="en / nl" label-placement="floating" ok-text="Ok" value="nl" v-model="userLocale" interface="popover">
             <ion-select-option value="nl">Nederlands</ion-select-option>
             <ion-select-option value="en">English</ion-select-option>
           </ion-select>
@@ -31,7 +28,7 @@
 
 <script>
 import {
-  IonCard,IonCardHeader,IonCardTitle,IonCardContent,IonItem,IonLabel,IonInput,IonButton,modalController,IonSelect, IonSelectOption
+  IonCard,IonCardHeader,IonCardTitle,IonCardContent,IonItem,IonInput,IonButton,modalController,IonSelect, IonSelectOption
 } from "@ionic/vue";
 import { defineComponent } from 'vue'
 import axios from 'axios'
@@ -40,7 +37,7 @@ import ResetPasswordModal from './ResetPasswordModal.vue'
 export default defineComponent({
   name: 'SigninModal',
   components: {
-    IonCard,IonCardHeader,IonCardTitle,IonCardContent,IonItem,IonLabel,IonInput,IonButton,IonSelect, IonSelectOption
+    IonCard,IonCardHeader,IonCardTitle,IonCardContent,IonItem,IonInput,IonButton,IonSelect, IonSelectOption
   },
   data () {
     return {

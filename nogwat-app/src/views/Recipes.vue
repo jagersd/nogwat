@@ -31,8 +31,7 @@
             </li>
           </ul>
           <ion-item>
-            <ion-label position="floating" color="secondary">{{$t('recipes.menu.searchword')}}</ion-label>
-            <ion-input :clear-input="true" v-model="searchString" color="secondary" type="text" maxlength="30"></ion-input>
+            <ion-input :label="$t('recipes.menu.searchword')" label-placement="floating" :clear-input="true" v-model="searchString" color="secondary" type="text" maxlength="30"></ion-input>
           </ion-item>
           <ion-button @click="toSearchResults()">OK</ion-button>
         </ion-card-content>
