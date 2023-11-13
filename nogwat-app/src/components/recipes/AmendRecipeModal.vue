@@ -53,8 +53,9 @@
         </ion-select>
       </ion-item>
       <ion-item lines="none">
-        <ion-label position="floating">{{$t('recipes.add.instructions')}}: <small><i>{{charactersRemaining}}</i></small></ion-label>
         <ion-textarea
+          :label="$t('recipes.add.instructions')"
+          label-placement="floating"
           type="text"
           required="true"
           autoGrow="true"
@@ -127,7 +128,6 @@ import {
   IonText,
   modalController,
   IonButton,
-  IonLabel,
   IonInput,
   IonItem,
   IonSelect,
@@ -145,7 +145,6 @@ export default defineComponent({
   components: {
     IonText,
     IonButton,
-    IonLabel,
     IonInput,
     IonItem,
     IonSelect,

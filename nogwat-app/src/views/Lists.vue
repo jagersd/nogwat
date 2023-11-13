@@ -17,12 +17,13 @@
             <ion-badge color="primary">{{listGroup.active_lists.filter(item => item.user_id_purchased == null).length}}</ion-badge>
             <ion-icon v-if="currentSlider != listInfo.length-1" color="primary" slot="end" :icon="chevronForward"></ion-icon>
           </ion-item>
-          <ion-button v-if="listGroup.active_lists.length >= 8" @click="openAddItemModal(listGroup.id, listGroup.stores)">+</ion-button>
-          <ion-icon id="filterIcon" v-if="listGroup.stores.length" @click="setStoreFilter(listGroup.active_lists)" :icon="filterCircle" size="large" color="secondary"></ion-icon>
+          <ion-item lines="none">
+            <ion-button size="default" v-if="listGroup.active_lists.length >= 8" @click="openAddItemModal(listGroup.id, listGroup.stores)">+</ion-button>
+            <ion-icon id="filter-icon" v-if="listGroup.stores.length && listGroup.active_lists.length >= 5" @click="setStoreFilter(listGroup.active_lists)" :icon="filterCircle" size="large" slot="end" color="secondary"></ion-icon>
+          </ion-item>
           <ion-radio-group>
-            <ion-item v-for="store in storeFilter" :key="store">
-              <ion-label color="secondary">{{store}}</ion-label>
-              <ion-radio slot="start" :value=store @click="this.selectedStore={storeName:store, groupId:listGroup.id}"></ion-radio>
+            <ion-item v-for="store in storeFilter" :key="store" lines="none">
+                        <ion-radio label-placement="start" justify="end" :value=store @click="this.selectedStore={storeName:store, groupId:listGroup.id}"><b>{{store}}</b></ion-radio>
             </ion-item>
           </ion-radio-group>
 
@@ -32,29 +33,31 @@
               <div v-for="listItem in listGroup.active_lists" :key="listItem.id">
               <ion-item lines="none" v-if="(selectedStore.groupId && selectedStore.groupId == listGroup.id && listItem.store && listItem.store.name == selectedStore.storeName) || !selectedStore.storeName">
                 <ion-reorder slot="start"></ion-reorder>
-                  <b v-if="listItem.date_purchased != null">
-                    <s @click="reversePurchasedActionSheet(listItem.id)">{{ listItem.item_name }}</s>
-                    <ion-icon id="recipe-icon" v-if="listItem.recipe_id" color="primary" size="small" :icon="restaurant" @click="openRecipeQuickViewModal(listItem.group_id,listItem.recipe_id)"></ion-icon>
-                  </b>
-                  <b v-if="listItem.date_purchased == null">
-                    <b @click="openItemDetailsModal(listItem, listGroup.stores)">{{ listItem.item_name }}</b>
-                    <ion-icon id="recipe-icon" v-if="listItem.recipe_id" color="primary" size="small" :icon="restaurant" @click="openRecipeQuickViewModal(listItem.group_id,listItem.recipe_id)"></ion-icon>
-                  </b>
-                  <p id="additionals" v-if="(listItem.measurement_amount!=null)">
-                    {{ listItem.measurement_amount }}
-                    {{ listItem.measurement.abbreviation }} |
-                    <i v-if="listItem.store">
+                <b v-if="listItem.date_purchased != null">
+                  <s @click="reversePurchasedActionSheet(listItem.id)">{{ listItem.item_name }}</s>
+                  <ion-icon id="recipe-icon" v-if="listItem.recipe_id" color="primary" size="small" :icon="restaurant" @click="openRecipeQuickViewModal(listItem.group_id,listItem.recipe_id)"></ion-icon>
+                </b>
+                <b v-if="listItem.date_purchased == null">
+                  <b @click="openItemDetailsModal(listItem, listGroup.stores)">{{ listItem.item_name }}</b>
+                  <ion-icon id="recipe-icon" v-if="listItem.recipe_id" color="primary" size="small" :icon="restaurant" @click="openRecipeQuickViewModal(listItem.group_id,listItem.recipe_id)"></ion-icon>
+                </b>
+                <p class="additionals" v-if="(listItem.measurement_amount!=null)">
+                  {{ listItem.measurement_amount }}
+                  {{ listItem.measurement.abbreviation }} |
+                  <i v-if="listItem.store">
                     {{listItem.store.name}}
-                    </i>
-                  </p>
-                  <p v-if="(listItem.measurement_amount ==null && listItem.store != null)">{{listItem.store.name}}</p>
-                <ion-checkbox label="" v-if="listItem.date_purchased == null" color="primary" slot="end" @click="markPurchased(listItem.id)"></ion-checkbox>
+                  </i>
+                </p>
+                <p class="additionals" v-if="(listItem.measurement_amount ==null && listItem.store != null)">{{listItem.store.name}}</p>
+                <ion-checkbox justify="space-between" label-placement="fixed" v-if="listItem.date_purchased == null" color="primary" slot="end" @click="markPurchased(listItem.id)"></ion-checkbox>
                 <ion-icon v-if="listItem.date_purchased != null" slot="end" :icon="checkmark"></ion-icon>
               </ion-item>
               </div>
             </ion-reorder-group>
           </ion-list>
-          <ion-button id="addBtn" @click="openAddItemModal(listGroup.id, listGroup.stores)">+</ion-button>
+          <ion-item lines="none">
+            <ion-button id="addBtn" size="default" @click="openAddItemModal(listGroup.id, listGroup.stores)">+</ion-button>
+          </ion-item>
       </swiper-slide>
     </swiper>
   </master-layout>
@@ -262,16 +265,14 @@ ion-badge{
 	margin-left:1rem;
 }
 
-#filterIcon{
-  position: absolute;
-  right: 10vw;
-}
-
 #recipe-icon{
   padding-left: 5px;
 }
 
-#additionals{
+.additionals{
+  font-size: smaller;
+  position: absolute;
+  padding-top: 2.5em;
   padding-left: 5px;
 }
 </style>

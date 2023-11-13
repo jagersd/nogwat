@@ -22,8 +22,7 @@
         </ion-select>
       </ion-item>
       <ion-item v-if="storeArray.length">
-        <ion-label position="stacked" color="secondary">{{$t('shoppingList.addModal.selectStore')}}</ion-label>
-        <ion-select v-model="form.listItems[0].storeId" interface="popover">
+        <ion-select :label="$t('shoppingList.addModal.selectStore')" label-placement="stacked" v-model="form.listItems[0].storeId" interface="popover">
           <ion-select-option v-for="store in storeArray" :key="store.id" :value="store.id">{{store.name}}</ion-select-option>
         </ion-select>
       </ion-item>

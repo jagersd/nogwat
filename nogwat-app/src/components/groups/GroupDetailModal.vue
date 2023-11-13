@@ -58,11 +58,11 @@
 
       <ion-button v-if="groupInfo.adminCheck.is_admin==1" class="ion-margin-top" @click="formHidden = false">+</ion-button>
 
-      <ion-item v-if="!formHidden">
+      <div v-if="!formHidden">
         <ion-input :label="$t('misc.email')" label-placement="stacked" inputmode="email" type="email" required="true" v-model="form.invitee" id="inviteForm" placeholder="email@email.com"></ion-input>
         <ion-button @click="sendInvite">{{$t('groups.detailsModal.sendInviteBtn')}}</ion-button>
         <ion-button @click="formHidden = true">{{$t('misc.cancel')}}</ion-button>
-      </ion-item>
+      </div>
     
       <!--Invites registered-->
       <h4 v-if="(groupInfo.open_invites_registered.length || groupInfo.open_invites_unregistered.length)">{{$t('groups.detailsModal.invSentTo')}}:</h4>
@@ -87,12 +87,14 @@
     <!--Stores-->
     <div class="stores-section" v-if="showStores">
       <ion-button v-if="groupInfo.adminCheck.is_admin==1" class="ion-margin-top" @click="storeFormHidden = false" slot="end">+</ion-button>
-      <ion-item v-if="!storeFormHidden">
+      <div v-if="!storeFormHidden">
         <ion-input :label="$t('groups.detailsModal.storeName')" label-placement="stacked" type="text" required="true" v-model="storeForm.name" placeholder="Voorbeeld: Buurtboer" maxlength="30"></ion-input>
-        <ion-input :label="$t('misc.description')" type="text" required="true" v-model="storeForm.description" placeholder="Voorbeeld: supermarkt" maxlength="150"></ion-input>
-        <ion-button @click="addStore">{{$t('misc.add')}}</ion-button>
-        <ion-button @click="storeFormHidden = true">{{$t('misc.cancel')}}</ion-button>
-      </ion-item>
+        <ion-input :label="$t('misc.description')" label-placement="stacked" type="text" required="true" v-model="storeForm.description" placeholder="Voorbeeld: supermarkt" maxlength="150"></ion-input>
+                <ion-item>
+                    <ion-button @click="addStore">{{$t('misc.add')}}</ion-button>
+                    <ion-button @click="storeFormHidden = true">{{$t('misc.cancel')}}</ion-button>
+                </ion-item>
+      </div>
       <ion-list v-for="store in groupInfo.stores" :key="store.id">
         <ion-item>
           <ion-label color="dark">
@@ -435,4 +437,5 @@ h1, h4, p, i{
   padding-right: 1rem;
   overflow-x: scroll;
 }
+
 </style>

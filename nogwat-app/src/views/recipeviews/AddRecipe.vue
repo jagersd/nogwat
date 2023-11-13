@@ -99,8 +99,9 @@
         <IonText slot="start" id="header-text" color="primary"><b>{{$t('misc.description')}} (3/3)</b></IonText>
       </ion-item>
       <ion-item lines="none">
-        <ion-label position="floating">{{$t('recipes.add.instructions')}}: <small><i>{{charactersRemaining}}</i></small></ion-label>
         <ion-textarea
+          :label="$t('recipes.add.instructions')"
+          label-placement="floating"
           type="text"
           required="true"
           autoGrow="true"
