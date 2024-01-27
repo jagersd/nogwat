@@ -108,7 +108,7 @@
                 storage is 100% secure and reliable, and we cannot
                 guarantee its absolute security.
                 Should you require us to remove your data from the NogWat App,
-                Please submit your request <a scr="https://nogwat-app.nl/forget-me">here</a>.
+                Please submit your request <a href="https://nogwat-app.nl/forget-me">here</a>.
             </p>
             <p><strong>Links to Other Sites</strong></p>
             <p>

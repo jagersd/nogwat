@@ -4,6 +4,8 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="shortcut icon" href="{{ asset('favicon-16x16.png') }}">
+        <link rel="stylesheet" href="{{ mix('css/app.css') }}" />
+
         <title>NogWat App!</title>
 
     </head>
@@ -23,8 +25,10 @@
                 <input type="text" name="email">
                 <input type="submit">
             </form>
+            <br>
 
-            <p>For other questions in regards to data privacy, you can find our privacy policy <a scr="https://nogwat-app.nl/privacy-policy"> here </a> , or contact us by sending an email to nogwatapp@gmail.com or by submitting a contact request through the app directly.
+            <p>For other questions in regards to data privacy, you can find our privacy policy <a href="https://nogwat-app.nl/privacy-policy"> here </a> , or contact us by sending an email to nogwatapp@gmail.com or by submitting a contact request through the app directly.
+        <a href="https://nogwat-app.nl"> <img src="{{asset('images/nogwat-logo.png')}}"> </a>
 
         </div>
     </body>
