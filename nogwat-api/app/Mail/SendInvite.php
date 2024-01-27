@@ -11,6 +11,7 @@ use Illuminate\Queue\SerializesModels;
 class SendInvite extends Mailable
 {
     use Queueable, SerializesModels;
+    public $invitor;
 
     /**
      * Create a new message instance.

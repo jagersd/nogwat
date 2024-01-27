@@ -5,21 +5,20 @@ namespace App\Mail;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
+use Illuminate\Mail\Mailables\Content;
+use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class SendPasswordResetToken extends Mailable
+class SendForgetRequest extends Mailable
 {
     use Queueable, SerializesModels;
-    public $resetToken;
-
+    public $emailAddress;
     /**
      * Create a new message instance.
-     *
-     * @return void
      */
-    public function __construct($resetToken)
+    public function __construct($emailAddress)
     {
-        $this->resetToken = $resetToken;
+        $this->emailAddress = $emailAddress;
     }
 
     /**
@@ -29,10 +28,11 @@ class SendPasswordResetToken extends Mailable
      */
     public function build()
     {
-        return $this->subject('Password Reset Token')
-        ->view('mails.passwordreset')
+        return $this->subject('Data removal request')
+        ->view('mails.forgetme')
         ->with([
-            'resetToken' => $this->resetToken
+            'invitorName' =>  $this->emailAddress,
         ]);
     }
+
 }

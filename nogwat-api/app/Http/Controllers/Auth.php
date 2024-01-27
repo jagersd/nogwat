@@ -10,6 +10,7 @@ use App\Models\UserStat;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Http\Request;
 use App\Mail\SendDevMessage;
+use App\Mail\SendForgetRequest;
 use App\Mail\SendPasswordResetToken;
 use Illuminate\Support\Facades\Mail;
 
@@ -19,7 +20,7 @@ class Auth extends Controller
     * Register
     */
     public function register(Request $request)
-    {   
+    {
         $request->validate([
             'name' => 'required',
             'email' => 'required|email',
@@ -160,7 +161,7 @@ class Auth extends Controller
     * Triggers an email for feedback
     * @param  \Illuminate\Http\Request  $request
     * @return \Illuminate\Http\Response
-    * 
+    *
     */
     public function sendFeedback(Request $request){
 
@@ -179,7 +180,7 @@ class Auth extends Controller
     * Generate and email password request token
     * @param  \Illuminate\Http\Request  $request
     * @return \Illuminate\Http\Response
-    * 
+    *
     */
     public function generatePasswordResetToken(Request $request){
 
@@ -217,7 +218,7 @@ class Auth extends Controller
     * Allow user to submit new password based on token match
     * @param  \Illuminate\Http\Request  $request
     * @return \Illuminate\Http\Response
-    * 
+    *
     */
     public function updatePasswordWithToken(Request $request){
 
@@ -244,7 +245,7 @@ class Auth extends Controller
             $user->save();
 
             PasswordReset::where('email',$request->email)->delete();
-    
+
             return response([
                 'message' => 'Password Changed'
             ], 201);
@@ -254,6 +255,20 @@ class Auth extends Controller
             ], 500);
         }
 
+    }
+
+    public function sendForgetMeNowRequest(Request $request){
+        $request->validate([
+            "email" => "required|email"
+        ]);
+
+        $user = User::where('email', $request->input("email"))->first();
+        if ($user){
+            $emailAddress = $user->email;
+            Mail::to(env('FEEDBACK_MAIL'))->send(new SendForgetRequest($emailAddress));
+        }
+
+        return response("Request process initiated.",200);
     }
 
 }

@@ -2,15 +2,14 @@
 
 namespace App\Mail;
 
-use App\Models\User;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
 class SendDevMessage extends Mailable
 {
     use Queueable, SerializesModels;
+    public $email, $type, $content;
 
     /**
      * Create a new message instance.
@@ -18,7 +17,7 @@ class SendDevMessage extends Mailable
      * @return void
      */
     public function __construct($email,$type,$content)
-    {   
+    {
         $this->email = $email;
         $this->type = $type;
         $this->content = $content;

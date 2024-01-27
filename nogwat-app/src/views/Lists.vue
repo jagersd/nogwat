@@ -272,7 +272,7 @@ ion-badge{
 .additionals{
   font-size: smaller;
   position: absolute;
-  padding-top: 2.5em;
+  margin-top: 3.5em;
   padding-left: 5px;
 }
 </style>

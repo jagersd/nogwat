@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,3 +21,10 @@ Route::get('/', function () {
 Route::get('/privacy-policy', function (){
     return view('privacy-policy');
 });
+
+Route::get('/forget-me', function (){
+    return view('forget-me');
+});
+
+Route::post('/forget-me',[Auth::class, 'sendForgetMeNowRequest']);
+
