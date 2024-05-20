@@ -14,7 +14,7 @@ class FavoriteController extends Controller
     * @return \Illuminate\Http\Response
     */
     public function create(Request $request)
-    {   
+    {
         try{
             Favorite::create([
                 'recipe_id' => $request->recipeId,
@@ -38,7 +38,7 @@ class FavoriteController extends Controller
 
     /**
     * Deletes a recipe initially marked as favorite
-    * 
+    *
     * @return \Illuminate\Http\Reponse
     */
     public function delete(Request $request)
