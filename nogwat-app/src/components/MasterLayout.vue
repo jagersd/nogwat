@@ -32,7 +32,6 @@
       </ion-fab>
       <slot> </slot>
     </ion-content>
-
     <ion-tab-bar v-if="$store.state.user" slot="bottom">
       <ion-tab-button tab="Groups" href="/groups">
         <ion-icon :icon="heart" size="large"></ion-icon>

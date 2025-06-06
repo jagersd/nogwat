@@ -2,7 +2,7 @@
   "name": "nogwat",
   "integrations": {
     "capacitor": {
-      "CAPACITOR_ANDROID_STUDIO_PATH":"~/Android/sdk"
+      "CAPACITOR_ANDROID_STUDIO_PATH":"~/Android/Sdk"
     }
   },
   "type": "vue"

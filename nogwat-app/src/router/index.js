@@ -1,4 +1,4 @@
-import { createRouter, createWebHashHistory } from '@ionic/vue-router';
+import { createRouter, createWebHistory } from '@ionic/vue-router';
 import Home from '../views/Home'
 import About from '../views/About'
 
@@ -15,12 +15,12 @@ const routes = [
   },
   {
     path: '/error',
-    component: () => import(/* webpackChunkName: "Errors" */ '../views/errors/generic.vue'),
+    component: () => import('../views/errors/generic.vue'),
     name: 'Error'
   },
   { 
     path: '/groups',
-    component: () => import(/* webpackChunkName: "Groups" */ '../views/Groups.vue'),
+    component: () => import('../views/Groups.vue'),
     name: 'groups',
     meta: {
       requiresAuth: true
@@ -28,15 +28,15 @@ const routes = [
   },
   { 
     path: '/lists',
-    component: () => import(/* webpackChunkName: "Lists" */ '../views/Lists.vue'),
-    name: 'lists',
+    component: () => import('../views/Lists.vue'),
+    name: 'Lists',
     meta: {
       requiresAuth: true
     }
   },
   { 
     path: '/grouphistory/:groupId',
-    component: () => import(/* webpackChunkName: "Grouphistory" */ '../views/History.vue'),
+    component: () => import('../views/History.vue'),
     name: 'grouphistory',
     meta: {
       requiresAuth: true
@@ -44,7 +44,7 @@ const routes = [
   },
   { 
     path: '/recipes',
-    component: () => import(/* webpackChunkName: "Recipes" */ '../views/Recipes.vue'),
+    component: () => import('../views/Recipes.vue'),
     name: 'recipesmenu',
     meta: {
       requiresAuth: true
@@ -52,7 +52,7 @@ const routes = [
   },
   {
     path: '/myrecipes',
-    component: () => import(/* webpackChunkName: "Myrecipes" */ '../views/recipeviews/Myrecipes.vue'),
+    component: () => import('../views/recipeviews/Myrecipes.vue'),
     name: 'myrecipes',
     meta: {
       requiresAuth: true
@@ -60,14 +60,14 @@ const routes = [
   },
   {
   path: '/searchrecipes',
-  component: () => import(/* webpackChunkName: "Searchrecipes" */ '../views/recipeviews/Searchrecipes.vue'),
+  component: () => import('../views/recipeviews/Searchrecipes.vue'),
     meta: {
       requiresAuth: true
     }
   },
   {
   path: '/addrecipe',
-  component: () => import(/* webpackChunkName: "Addrecipe" */ '../views/recipeviews/AddRecipe.vue'),
+  component: () => import('../views/recipeviews/AddRecipe.vue'),
     name: 'AddRecipe',
     meta: {
       requiresAuth: true
@@ -75,21 +75,21 @@ const routes = [
   },
   {
     path: '/myfavorites',
-    component: () => import(/* webpackChunkName: "Myfavorites" */ '../views/recipeviews/Myfavorites.vue'),
+    component: () => import('../views/recipeviews/Myfavorites.vue'),
       meta: {
         requiresAuth: true
       }
     },
   {
     path: '/staritems',
-    component: () => import(/* webpackChunkName: "Staritems" */ '../views/Staritems.vue'),
+    component: () => import('../views/Staritems.vue'),
       meta: {
         requiresAuth: true
       }
     },
   {
     path: '/usersettings',
-    component: () => import(/* webpackChunkName: "Usetsettings" */ '../views/Usersettings.vue'),
+    component: () => import('../views/Usersettings.vue'),
       meta: {
         requiresAuth: true
       }
@@ -97,9 +97,11 @@ const routes = [
 ]
 
 const router = createRouter({
-  history: createWebHashHistory(process.env.BASE_URL),
-  routes
-})
+  // Use: createWebHistory(process.env.BASE_URL) in your app
+  history: createWebHistory(),
+  routes,
+});
+
 
 router.beforeEach((to, from, next) => {
   const loggedIn = localStorage.getItem('user')
