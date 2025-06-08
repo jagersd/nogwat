@@ -13,29 +13,29 @@
 </template>
 
 <script>
+import {
+    IonItem,
+    IonText,
+    IonButton,
+    modalController,
+} from "@ionic/vue";
+import { defineComponent } from "vue";
 
-    import {
-        IonItem,
-        IonText,
-        IonButton,
-        modalController,
-    } from "@ionic/vue";
-    import { defineComponent } from "vue";
-
-    export default defineComponent({
-        name: "DashboardModal",
-        components: {
-            IonItem,IonText, IonButton,
-        },
-        props:{
-            messagesObject: {type: Object}
-        },
-        methods:{
-            closeModal(){
-                modalController.dismiss()
-            },
+export default defineComponent({
+    name: "DashboardModal",
+    components: {
+        IonItem,IonText, IonButton,
+    },
+    props:{
+        messagesObject: {type: Object}
+    },
+    setup() {
+        const closeModal = () => {
+            modalController.dismiss();
         }
-    })
+        return { closeModal }
+    }
+})
 </script>
 
 <style scoped>

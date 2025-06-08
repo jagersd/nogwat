@@ -2,8 +2,9 @@
   <master-layout pageTitle="Gevonden Recepten">
     <ion-list v-for="foundRecipe in foundRecipes" :key="foundRecipe.id">
       <ion-item @click="openDetailRecipeModal(foundRecipe)">
-        <ion-label>{{ foundRecipe.name }}
-          <p>{{ foundRecipe.description }}</p>
+            <ion-label><b>{{ foundRecipe.name }}</b>
+            <br>
+            <i>{{ foundRecipe.description }}</i>
         </ion-label>
         <small id="favo-counter" slot="end" v-if="foundRecipe.favorited_count != 0"> <ion-icon :icon="star" color="primary"></ion-icon> ({{ foundRecipe.favorited_count }}) </small>
       </ion-item>

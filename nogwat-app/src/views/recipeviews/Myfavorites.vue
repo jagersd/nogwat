@@ -2,8 +2,8 @@
     <master-layout pageTitle="Mijn Favoriete Recepten">
         <ion-list v-for="myFavo in myFavos" :key="myFavo.id">
             <ion-item @click="openDetailRecipeModal(myFavo)">
-                <ion-label>{{myFavo.name}}
-                <p>{{myFavo.description}}</p>
+                <ion-label><b>{{myFavo.name}}</b><br>
+                <i>{{myFavo.description}}</i>
                 </ion-label>
             </ion-item>
         </ion-list>

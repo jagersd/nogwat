@@ -3,8 +3,8 @@
     <ion-list v-for="myRecipe in myRecipes" :key="myRecipe.id">
       <ion-item @click="openDetailRecipeModal(myRecipe)">
         <ion-label
-          >{{ myRecipe.name }}
-          <p>{{ myRecipe.description }}</p>
+                ><b>{{ myRecipe.name }}</b><br>
+          <i>{{ myRecipe.description }}</i>
         </ion-label>
       </ion-item>
     </ion-list>
