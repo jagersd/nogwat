@@ -32,6 +32,7 @@ export default defineComponent({
       error => {
         if (!error.response){
           this.$router.push({name: 'Error'})
+          return Promise.reject(error)
         }
         switch (error.response.status){
           case 401: this.$store.dispatch('logout')

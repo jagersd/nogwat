@@ -81,7 +81,7 @@ import {
 } from "@ionic/vue";
 
 import { Swiper, SwiperSlide} from 'swiper/vue';
-import 'swiper/swiper.min.css';
+import 'swiper/css';
 import '@ionic/vue/css/ionic-swiper.css';
 
 

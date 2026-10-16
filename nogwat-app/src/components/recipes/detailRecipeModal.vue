@@ -52,8 +52,8 @@
     </ion-card-content>
   </ion-card>
   <ion-text color="secondary">
-    <div id="instructions-section" v-for="i in this.recipeDetails.instructions.split('. ')">
-    {{i}}.<br>
+    <div id="instructions-section" v-for="(instruction, index) in recipeDetails.instructions.split('. ')" :key="index">
+    {{instruction}}.<br>
     </div>
   </ion-text>
   </div>

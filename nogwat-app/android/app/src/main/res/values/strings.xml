@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">NogWat</string>
+    <string name="title_activity_main">NogWat</string>
+    <string name="package_name">nl.nogwatapp.www</string>
+    <string name="custom_url_scheme">nl.nogwatapp.www</string>
+</resources>
