@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from '@ionic/vue-router';
-import Home from '../views/Home'
-import About from '../views/About'
+import Home from '../views/Home.vue'
+import About from '../views/About.vue'
 
 const routes = [
   {
@@ -97,8 +97,7 @@ const routes = [
 ]
 
 const router = createRouter({
-  // Use: createWebHistory(process.env.BASE_URL) in your app
-  history: createWebHistory(),
+  history: createWebHistory(import.meta.env.BASE_URL),
   routes,
 });
 

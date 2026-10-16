@@ -32,22 +32,6 @@
       </ion-fab>
       <slot> </slot>
     </ion-content>
-    <ion-tab-bar v-if="$store.state.user" slot="bottom">
-      <ion-tab-button tab="Groups" href="/groups">
-        <ion-icon :icon="heart" size="large"></ion-icon>
-        <ion-label>{{$t("masterLayout.groups")}}</ion-label>
-      </ion-tab-button>
-
-      <ion-tab-button tab="Lists" href="/lists">
-        <ion-icon :icon="list" size="large"></ion-icon>
-        <ion-label>{{$t("masterLayout.shoppingList")}}</ion-label>
-      </ion-tab-button>
-
-      <ion-tab-button tab="Recipes" href="/recipes">
-        <ion-icon :icon="restaurant" size="large"></ion-icon>
-        <ion-label>{{$t("masterLayout.recipes")}}</ion-label>
-      </ion-tab-button>
-    </ion-tab-bar>
   </ion-page>
 </template>
 <script>
@@ -58,9 +42,7 @@ import {
   IonToolbar,
   IonTitle, 
   IonIcon, 
-  IonLabel, 
-  IonTabBar,
-  IonTabButton, 
+  IonLabel,
   IonFab, 
   IonFabButton, 
   IonFabList,
@@ -68,14 +50,14 @@ import {
   IonButton
 } from "@ionic/vue";
 
-import { heart, list, restaurant, person, close, settings, star, help, home } from "ionicons/icons";
+import { person, close, settings, star, help, home } from "ionicons/icons";
 export default {
   components: {
-    IonPage,IonHeader,IonContent,IonToolbar,IonTitle, IonIcon, IonLabel, IonTabBar, IonTabButton, IonFab, IonFabButton, IonFabList, IonButton
+    IonPage,IonHeader,IonContent,IonToolbar,IonTitle, IonIcon, IonLabel, IonFab, IonFabButton, IonFabList, IonButton
   },
   setup() {
     return {
-      heart,list, restaurant, person, close, settings, star, help, home
+      person, close, settings, star, help, home
     }
   },
   props: ["pageTitle"],
@@ -110,12 +92,4 @@ ion-toolbar{
   --background: var(--ion-color-primary);
   --color: var(--ion-color-primary-contrast);
 }
-ion-tab-bar{
-  --background: var(--ion-background-color);
-}
-ion-tab-button{
-  --color-selected: var(--ion-color-primary);
-  --color: var(--ion-color-step-750);
-}
-
 </style>

@@ -12,7 +12,7 @@
 
       <ion-button v-if="!$store.state.user" class="ion-margin-top" expand="block" @click="openSignupModal">Registreren</ion-button>
     </div>
-    <img src="../assets/logo-small.png" alt="">
+    <img src="/assets/logo-small.png" alt="NogWat">
   </master-layout>
 </template>
 
@@ -51,7 +51,10 @@ export default{
       return modal.present();
     },
     async dashboardMessages(){
-      let lastCheck = JSON.parse(localStorage.getItem('user')).dashboard.lastCheck
+      const user = JSON.parse(localStorage.getItem('user'))
+      if (!user?.dashboard?.lastCheck) return
+
+      let lastCheck = user.dashboard.lastCheck
       if(lastCheck && lastCheck < (Date.now() / 1000) - 7200){
         axios.get(`/dashboard/${localStorage.getItem('locale')}`)
         .then(response => (response.status !== 204 ? this.presentDashboardModal(response.data) : null))

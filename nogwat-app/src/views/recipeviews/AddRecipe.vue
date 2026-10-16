@@ -125,8 +125,7 @@
 import axios from "axios";
 import { chevronBack, chevronForward } from "ionicons/icons";
 import { Swiper, SwiperSlide} from 'swiper/vue';
-import '@ionic/vue/css/ionic-swiper.css';
-import 'swiper/swiper.min.css';
+import 'swiper/css';
 
 import {
   IonText,

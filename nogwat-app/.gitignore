@@ -22,7 +22,16 @@ npm-debug.log*
 /.vscode
 /coverage
 /dist
-/android
+/android/.gradle
+/android/.idea
+/android/**/build
+/android/app/release
+/android/local.properties
+/android/key.properties
+/android/**/*.jks
+/android/**/*.keystore
+/android/app/google-services.json
+/android/app/src/main/assets
 /node_modules
 /platforms
 /plugins
