@@ -10,7 +10,10 @@ ext {
     junitVersion = '4.13.2'
     androidxJunitVersion = '1.2.1'
     androidxEspressoCoreVersion = '3.6.1'
-    cordovaAndroidVersion = '10.1.1'
+    // Capacitor 8's generated Cordova bridge defaults to 14.0.1. Keeping the
+    // old 10.x override pulls split Kotlin 1.6 artifacts alongside the modern
+    // Kotlin standard library and fails Android's duplicate-class check.
+    cordovaAndroidVersion = '14.0.1'
     coreSplashScreenVersion = '1.0.1'
     androidxWebkitVersion = '1.12.1'
 }
