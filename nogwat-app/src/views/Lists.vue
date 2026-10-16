@@ -4,18 +4,21 @@
       {{$t('shoppingList.nogroup')}}
     </ion-item>
     <swiper
+    class="group-swiper"
+    :auto-height="true"
+    @swiper="onSwiper"
     @reachBeginning="currentSlider = 0"
     @slideNextTransitionStart="sliderMovedUp"
     @slidePrevTransitionStart="sliderMovedDown"
     @slideChange="clearStoreFilter"
     >
     <!--GroupID Loop-->
-      <swiper-slide v-for="listGroup in listInfo" :key="listGroup.id" >
+      <swiper-slide v-for="listGroup in listInfo" :key="listGroup.id" class="group-slide">
           <ion-item lines="none">
-            <ion-icon v-if="currentSlider != 0" color="primary" slot="start" :icon="chevronBack"></ion-icon>
+            <ion-icon v-if="currentSlider != 0" class="group-navigation" color="primary" slot="start" :icon="chevronBack" @click="slidePrevious"></ion-icon>
             <p id="group-name">{{ listGroup.name }}</p>
             <ion-badge color="primary">{{listGroup.active_lists.filter(item => item.user_id_purchased == null).length}}</ion-badge>
-            <ion-icon v-if="currentSlider != listInfo.length-1" color="primary" slot="end" :icon="chevronForward"></ion-icon>
+            <ion-icon v-if="currentSlider != listInfo.length-1" class="group-navigation" color="primary" slot="end" :icon="chevronForward" @click="slideNext"></ion-icon>
           </ion-item>
           <ion-item lines="none">
             <ion-button size="default" v-if="listGroup.active_lists.length >= 8" @click="openAddItemModal(listGroup.id, listGroup.stores)">+</ion-button>
@@ -82,7 +85,6 @@ import {
 
 import { Swiper, SwiperSlide} from 'swiper/vue';
 import 'swiper/css';
-import '@ionic/vue/css/ionic-swiper.css';
 
 
 import { checkmark, restaurant, chevronBack, chevronForward, filterCircle } from "ionicons/icons";
@@ -98,6 +100,7 @@ export default {
     return {
       listInfo: {},
       currentSlider: 0,
+      groupSwiper: null,
       nogroups: false,
       storeFilter: [],
       selectedStore: {}
@@ -230,6 +233,15 @@ export default {
       if(this.currentSlider !== 0){
       this.currentSlider-=1
       }
+    },
+    onSwiper(swiper) {
+      this.groupSwiper = swiper
+    },
+    slideNext() {
+      this.groupSwiper?.slideNext()
+    },
+    slidePrevious() {
+      this.groupSwiper?.slidePrev()
     }
   },
 };
@@ -237,9 +249,18 @@ export default {
 
 <style scoped>
 
-.swiper-slide{
-  margin-top: 3vh;
+.group-swiper {
+  margin-top: 0.75rem;
+  width: 100%;
+}
+
+.group-slide {
   min-height: 60vh;
+  padding-bottom: 1rem;
+}
+
+.group-navigation {
+  cursor: pointer;
 }
 
 #group-name{
