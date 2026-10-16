@@ -22,7 +22,7 @@ The production API endpoint is configured in `.env.production`. Use `.env.exampl
 
 ## Android release
 
-The Android package ID is `nl.stefandejager.nogwat`; do not change it or Google Play will treat the output as a different app. The current release version code is `250601`, which is greater than the previous release code `250600`.
+The Android package ID is `nl.stefandejager.nogwat`; do not change it or Google Play will treat the output as a different app. The current release version is `26.10.0` and its Android version code is `261000`, which is greater than the previous release code `250600`.
 
 ```sh
 npm run android:build

@@ -6,8 +6,8 @@ android {
     defaultConfig {
         applicationId 'nl.stefandejager.nogwat'
         minSdk 33
-        versionCode 250601
-        versionName '25.06.1'
+        versionCode 261000
+        versionName '26.10.0'
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         aaptOptions {
              // Files and dirs to omit from the packaged assets dir, modified to accommodate modern web apps.
